@@ -308,7 +308,7 @@ def update_params(
         grad_clip = hyperparameters['grad_clip']
     else:
         grad_clip = None
-        outputs = train_step(
+        outputs = pmapped_train_step(
                 workload,
                 opt_update_fn,
                 model_state,
