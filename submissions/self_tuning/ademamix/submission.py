@@ -411,7 +411,7 @@ def init_optimizer_state(
     del model_state
     del rng
     params_zeros_like = jax.tree.map(
-            lambda s: jnp.zeros(s.shape_tuple, workload.param_shapes)
+            lambda s: jnp.zeros(s.shape_tuple), workload.param_shapes
             )
     lr = HPARAMS['learning_rate']
     b1 = HPARAMS['b1']
