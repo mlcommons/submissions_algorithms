@@ -220,7 +220,7 @@ def tree_bias_correction(moment, decay, count):
 @functools.partial(
         jax.pmap,
         axis_name='batch',
-        in_axes=(None, None, 0, 0, 0, None, 0, 0),
+        in_axes=(None, None, 0, 0, 0, 0, 0, None, None),
         static_broadcasted_argnums=(0, 1),
         )
 def pmapped_train_step(
