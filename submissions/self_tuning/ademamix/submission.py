@@ -398,6 +398,40 @@ def data_selection(
     batch = next(input_queue)
     return batch
 
+def init_optimizer_state(
+        workload: spec.Workload,
+        model_params: spec.ParameterContainer,
+        model_state: spec.ModelAuxiliaryState,
+        hyperparameters: spec.Hyperparameters,
+        rng: spec.RandomState,
+        ) -> spec.OptimizerState:
+    del model_params
+    del model_state
+    del rng
+    params_zeros_like = jax.tree.map(
+            lambda s: jnp.zeros(s.shape_tuple, workload.param_shapes)
+            )
+    lr = HPARAMS['learning_rate']
+    b1 = HPARAMS['b1']
+    b2 = HPARAMS['b2']
+    b3 = HPARAMS['b3']
+    alpha = HPARAMS['alpha']
+    warmup = HPARAMS['warmup']
+    f_b3 = beta3_scheduler(b3, beta_start=b1, warmup=warmup)
+    f_a = alpha_scheduler(alpha, alpha_start=0, warmup=warmup)
+    weight_decay = HPARAMS['weight_decay']
+    opt_init_fn, opt_update_fn = ademamix(lr=lr,
+                                          b1=b1,
+                                          b2=b2,
+                                          b3=b3,
+                                          alpha=alpha,
+                                          b3_scheduler=f_b3,
+                                          alpha_scheduler=f_a,
+                                          weight_decay=weight_decay
+                                          )
+    optimizer_state = opt_init_fn(params_zeros_like)
+    return jax_utils.replicate(optimizer_state), opt_update_fn
+
 if __name__ == "__main__": # dummy test
    
     def f(x): return jnp.sum(x ** 2)  # simple quadratic function
