@@ -31,19 +31,20 @@ from optax import tree_utils as otu
 
 from algoperf import spec
 
+
 HPARAMS = {
-        'alpha': ,
-        'alpha_start': ,
-        'warmup': ,
-        'beta_end': ,
-        'beta_start': ,
-        'learning_rate': ,
-        'b1': ,
-        'b2': ,
-        'b3': ,
-        'eps': ,
-        'eps_root': ,
-        'weight_decay': ,
+        'alpha': 8.0,
+        'alpha_start': 0,
+        'warmup': 10,
+        'beta_end': 0.9999,
+        'beta_start': 0.9,
+        'learning_rate': 0.01,
+        'b1': 0.9,
+        'b2': 0.999,
+        'b3': 0.9999,
+        'eps': 1e-8,
+        'eps_root': 0.0,
+        'weight_decay': 0.01,
         }
         
 _GRAD_CLIP_EPS = 1e-6
