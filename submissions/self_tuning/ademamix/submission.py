@@ -258,9 +258,8 @@ def pmapped_train_step(
             current_param_container
             )
     (summed_loss, n_valid_examples, grad) = lax.psum(
-            (summed_loss, n_valid_examples, grad), axis_name='batch')
+            (summed_loss, n_valid_examples, grad), axis_name='batch'
             )
-    # change to lax.psum or something different for jit?
     loss = summed_loss / n_valid_examples
     grad = jax.tree.map(lambda x: x / n_valid_examples, grad)
     grad_norm = jnp.sqrt(
