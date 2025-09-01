@@ -1,16 +1,16 @@
 """Submission file for an Schedule Free AdamW optimizer in Jax."""
 
-import functools
 from typing import Dict, Iterator, List, Tuple
 
 import jax
 import jax.numpy as jnp
 import optax
 from flax import jax_utils
-from jax import lax
 from optax.contrib import schedule_free_adamw
 
 from algoperf import spec
+from jax.sharding import NamedSharding, PartitionSpec as P
+
 
 _GRAD_CLIP_EPS = 1e-6
 
@@ -54,17 +54,10 @@ def init_optimizer_state(
   model_params = jax_utils.unreplicate(model_params)
   optimizer_state = opt_init_fn(model_params)
 
-  return jax_utils.replicate(optimizer_state), opt_update_fn
+  return optimizer_state, opt_update_fn
 
 
-@functools.partial(
-  jax.pmap,
-  axis_name='batch',
-  in_axes=(None, None, 0, 0, 0, 0, 0, None, None),
-  static_broadcasted_argnums=(0, 1),
-  donate_argnums=(2, 3, 4),
-)
-def pmapped_train_step(
+def train_step(
   workload,
   opt_update_fn,
   model_state,
@@ -99,10 +92,7 @@ def pmapped_train_step(
   (summed_loss, (n_valid_examples, new_model_state)), grad = grad_fn(
     current_param_container
   )
-  # Get correct global mean loss and grad.
-  (summed_loss, n_valid_examples, grad) = lax.psum(
-    (summed_loss, n_valid_examples, grad), axis_name='batch'
-  )
+
   loss = summed_loss / n_valid_examples
   grad = jax.tree_map(lambda x: x / n_valid_examples, grad)
 
@@ -159,25 +149,58 @@ def update_params(
     grad_clip = hyperparameters.grad_clip
   else:
     grad_clip = None
-  outputs = pmapped_train_step(
-    workload,
-    opt_update_fn,
-    model_state,
-    optimizer_state,
-    current_param_container,
-    batch,
-    per_device_rngs,
-    grad_clip,
-    label_smoothing,
-  )
-  new_optimizer_state, new_params, new_model_state, loss, grad_norm = outputs
+
+
+  # Set up mesh and sharding
+  mesh = jax.sharding.Mesh(jax.devices(), ('batch'))
+  replicated = NamedSharding(mesh, P())  # No partitioning
+  sharded = NamedSharding(mesh, P('batch'))  # Partition along batch dimension
+  
+  
+  jitted_train_step = jax.jit(
+      train_step,
+      static_argnums=(0, 1),
+      donate_argnums=(2, 3, 4),
+      in_shardings=(
+        # workload is static
+        # opt_update_fn is static
+        replicated,  # model_state
+        replicated,  # optimizer_state
+        replicated,  # current_param_container
+        sharded,  # batch
+        replicated,  # rng
+        replicated,  # grad_clip
+        replicated,  # label_smoothing
+      ),
+      out_shardings=(
+        replicated,  # new_optimizer_state
+        replicated,  # updated_params
+        replicated,  # new_model_state
+        replicated,  # loss
+        replicated,  # grad_norm
+      ),
+    )
+    # print(batch)
+  new_optimizer_state, new_params, new_model_state, loss, grad_norm = (
+      jitted_train_step(
+        workload,
+        opt_update_fn,
+        model_state,
+        optimizer_state,
+        current_param_container,
+        batch,
+        rng,
+        grad_clip,
+        label_smoothing,
+      )
+    )
 
   # Log loss, grad_norm.
   if global_step % 100 == 0 and workload.metrics_logger is not None:
     workload.metrics_logger.append_scalar_metrics(
       {
-        'loss': loss[0],
-        'grad_norm': grad_norm[0],
+        'loss': loss,
+        'grad_norm': grad_norm,
       },
       global_step,
     )
