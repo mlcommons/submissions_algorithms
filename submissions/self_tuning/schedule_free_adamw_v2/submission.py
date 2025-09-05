@@ -234,13 +234,13 @@ def get_batch_size(workload_name):
   elif workload_name == 'fastmri':
     return 16
   elif workload_name == 'imagenet_resnet':
-    return 768
+    return 1024
   elif workload_name == 'imagenet_vit':
     return 1024
   elif workload_name == 'librispeech_conformer':
-    return 128
+    return 224
   elif workload_name == 'librispeech_deepspeech':
-    return 256
+    return 128
   elif workload_name == 'ogbg':
     return 512
   elif workload_name == 'wmt':
