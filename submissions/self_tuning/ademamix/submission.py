@@ -268,7 +268,7 @@ def train_step(workload,
 
   if grad_clip is not None:
     grad_scaling_factor = grad_clip / (grad_norm + _GRAD_CLIP_EPS)
-    grad_scaling_factor = jax.lax.clamp(min=0.0 x=grad_scaling_factor, max=1.0)
+    grad_scaling_factor = jax.lax.clamp(min=0.0, x=grad_scaling_factor, max=1.0)
     grad = jax.tree.map(lambda x: x * grad_scaling_factor, grad)
 
   updates, new_optimizer_state = opt_update_fn(grad, optimizer_state,
