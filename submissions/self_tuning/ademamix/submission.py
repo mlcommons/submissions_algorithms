@@ -313,9 +313,7 @@ def update_params(
   dropout_rate = hyperparameters['dropout_rate']
   
   mesh = jax.sharding.Mesh(jax.devices(), ('batch'))
-  replicated = jax_sharding_utils.get_replicate_sharding(
-          mesh
-          )
+  replicated = jax_sharding_utils.get_replicate_sharding()
   sharded = jax_sharding_utils.get_batch_sharding(
           mesh
           )
