@@ -310,7 +310,7 @@ def update_params(
     grad_clip = hyperparameters['grad_clip']
   else:
     grad_clip = None
-  dropout_rate = hyperparameters.dropout_rate
+  dropout_rate = hyperparameters['dropout_rate']
   
   mesh = jax.sharding.Mesh(jax.devices(), ('batch'))
   replicated = jax_sharding_utils.get_replicate_sharding(
