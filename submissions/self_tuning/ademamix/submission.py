@@ -45,6 +45,7 @@ HPARAMS = {
         'eps': 1e-8,
         'eps_root': 0.0,
         'weight_decay': 0.01,
+        'dropout_rate': 0.1,
         }
         
 _GRAD_CLIP_EPS = 1e-6
