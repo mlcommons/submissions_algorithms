@@ -29,7 +29,7 @@ from jax import lax
 from optax._src import transform, combine, base, numerics, utils
 from optax import tree_utils as otu
 
-from algoperf import spec
+from algoperf import spec, jax_sharding_utils
 
 
 HPARAMS = {
