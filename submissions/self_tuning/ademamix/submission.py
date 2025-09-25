@@ -312,11 +312,9 @@ def update_params(
     grad_clip = None
   dropout_rate = hyperparameters['dropout_rate']
   
-  mesh = jax.sharding.Mesh(jax.devices(), ('batch'))
+  # mesh = jax.sharding.Mesh(jax.devices(), ('batch'))
   replicated = jax_sharding_utils.get_replicate_sharding()
-  sharded = jax_sharding_utils.get_batch_dim_sharding(
-          mesh
-          )
+  sharded = jax_sharding_utils.get_batch_dim_sharding()
   arg_shardings = (
           replicated, #model_state
           replicated, #optimizer_state # change to optimizer sharding eventually
