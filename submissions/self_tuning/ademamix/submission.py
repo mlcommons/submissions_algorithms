@@ -314,7 +314,7 @@ def update_params(
   
   mesh = jax.sharding.Mesh(jax.devices(), ('batch'))
   replicated = jax_sharding_utils.get_replicate_sharding()
-  sharded = jax_sharding_utils.get_batch_sharding(
+  sharded = jax_sharding_utils.get_batch_dim_sharding(
           mesh
           )
   arg_shardings = (
