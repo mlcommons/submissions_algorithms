@@ -11,8 +11,7 @@ Which momentum implementation should we use?
     - original KellerJordan/modded-nanogpt: https://github.com/microsoft/dion/blob/0360f9b0369603ecfa19de5128f56c983f1ac7d9/dion/muon_reference.py#L323
     - MoonShootAI: https://arxiv.org/pdf/2502.16982
     - Dion: https://github.com/microsoft/dion/tree/main
-For now we stick to the original one, with no dampening,
-but we should enable control on this with an additional hyperparameter.
+We allow both by specifying two momentum hyperparameters: `muon_beta` and `muon_dampening`.
 
 TODO:
 - check for dropout correctness
@@ -74,6 +73,7 @@ class MuonVanilla(torch.optim.Optimizer):
     lr=0.02,
     weight_decay=0.0,
     muon_beta=0.95,
+    muon_dampening=0.0,
     muon_nesterov=True,
     muon_ns_steps=5,
     muon_ns_eps=1.0e-7,
@@ -88,6 +88,8 @@ class MuonVanilla(torch.optim.Optimizer):
 
     if not 0.0 <= muon_beta < 1.0:
       raise ValueError(f'Invalid muon_beta parameter: {muon_beta}')
+    if not 0.0 <= muon_dampening <= 1.0:     # <<< ADDED
+      raise ValueError(f'Invalid muon_dampening parameter: {muon_dampening}')
     if muon_nesterov not in [True, False]:
       raise ValueError(f'Invalid muon_nesterov parameter: {muon_nesterov}')
     if not 0 < muon_ns_steps:
@@ -109,6 +111,7 @@ class MuonVanilla(torch.optim.Optimizer):
       algo = group.get('algorithm')
       if algo == 'muon':
         group['beta'] = group.get('beta', muon_beta)
+        group['dampening'] = group.get('dampening', muon_dampening)
         group['nesterov'] = group.get('nesterov', muon_nesterov)
         group['ns_steps'] = group.get('ns_steps', muon_ns_steps)
         group['ns_eps'] = group.get('ns_eps', muon_ns_eps)
@@ -139,6 +142,7 @@ class MuonVanilla(torch.optim.Optimizer):
 
         if algo == 'muon':
           beta = group['beta']
+          dampening = group['dampening']
           nesterov = group['nesterov']
           ns_steps = group['ns_steps']
           ns_eps = group['ns_eps']
@@ -146,7 +150,7 @@ class MuonVanilla(torch.optim.Optimizer):
           if len(state) == 0:
             state['m'] = torch.zeros_like(p)
 
-          state['m'].mul_(beta).add_(g)  # no dampening
+          state['m'].mul_(beta).add_(g, alpha=1 - dampening)
           if nesterov:
             g = g.add(state['m'], alpha=beta)
           else:
@@ -224,6 +228,7 @@ def init_optimizer_state(
       lr=hyperparameters.learning_rate,  # shared
       weight_decay=hyperparameters.weight_decay,  # shared
       muon_beta=hyperparameters.muon_beta,
+      muon_dampening=hyperparameters.muon_dampening,
       muon_nesterov=hyperparameters.muon_nesterov,
       muon_ns_steps=hyperparameters.muon_ns_steps,
       muon_ns_eps=hyperparameters.muon_ns_eps,
