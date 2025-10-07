@@ -13,7 +13,8 @@ from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from algoperf import spec
 from algoperf.pytorch_utils import pytorch_setup
 
-from muon.pytorch.muon_algos import MuonKJ
+from reference_algorithms.muon.pytorch.muon_algos import MuonKJ
+from reference_algorithms.muon.pytorch.utils import _split_params_muon_adam
 
 USE_PYTORCH_DDP, RANK, DEVICE, N_GPUS = pytorch_setup()
 WORLD_SIZE = N_GPUS # single-node assumption
@@ -31,26 +32,6 @@ def _pytorch_cosine_warmup(step_hint: int, hyperparameters, optimizer):
   )
 
 
-def _split_params_muon_adam(model):
-  """Split parameters based on ndim."""
-  params = [p for p in model.parameters() if p.requires_grad]
-  matrix_params = [p for p in params if p.ndim >= 2]
-  non_matrix_params = [p for p in params if p.ndim < 2]
-
-  # check + print
-  named_params = [
-    (n, p) for n, p in model.named_parameters() if p.requires_grad
-  ]
-  matrix_info = [f'{n} (ndim={p.ndim})' for n, p in named_params if p.ndim >= 2]
-  non_matrix_info = [
-    f'{n} (ndim={p.ndim})' for n, p in named_params if p.ndim < 2
-  ]
-  logging.info('matrix params:\n\t' + '\n\t'.join(matrix_info))
-  logging.info('non-matrix params:\n\t' + '\n\t'.join(non_matrix_info))
-
-  return matrix_params, non_matrix_params
-
-
 def init_optimizer_state(
   workload: spec.Workload,
   model_params: spec.ParameterContainer,
@@ -62,11 +43,11 @@ def init_optimizer_state(
   del model_state
   del rng
 
-  matrix_params, non_matrix_params = _split_params_muon_adam(model_params)
+  muon_params, adam_params = _split_params_muon_adam(model_params)
 
   optimizer_state = {
     'muon': MuonKJ(
-      matrix_params,
+      muon_params,
       lr=hyperparameters.learning_rate,  # shared
       weight_decay=hyperparameters.weight_decay,  # shared
       beta=hyperparameters.muon_beta,
@@ -76,7 +57,7 @@ def init_optimizer_state(
       ns_eps=hyperparameters.muon_ns_eps,
     ),
     'adamw': torch.optim.AdamW(
-      non_matrix_params,
+      adam_params,
       lr=hyperparameters.learning_rate,  # shared
       weight_decay=hyperparameters.weight_decay,  # shared
       betas=(hyperparameters.adamw_beta1, hyperparameters.adamw_beta2),
@@ -185,12 +166,12 @@ def update_params(
         },
         global_step,
       )
-    logging.info(
-      '%d) loss = %0.3f, grad_norm = %0.3f',
-      global_step,
-      loss.item(),
-      grad_norm.item(),
-    )
+    # logging.info(
+    #   '%d) loss = %0.3f, grad_norm = %0.3f',
+    #   global_step,
+    #   loss.item(),
+    #   grad_norm.item(),
+    # )
 
   return (optimizer_state, current_param_container, new_model_state)
 
