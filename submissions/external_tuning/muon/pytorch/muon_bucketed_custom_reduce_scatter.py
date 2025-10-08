@@ -63,6 +63,7 @@ def init_optimizer_state(
       weight_decay=hyperparameters.weight_decay,  # shared
       betas=(hyperparameters.adamw_beta1, hyperparameters.adamw_beta2),
       eps=hyperparameters.adamw_eps,
+      fused=True
     ),
   }
 
