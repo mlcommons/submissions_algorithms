@@ -62,7 +62,6 @@ def init_optimizer_state(
       weight_decay=hyperparameters.weight_decay,  # shared
       betas=(hyperparameters.adamw_beta1, hyperparameters.adamw_beta2),
       eps=hyperparameters.adamw_eps,
-      fused=True
     ),
   }
 
@@ -140,7 +139,7 @@ def update_params(
     n_valid_examples = dist_nn.all_reduce(n_valid_examples)
   loss = summed_loss / n_valid_examples
 
-  # Skip all_reduce in backward pass: compute grads locally on each rank, no sync
+  # AllReduce grads
   loss.backward()
 
   if grad_clip is not None:
@@ -152,21 +151,21 @@ def update_params(
   optimizer_state['muon_scheduler'].step()
   optimizer_state['adamw_scheduler'].step()
 
-  # Log training metrics - loss, grad_norm, batch_size.
-  if global_step <= 100 or global_step % 50 == 0:
-    with torch.no_grad():
-      parameters = [p for p in current_model.parameters() if p.grad is not None]
-      grad_norm = torch.norm(
-        torch.stack([torch.norm(p.grad.detach(), 2) for p in parameters]), 2
-      )
-    if workload.metrics_logger is not None:
-      workload.metrics_logger.append_scalar_metrics(
-        {
-          'loss': loss.item(),
-          'grad_norm': grad_norm.item(),
-        },
-        global_step,
-      )
+  # # Log training metrics - loss, grad_norm, batch_size.
+  # if global_step <= 100 or global_step % 50 == 0:
+  #   with torch.no_grad():
+  #     parameters = [p for p in current_model.parameters() if p.grad is not None]
+  #     grad_norm = torch.norm(
+  #       torch.stack([torch.norm(p.grad.detach(), 2) for p in parameters]), 2
+  #     )
+  #   if workload.metrics_logger is not None:
+  #     workload.metrics_logger.append_scalar_metrics(
+  #       {
+  #         'loss': loss.item(),
+  #         'grad_norm': grad_norm.item(),
+  #       },
+  #       global_step,
+  #     )
     # logging.info(
     #   '%d) loss = %0.3f, grad_norm = %0.3f',
     #   global_step,

@@ -193,6 +193,7 @@ class MuonKJ(MuonBase):
 
       # Iterate over params in blocks of WORLD_SIZE
       for block_start in range(0, len(params), WORLD_SIZE):
+        # Each device updates the RANK-th tensor in the block
         if block_start + RANK < len(params): # skip padded tensors
           p = params[block_start + RANK] # round-robin
           if p.grad is None:

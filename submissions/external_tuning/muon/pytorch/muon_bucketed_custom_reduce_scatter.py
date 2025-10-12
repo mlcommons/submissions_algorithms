@@ -63,7 +63,6 @@ def init_optimizer_state(
       weight_decay=hyperparameters.weight_decay,  # shared
       betas=(hyperparameters.adamw_beta1, hyperparameters.adamw_beta2),
       eps=hyperparameters.adamw_eps,
-      fused=True
     ),
   }
 
@@ -103,6 +102,9 @@ def update_params(
   optimizer_state['muon'].zero_grad()
   optimizer_state['adamw'].zero_grad()
 
+  # Skip all_reduce in backward pass:
+  current_model.require_backward_grad_sync=False
+
   # Fwd pass
   logits_batch, new_model_state = workload.model_fn(
     params=current_model,
@@ -141,8 +143,7 @@ def update_params(
     n_valid_examples = dist_nn.all_reduce(n_valid_examples)
   loss = summed_loss / n_valid_examples
 
-  # Skip all_reduce in backward pass: compute grads locally on each rank, no sync
-  current_model.require_backward_grad_sync=False
+  # AllReduce skipped!
   loss.backward()
   
   # All-reduce AdamW grads
@@ -152,7 +153,7 @@ def update_params(
         dist.all_reduce(p.grad)
         p.grad.div_(WORLD_SIZE)
   
-  # Reduce-scatter Muon parameters
+  # ReduceScatter Muon grads
   # Space: O(largest_param) persistent (model + buffers);
   #        O(WORLD_SIZE × largest_param) transient during all_gather.
   # Comms: one per block (~#params/WORLD_SIZE)

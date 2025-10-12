@@ -18,38 +18,6 @@ from reference_algorithms.muon.pytorch.utils import _split_params_muon_adam
 USE_PYTORCH_DDP = pytorch_setup()[0]
 
 
-@torch.compile()
-def zeropower_via_newtonschulz5(G, steps=5, eps=1e-7):
-  """
-  Newton-Schulz iteration to approximally orthogonalize G.
-  5-th order odd polynomial to approximate sign(x) on [-1,1],
-  pushing singlular values to {+1,-1}.
-
-  M = U @ S @ V.T
-  sign(M) = U @ sign(S) @ V.T, odd matrix polynomial commutes with SVD
-  sign(x) ~= a*x + b*x^3 + c*x^5, x in [-1,1]
-  """
-  assert len(G.shape) == 2, 'Expected 2D tensor'
-  a, b, c = 3.4445, -4.7750, 2.0315
-  X = G.bfloat16()
-  if G.size(0) > G.size(1):
-    X = X.T
-
-  # Ensure spectral norm is at most 1.
-  # Ortho(cX)=Ortho(X), so we can normalize by ||X||_2 <= ||X||_F
-  X /= X.norm() + eps
-
-  # NS iterations
-  for _ in range(steps):
-    A = X @ X.T
-    B = b * A + c * (A @ A)
-    X = a * X + B @ X
-
-  if G.size(0) > G.size(1):
-    X = X.T
-  return X
-
-
 def _pytorch_cosine_warmup(step_hint: int, hyperparameters, optimizer):
   warmup_steps = int(hyperparameters.warmup_factor * step_hint)
   warmup = LinearLR(
@@ -92,7 +60,6 @@ def init_optimizer_state(
       weight_decay=hyperparameters.weight_decay,  # shared
       betas=(hyperparameters.adamw_beta1, hyperparameters.adamw_beta2),
       eps=hyperparameters.adamw_eps,
-      fused=True
     ),
   }
 
@@ -170,6 +137,7 @@ def update_params(
     n_valid_examples = dist_nn.all_reduce(n_valid_examples)
   loss = summed_loss / n_valid_examples
 
+  # AllReduce grads
   loss.backward()
 
   if grad_clip is not None:
@@ -181,21 +149,21 @@ def update_params(
   optimizer_state['muon_scheduler'].step()
   optimizer_state['adamw_scheduler'].step()
 
-  # Log training metrics - loss, grad_norm, batch_size.
-  if global_step <= 100 or global_step % 50 == 0:
-    with torch.no_grad():
-      parameters = [p for p in current_model.parameters() if p.grad is not None]
-      grad_norm = torch.norm(
-        torch.stack([torch.norm(p.grad.detach(), 2) for p in parameters]), 2
-      )
-    if workload.metrics_logger is not None:
-      workload.metrics_logger.append_scalar_metrics(
-        {
-          'loss': loss.item(),
-          'grad_norm': grad_norm.item(),
-        },
-        global_step,
-      )
+  # # Log training metrics - loss, grad_norm, batch_size.
+  # if global_step <= 100 or global_step % 50 == 0:
+  #   with torch.no_grad():
+  #     parameters = [p for p in current_model.parameters() if p.grad is not None]
+  #     grad_norm = torch.norm(
+  #       torch.stack([torch.norm(p.grad.detach(), 2) for p in parameters]), 2
+  #     )
+  #   if workload.metrics_logger is not None:
+  #     workload.metrics_logger.append_scalar_metrics(
+  #       {
+  #         'loss': loss.item(),
+  #         'grad_norm': grad_norm.item(),
+  #       },
+  #       global_step,
+  #     )
     # logging.info(
     #   '%d) loss = %0.3f, grad_norm = %0.3f',
     #   global_step,

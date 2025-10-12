@@ -1,5 +1,5 @@
 """"
-MuonBucketed, see the corresponding algorithm in `muon_algos.py` for more details.
+MuonKJ, see the corresponding algorithm in `muon_algos.py` for more details.
 """
 
 from typing import Any, Dict, Iterator, List, Optional, Tuple
@@ -13,7 +13,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from algoperf import spec
 from algoperf.pytorch_utils import pytorch_setup
 
-from reference_algorithms.muon.pytorch.muon_algos import MuonBucketed
+from reference_algorithms.muon.pytorch.muon_algos import MuonKJ
 from reference_algorithms.muon.pytorch.utils import _split_params_muon_adam
 
 USE_PYTORCH_DDP, RANK, DEVICE, N_GPUS = pytorch_setup()
@@ -46,7 +46,7 @@ def init_optimizer_state(
   muon_params, adam_params = _split_params_muon_adam(model_params)
 
   optimizer_state = {
-    'muon': MuonBucketed(
+    'muon': MuonKJ(
       muon_params,
       lr=hyperparameters.learning_rate,  # shared
       weight_decay=hyperparameters.weight_decay,  # shared
@@ -101,6 +101,9 @@ def update_params(
   optimizer_state['muon'].zero_grad()
   optimizer_state['adamw'].zero_grad()
 
+  # Skip all_reduce in backward pass:
+  current_model.require_backward_grad_sync=False
+  
   # Fwd pass
   logits_batch, new_model_state = workload.model_fn(
     params=current_model,
@@ -139,8 +142,41 @@ def update_params(
     n_valid_examples = dist_nn.all_reduce(n_valid_examples)
   loss = summed_loss / n_valid_examples
 
-  # AllReduce grads
+  # AllReduce skipped!
   loss.backward()
+
+  # All-reduce AdamW grads
+  for group in optimizer_state['adamw'].param_groups:
+    for p in group['params']:
+      if p.grad is not None:
+        dist.all_reduce(p.grad)
+        p.grad.div_(WORLD_SIZE)
+
+  # ReduceScatter Muon grads
+  for group in optimizer_state['muon'].param_groups:
+    # References to grads, ensure valid tensors for reduce_scatter
+    grads = [
+      p.grad if p.grad is not None else torch.zeros_like(p) 
+      for p in group["params"]
+    ]
+
+    # Pad grads so each reduce_scatter block is of size WORLD_SIZE.
+    pad = (WORLD_SIZE - len(grads) % WORLD_SIZE) % WORLD_SIZE
+    grads_pad = grads + [torch.zeros_like(grads[-1])] * pad
+
+    # Iterate over grads in blocks of WORLD_SIZE
+    for block_start in range(0, len(grads), WORLD_SIZE):
+      # Skip padded tensor when reducing
+      if block_start + RANK < len(grads):
+        receiv = grads_pad[block_start + RANK] # ref to p.grad
+      else:
+        receiv = torch.zeros_like(grads_pad[block_start + RANK]) # dummy buffer
+      # ReduceScatter this block
+      with torch.no_grad():
+        dist.reduce_scatter(
+          receiv, grads_pad[block_start:block_start + WORLD_SIZE]
+        )
+        receiv.div_(WORLD_SIZE)  
 
   if grad_clip is not None:
     torch.nn.utils.clip_grad_norm_(
@@ -151,27 +187,27 @@ def update_params(
   optimizer_state['muon_scheduler'].step()
   optimizer_state['adamw_scheduler'].step()
 
-  # Log training metrics - loss, grad_norm, batch_size.
-  if global_step <= 100 or global_step % 50 == 0:
-    with torch.no_grad():
-      parameters = [p for p in current_model.parameters() if p.grad is not None]
-      grad_norm = torch.norm(
-        torch.stack([torch.norm(p.grad.detach(), 2) for p in parameters]), 2
-      )
-    if workload.metrics_logger is not None:
-      workload.metrics_logger.append_scalar_metrics(
-        {
-          'loss': loss.item(),
-          'grad_norm': grad_norm.item(),
-        },
-        global_step,
-      )
-    # logging.info(
-    #   '%d) loss = %0.3f, grad_norm = %0.3f',
-    #   global_step,
-    #   loss.item(),
-    #   grad_norm.item(),
-    # )
+  # # Log training metrics - loss, grad_norm, batch_size.
+  # if global_step <= 100 or global_step % 50 == 0:
+  #   with torch.no_grad():
+  #     parameters = [p for p in current_model.parameters() if p.grad is not None]
+  #     grad_norm = torch.norm(
+  #       torch.stack([torch.norm(p.grad.detach(), 2) for p in parameters]), 2
+  #     )
+  #   if workload.metrics_logger is not None:
+  #     workload.metrics_logger.append_scalar_metrics(
+  #       {
+  #         'loss': loss.item(),
+  #         'grad_norm': grad_norm.item(),
+  #       },
+  #       global_step,
+  #     )
+  #   logging.info(
+  #     '%d) loss = %0.3f, grad_norm = %0.3f',
+  #     global_step,
+  #     loss.item(),
+  #     grad_norm.item(),
+  #   )
 
   return (optimizer_state, current_param_container, new_model_state)
 
