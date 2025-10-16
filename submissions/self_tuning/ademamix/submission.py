@@ -51,12 +51,10 @@ HPARAMS = {
 _GRAD_CLIP_EPS = 1e-6
 
 def alpha_scheduler(alpha, alpha_start=0, warmup=0):
-    def schedule(step):
-        is_warmup = (step < warmup).astype(jnp.float32)
-        a = step / float(warmup)
-        return is_warmup * ((1.0-a) * alpha_start + a * alpha) + alpha * (1.0-is_warmup)
-
-    return schedule
+    warmup_fn = optax.linear_schedule(init_value=alpha_start, end_value=alpha, transition_steps=warmup)
+    constant_fn = optax.constant_schedule(alpha)
+    schedule_fn = optax.join_schedules(schedules=[warmup_fn, constant_fn], boundaries=[warmup])
+    return schedule_fn
 
 
 def beta3_scheduler(beta_end, beta_start=0, warmup=0):
@@ -67,21 +65,22 @@ def beta3_scheduler(beta_end, beta_start=0, warmup=0):
     def f_inv(t):
         return jnp.power(0.5, 1/(t+1))
 
-    def schedule(step):
-        is_warmup = (step < warmup).astype(jnp.float32)
-        alpha = step / float(warmup)
-        return is_warmup * f_inv((1.0-alpha) * f(beta_start) + alpha * f(beta_end)) + beta_end * (1.0-is_warmup)
+    def warmup_fn(step):
+        frac = 1 - step / warmup
+        return f_inv( frac * f(beta_start) + (1 - frac) * f(beta_end))
 
-    return schedule
+    constant_fn = optax.constant_schedule(beta_end)
+    schedule_fn = optax.join_schedules(schedules=[warmup_fn, constant_fn], boundaries=[warmup])
+    return schedule_fn
 
 
 class ScaleByAdemamixState(NamedTuple):
   """State for the AdEMAMix algorithm."""
   count: chex.Array  
   count_m2: chex.Array  
-  m1: base.Updates
-  m2: base.Updates
-  nu: base.Updates
+  m1: optax.Updates
+  m2: optax.Updates
+  nu: optax.Updates
 
 
 def ademamix(lr, b1=0.9, b2=0.999, b3=0.9999, alpha=5.0, b3_scheduler=None, alpha_scheduler=None,
@@ -128,84 +127,41 @@ def ademamix(lr, b1=0.9, b2=0.999, b3=0.9999, alpha=5.0, b3_scheduler=None, alph
   )
 
 
-def scale_by_ademamix(b1, b2, b3, alpha, b3_scheduler, alpha_scheduler, eps=1e-8, eps_root=0.0, mu_dtype=None):
-
-  mu_dtype = utils.canonicalize_dtype(mu_dtype)
+def scale_by_ademamix(b1, b2, b3, alpha, b3_scheduler, alpha_scheduler, eps=1e-8, eps_root=0.0):
 
   def init_fn(params):
-    m1 = tree_zeros_like(params, dtype=mu_dtype)   # fast EMA
-    m2 = tree_zeros_like(params, dtype=mu_dtype)   # slow EMA
-    nu = tree_zeros_like(params, dtype=mu_dtype)   # second moment estimate
+    m1 = jax.tree.map(jnp.zeros_like, params)   # fast EMA
+    m2 = jax.tree.map(jnp.zeros_like, params)   # slow EMA
+    nu = jax.tree.map(jnp.zeros_like, params)   # second moment estimate
     return ScaleByAdemamixState(count=jnp.zeros([], jnp.int32), count_m2=jnp.zeros([], jnp.int32), m1=m1, m2=m2, nu=nu)
 
   def update_fn(updates, state, params=None):
     del params
     c_b3 = b3_scheduler(state.count_m2) if b3_scheduler is not None else b3
     c_alpha = alpha_scheduler(state.count_m2) if alpha_scheduler is not None else alpha
-    m1 = tree_update_moment(updates, state.m1, b1, 1) # m1 = b1 * m1 + (1-b1) * updates
-    m2 = tree_update_moment(updates, state.m2, c_b3, 1)
-    nu = tree_update_moment_per_elem_norm(updates, state.nu, b2, 2)
-    count_inc = numerics.safe_int32_increment(state.count)
-    count_m2_inc = numerics.safe_int32_increment(state.count_m2)
-    m1_hat = tree_bias_correction(m1, b1, count_inc)
-    nu_hat = tree_bias_correction(nu, b2, count_inc)
-    updates = jtu.tree_map(lambda m1_, m2_, v_: (m1_+c_alpha*m2_)/(jnp.sqrt(v_+eps_root)+eps), m1_hat, m2, nu_hat)
-    mu1 = tree_cast(m1, mu_dtype)
-    mu2 = tree_cast(m2, mu_dtype)
-    return updates, ScaleByAdemamixState(count=count_inc, count_m2=count_m2_inc, m1=m1, m2=m2, nu=nu)
+    m1 = _update_moment(updates, state.m1, b1, 1) # m1 = b1 * m1 + (1-b1) * updates
+    m2 = _update_moment(updates, state.m2, c_b3, 1)
+    nu = _update_moment(updates, state.nu, b2, 2)
+    count = state.count + jnp.array(1, dtype=jnp.int32)
+    # count_inc = numerics.safe_int32_increment(state.count)
+    count_m2 = state.count_m2 + jnp.array(1, dtype=jnp.int32)
+    # count_m2_inc = numerics.safe_int32_increment(state.count_m2)
+    m1_hat = _bias_correction(m1, b1, count)
+    nu_hat = _bias_correction(nu, b2, count)
+    updates = jax.tree.map(lambda m1_, m2_, v_: (m1_+c_alpha*m2_)/(jnp.sqrt(v_+eps_root)+eps), m1_hat, m2, nu_hat)
+    return updates, ScaleByAdemamixState(count=count, count_m2=count_m2, m1=m1, m2=m2, nu=nu)
 
   return base.GradientTransformation(init_fn, update_fn)
 
 
-def tree_cast(tree, dtype):
-  """Cast tree to given dtype, skip if None."""
-  if dtype is not None:
-    return jtu.tree_map(lambda t: t.astype(dtype), tree)
-  else:
-    return tree
-
-
-def tree_zeros_like(
-    tree,
-    dtype = None,
-):
-  """Creates an all-zeros tree with the same structure.
-
-  Args:
-    tree: pytree.
-    dtype: optional dtype to use for the tree of zeros.
-
-  Returns:
-    an all-zeros tree with the same structure as ``tree``.
-  """
-  return jtu.tree_map(lambda x: jnp.zeros_like(x, dtype=dtype), tree)
-
-
-def tree_update_moment(updates, moments, decay, order):
+def _update_moment(updates, moments, decay, order):
   """Compute the exponential moving average of the `order`-th moment."""
-  return jtu.tree_map(
+  return jax.tree.map(
       lambda g, t: (1 - decay) * (g ** order) + decay * t, updates, moments)
 
 
-def tree_update_moment_per_elem_norm(updates, moments, decay, order):
-  """Compute the EMA of the `order`-th moment of the element-wise norm."""
 
-  def orderth_norm(g):
-    if jnp.isrealobj(g):
-      return g ** order
-    else:
-      half_order = order / 2
-      # JAX generates different HLO for int and float `order`
-      if half_order.is_integer():
-        half_order = int(half_order)
-      return numerics.abs_sq(g) ** half_order
-
-  return jtu.tree_map(
-      lambda g, t: (1 - decay) * orderth_norm(g) + decay * t, updates, moments)
-
-
-@functools.partial(jax.jit, inline=True)
-def tree_bias_correction(moment, decay, count):
+def _bias_correction(moment, decay, count):
   """Performs bias correction. It becomes a no-op as count goes to infinity."""
   # The conversion to the data type of the moment ensures that bfloat16 remains
   # bfloat16 in the optimizer state. This conversion has to be done after
@@ -215,16 +171,9 @@ def tree_bias_correction(moment, decay, count):
   bias_correction_ = 1 - decay**count
 
   # Perform division in the original precision.
-  return jax.tree_util.tree_map(
+  return jax.tree.map(
       lambda t: t / bias_correction_.astype(t.dtype), moment)
 
-#@functools.partial(
-#        jax.pmap,
-#        axis_name='batch',
-#        in_axes=(None, None, 0, 0, 0, 0, 0, None, None),
-#        static_broadcasted_argnums=(0, 1),
-#        donate_argnums=(2, 3, 4)
-#        )
 def train_step(workload,
                opt_update_fn,
                model_state,
@@ -301,7 +250,6 @@ def update_params(
   hyperparameters = HPARAMS
 
   optimizer_state, opt_update_fn = optimizer_state
-  per_device_rngs = jax.random.split(rng, jax.local_device_count())
   if hasattr(hyperparameters, 'label_smoothing'):
     label_smoothing = hyperparameters['label_smoothing']
   else:
@@ -314,7 +262,9 @@ def update_params(
   
   # mesh = jax.sharding.Mesh(jax.devices(), ('batch'))
   replicated = jax_sharding_utils.get_replicate_sharding()
-  sharded = jax_sharding_utils.get_batch_dim_sharding()
+  sharded = (
+          jax_sharding_utils.get_batch_dim_sharding()
+          )
   arg_shardings = (
           replicated, #model_state
           replicated, #optimizer_state # change to optimizer sharding eventually
@@ -345,7 +295,7 @@ def update_params(
                               optimizer_state,
                               current_param_container,
                               batch,
-                              per_device_rngs,
+                              rng,
                               grad_clip,
                               label_smoothing,
                               dropout_rate,
@@ -356,8 +306,8 @@ def update_params(
   if global_step % 100 == 0 and workload.metrics_logger is not None:
     workload.metrics_logger.append_scalar_metrics(
         {
-            'loss': loss[0],
-            'grad_norm': grad_norm[0],
+            'loss': loss,
+            'grad_norm': grad_norm,
         }, global_step)
   return (new_optimizer_state, opt_update_fn), new_params, new_model_state
 
@@ -408,7 +358,7 @@ def get_batch_size(workload_name):
     elif workload_name == 'mnist':
         return 16
     elif workload_name == 'cifar':
-        return 2048
+        return 128
     else:
         raise ValueError(f'Unsupported workload name: {workload_name}.')
 
@@ -464,7 +414,7 @@ def init_optimizer_state(
                                           weight_decay=weight_decay
                                           )
     optimizer_state = opt_init_fn(params_zeros_like)
-    return jax_utils.replicate(optimizer_state), opt_update_fn
+    return optimizer_state, opt_update_fn
 
 if __name__ == "__main__": # dummy test
    
