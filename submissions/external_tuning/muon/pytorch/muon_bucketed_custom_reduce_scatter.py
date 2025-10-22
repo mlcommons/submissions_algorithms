@@ -49,8 +49,8 @@ def init_optimizer_state(
   optimizer_state = {
     'muon': MuonBucketed(
       muon_params,
-      lr=hyperparameters.learning_rate,  # shared
-      weight_decay=hyperparameters.weight_decay,  # shared
+      lr=hyperparameters.muon_learning_rate,
+      weight_decay=hyperparameters.muon_weight_decay,
       beta=hyperparameters.muon_beta,
       nesterov=hyperparameters.muon_nesterov,
       ns_steps=hyperparameters.muon_ns_steps,
@@ -58,8 +58,8 @@ def init_optimizer_state(
     ),
     'adamw': torch.optim.AdamW(
       adam_params,
-      lr=hyperparameters.learning_rate,  # shared
-      weight_decay=hyperparameters.weight_decay,  # shared
+      lr=hyperparameters.adamw_learning_rate,
+      weight_decay=hyperparameters.adamw_weight_decay,
       betas=(hyperparameters.adamw_beta1, hyperparameters.adamw_beta2),
       eps=hyperparameters.adamw_eps,
     ),
