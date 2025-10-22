@@ -5,9 +5,7 @@ MuonKJ, see the corresponding algorithm in `muon_algos.py` for more details.
 from typing import Any, Dict, Iterator, List, Optional, Tuple
 
 import torch
-import torch.distributed as dist
 import torch.distributed.nn as dist_nn
-from absl import logging
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 
 from algoperf import spec

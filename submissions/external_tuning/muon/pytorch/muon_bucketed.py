@@ -5,9 +5,7 @@ MuonBucketed, see the corresponding algorithm in `muon_algos.py` for more detail
 from typing import Any, Dict, Iterator, List, Optional, Tuple
 
 import torch
-import torch.distributed as dist
 import torch.distributed.nn as dist_nn
-from absl import logging
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 
 from algoperf import spec

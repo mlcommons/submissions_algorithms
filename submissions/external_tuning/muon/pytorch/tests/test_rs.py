@@ -1,4 +1,6 @@
-import torch, torch.distributed as dist, torch.multiprocessing as mp
+import torch
+import torch.distributed as dist
+import torch.multiprocessing as mp
 
 
 def run(rank, world_size):
