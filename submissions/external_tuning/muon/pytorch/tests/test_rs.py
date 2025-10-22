@@ -1,5 +1,6 @@
 import torch, torch.distributed as dist, torch.multiprocessing as mp
 
+
 def run(rank, world_size):
     dist.init_process_group("nccl", rank=rank, world_size=world_size)
     torch.cuda.set_device(rank)
@@ -16,6 +17,7 @@ def run(rank, world_size):
         print(f"Rank {rank} error:", e)
 
     dist.destroy_process_group()
+
 
 if __name__ == "__main__":
     mp.spawn(run, args=(2,), nprocs=2)

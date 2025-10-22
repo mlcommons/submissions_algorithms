@@ -36,7 +36,6 @@ class ToyModel(nn.Module):
         return y.mean()
 
 
-
 def main():
     rank = int(os.environ["RANK"])
     world_size = int(os.environ["WORLD_SIZE"])
@@ -79,7 +78,7 @@ def main():
                 for block_start in range(0, len(params), world_size):
                     grad_block = [
                         (p.grad if p.grad is not None else torch.zeros_like(p))
-                        for p in params[block_start:block_start + world_size]
+                        for p in params[block_start : block_start + world_size]
                     ]
                     pad = world_size - len(grad_block)
                     if pad > 0:
@@ -97,7 +96,7 @@ def main():
         # --- Compare ---
         dist.barrier()
         if rank == 0:
-            print(f"\n=== Step {step+1}/{n_steps} Reduce-Scatter Check ===")
+            print(f"\n=== Step {step + 1}/{n_steps} Reduce-Scatter Check ===")
         dist.barrier()
 
         for (n1, p1), (n2, p2) in zip(

@@ -13,9 +13,9 @@ class ToyModel(nn.Module):
     def __init__(self):
         super().__init__()
         # --- Repeated 2D shapes
-        self.fc1 = nn.Linear(8, 4, bias=False)   # (4×8)
-        self.fc2 = nn.Linear(8, 4, bias=False)   # (4×8)
-        self.fc3 = nn.Linear(3, 4, bias=False)   # (4×3)
+        self.fc1 = nn.Linear(8, 4, bias=False)  # (4×8)
+        self.fc2 = nn.Linear(8, 4, bias=False)  # (4×8)
+        self.fc3 = nn.Linear(3, 4, bias=False)  # (4×3)
 
         # --- Repeated 3D shapes
         self.conv1 = nn.Conv1d(4, 2, 3, padding=1, bias=False)  # (2×4×3)
@@ -27,17 +27,16 @@ class ToyModel(nn.Module):
         # x_vec: (B, 8)
         y1 = self.fc1(x_vec)
         y2 = self.fc2(x_vec)
-        y = (y1 + y2).relu()                     # (B, 4)
+        y = (y1 + y2).relu()  # (B, 4)
 
-        y = self.conv1(y.unsqueeze(2)).relu()    # (B, 2, 4)
-        y = self.conv2(y).relu()                 # (B, 2, 4)
-        y = self.conv3(y).relu()                 # (B, 2, 4)
-        y = self.conv_unique(y).relu()           # (B, 3, 4)
+        y = self.conv1(y.unsqueeze(2)).relu()  # (B, 2, 4)
+        y = self.conv2(y).relu()  # (B, 2, 4)
+        y = self.conv3(y).relu()  # (B, 2, 4)
+        y = self.conv_unique(y).relu()  # (B, 3, 4)
 
-        y = y.mean(dim=2)                        # (B, 3)
-        y = self.fc3(y)                          # (B, 4)
+        y = y.mean(dim=2)  # (B, 3)
+        y = self.fc3(y)  # (B, 4)
         return y.mean()
-
 
 
 def main():
@@ -54,12 +53,12 @@ def main():
     model_v = ToyModel().to(device)
     model_og = deepcopy(model_v)
     model_b = deepcopy(model_v)
-    
+
     # print(f"[RANK {rank}], {torch.__version__, dist.get_backend()}")
     # for p in model_v.parameters():
     #   print(f"RANK {rank}, p.shape: {p.shape}")
     # dist.barrier()
-    
+
     ddp_v = DDP(model_v, device_ids=[rank])
     ddp_og = DDP(model_og, device_ids=[rank])
     ddp_b = DDP(model_b, device_ids=[rank])
@@ -81,7 +80,7 @@ def main():
 
         dist.barrier()
         if rank == 0:
-            print(f"\n=== Step {step+1}/{n_steps} Parameter Diffs ===")
+            print(f"\n=== Step {step + 1}/{n_steps} Parameter Diffs ===")
         dist.barrier()
         for (n1, p1), (_, p2), (_, p3) in zip(
             ddp_v.module.named_parameters(),
@@ -92,7 +91,9 @@ def main():
             diff_v_b = (p1 - p3).abs().max().item()
             diff_og_b = (p2 - p3).abs().max().item()
             if rank == 0:
-                print(f"{n1:<20s} | V-OG Δ={diff_v_og:.2e} | V-B Δ={diff_v_b:.2e} | OG-B Δ={diff_og_b:.2e}")
+                print(
+                    f"{n1:<20s} | V-OG Δ={diff_v_og:.2e} | V-B Δ={diff_v_b:.2e} | OG-B Δ={diff_og_b:.2e}"
+                )
 
     dist.destroy_process_group()
 
