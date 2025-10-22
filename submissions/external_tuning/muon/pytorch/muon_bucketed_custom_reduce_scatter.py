@@ -52,7 +52,6 @@ def init_optimizer_state(
       lr=hyperparameters.learning_rate,  # shared
       weight_decay=hyperparameters.weight_decay,  # shared
       beta=hyperparameters.muon_beta,
-      dampening=hyperparameters.muon_dampening,
       nesterov=hyperparameters.muon_nesterov,
       ns_steps=hyperparameters.muon_ns_steps,
       ns_eps=hyperparameters.muon_ns_eps,

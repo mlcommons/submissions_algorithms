@@ -57,7 +57,6 @@ class MuonBase(torch.optim.Optimizer, ABC):
     lr=0.02,
     weight_decay=0.0,
     beta=0.95,
-    dampening=0.0,
     nesterov=True,
     ns_steps=5,
     ns_eps=1.0e-7,
@@ -68,8 +67,6 @@ class MuonBase(torch.optim.Optimizer, ABC):
       raise ValueError(f'Invalid weight_decay: {weight_decay}')
     if not 0.0 <= beta < 1.0:
       raise ValueError(f'Invalid muon_beta parameter: {beta}')
-    if not 0.0 <= dampening <= 1.0:
-      raise ValueError(f'Invalid muon_dampening parameter: {dampening}')
     if nesterov not in [True, False]:
       raise ValueError(f'Invalid nesterov parameter: {nesterov}')
     if not 0 < ns_steps:
@@ -81,7 +78,6 @@ class MuonBase(torch.optim.Optimizer, ABC):
       lr = lr,
       weight_decay = weight_decay,
       beta = beta,
-      dampening = dampening,
       nesterov = nesterov,
       ns_steps = ns_steps,
       ns_eps = ns_eps,
@@ -113,7 +109,6 @@ class MuonVanilla(MuonBase):
       lr = group['lr']
       wd = group['weight_decay']
       beta = group['beta']
-      dampening = group['dampening']
       nesterov = group['nesterov']
       ns_steps = group['ns_steps']
       ns_eps = group['ns_eps']
@@ -126,7 +121,7 @@ class MuonVanilla(MuonBase):
 
         if len(state) == 0:
           state['m'] = torch.zeros_like(p)
-        state['m'].mul_(beta).add_(g, alpha=1 - dampening)
+        state['m'].mul_(beta).add_(g, alpha=1 - beta)
 
         if nesterov:
           g = g.add(state['m'], alpha=beta)
@@ -180,7 +175,6 @@ class MuonKJ(MuonBase):
       lr = group['lr']
       wd = group['weight_decay']
       beta = group['beta']
-      dampening = group['dampening']
       nesterov = group['nesterov']
       ns_steps = group['ns_steps']
       ns_eps = group['ns_eps']
@@ -203,7 +197,7 @@ class MuonKJ(MuonBase):
 
           if len(state) == 0:
             state['m'] = torch.zeros_like(p)
-          state['m'].mul_(beta).add_(g, alpha=1 - dampening)
+          state['m'].mul_(beta).add_(g, alpha=1 - beta)
 
           if nesterov:
             g = g.add(state['m'], alpha=beta)
@@ -260,7 +254,6 @@ class MuonBucketed(MuonBase):
       lr = group['lr']
       wd = group['weight_decay']
       beta = group['beta']
-      dampening = group['dampening']
       nesterov = group['nesterov']
       ns_steps = group['ns_steps']
       ns_eps = group['ns_eps']
@@ -282,7 +275,7 @@ class MuonBucketed(MuonBase):
 
             if len(state) == 0:
               state['m'] = torch.zeros_like(p)
-            state['m'].mul_(beta).add_(g, alpha=1 - dampening)
+            state['m'].mul_(beta).add_(g, alpha=1 - beta)
 
             if nesterov:
               g = g.add(state['m'], alpha=beta)
