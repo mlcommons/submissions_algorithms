@@ -84,7 +84,7 @@ class ScaleByAdemamixState(NamedTuple):
 
 
 def ademamix(lr, b1=0.9, b2=0.999, b3=0.9999, alpha=5.0, b3_scheduler=None, alpha_scheduler=None,
-             eps=1e-8, eps_root=0.0, weight_decay=0.0, mu_dtype=None, mask=None):
+             eps=1e-8, eps_root=0.0, weight_decay=0.0, mask=None):
   r"""AdEMAMix.
 
     Args:
@@ -121,7 +121,7 @@ def ademamix(lr, b1=0.9, b2=0.999, b3=0.9999, alpha=5.0, b3_scheduler=None, alph
         The corresponding `GradientTransformation`.
   """
   return combine.chain(
-    scale_by_ademamix(b1, b2, b3, alpha, b3_scheduler, alpha_scheduler, eps, eps_root, mu_dtype),
+    scale_by_ademamix(b1, b2, b3, alpha, b3_scheduler, alpha_scheduler, eps, eps_root),
     transform.add_decayed_weights(weight_decay, mask),
     transform.scale_by_learning_rate(lr),
   )
