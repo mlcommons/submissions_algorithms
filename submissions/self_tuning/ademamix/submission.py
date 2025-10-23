@@ -267,7 +267,7 @@ def update_params(
           )
   arg_shardings = (
           replicated, #model_state
-          replicated, #optimizer_state # change to optimizer sharding eventually
+          sharded, #optimizer_state # change to optimizer sharding eventually
           replicated, # current_param_container
           sharded, # batch
           replicated, # per_device_rngs
