@@ -51,37 +51,6 @@ HPARAMS = {
         
 _GRAD_CLIP_EPS = 1e-6
 
-def _path_matches_embedding(path_segments: tuple) -> bool:
-    return any(("embedding_table" in s) or ("embedding" in s) for s in path_segments)
-
-def build_embedding_name_mask(params_tree):
-    flat = tu.flatten_dict(params_tree, keep_empty_nodes=True)
-    mask_flat = {}
-    for path, leaf in flat.items():
-        mask_flat[path] = _path_matches_embedding(path)
-    return tu.unflatten_dict(mask_flat)
-
-def _choose_sharding(mask_tree, target_tree, sharded, replicated):
-    return jax.tree.map(
-            lambda m, _: sharded if m else replicated, mask_tree, target_tree)
-
-def create_ademamix_sharding_from_names(
-        optimizer_state: ScaleByAdemamixState,
-        params_tree,
-        replicated,
-        sharded
-        ) -> ScaleByAdemamixState:
-    embed_mask = build_embedding_name_mask(params_tree)
-    m1_sharding = _choose_sharding(embed_mask, optimizer_state.m1, sharded, replicated)
-    m2_sharding = _choose_sharding(embed_mask, optimizer_state.m2, sharded, replicated)
-    nu_sharding = _choose_sharding(embed_mask, optimizer_state.nu, sharded, replicated)
-    return ScaleByAdemamixState(
-            count=replicated,
-            count_m2=replicated,
-            m1=m1_sharding,
-            m2=m2_sharding,
-            nu=nu_sharding
-            )
 
 def alpha_scheduler(alpha, alpha_start=0, warmup=0):
     warmup_fn = optax.linear_schedule(init_value=alpha_start, end_value=alpha, transition_steps=warmup)
@@ -114,6 +83,38 @@ class ScaleByAdemamixState(NamedTuple):
   m1: optax.Updates
   m2: optax.Updates
   nu: optax.Updates
+
+def _path_matches_embedding(path_segments: tuple) -> bool:
+    return any(("embedding_table" in s) or ("embedding" in s) for s in path_segments)
+
+def build_embedding_name_mask(params_tree):
+    flat = tu.flatten_dict(params_tree, keep_empty_nodes=True)
+    mask_flat = {}
+    for path, leaf in flat.items():
+        mask_flat[path] = _path_matches_embedding(path)
+    return tu.unflatten_dict(mask_flat)
+
+def _choose_sharding(mask_tree, target_tree, sharded, replicated):
+    return jax.tree.map(
+            lambda m, _: sharded if m else replicated, mask_tree, target_tree)
+
+def create_ademamix_sharding_from_names(
+        optimizer_state: ScaleByAdemamixState,
+        params_tree,
+        replicated,
+        sharded
+        ) -> ScaleByAdemamixState:
+    embed_mask = build_embedding_name_mask(params_tree)
+    m1_sharding = _choose_sharding(embed_mask, optimizer_state.m1, sharded, replicated)
+    m2_sharding = _choose_sharding(embed_mask, optimizer_state.m2, sharded, replicated)
+    nu_sharding = _choose_sharding(embed_mask, optimizer_state.nu, sharded, replicated)
+    return ScaleByAdemamixState(
+            count=replicated,
+            count_m2=replicated,
+            m1=m1_sharding,
+            m2=m2_sharding,
+            nu=nu_sharding
+            )
 
 
 def ademamix(lr, b1=0.9, b2=0.999, b3=0.9999, alpha=5.0, b3_scheduler=None, alpha_scheduler=None,
