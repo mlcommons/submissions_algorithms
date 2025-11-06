@@ -317,7 +317,7 @@ def update_params(
           jax_sharding_utils.get_batch_dim_sharding()
           )
   optimizer_state_sharding = create_full_optimizer_sharding_from_names(
-          optimizer_state=optimizer_state,
+          optimizer_chain_state=optimizer_state,
           params_tree=current_param_container,
           replicated=replicated,
           sharded=sharded
