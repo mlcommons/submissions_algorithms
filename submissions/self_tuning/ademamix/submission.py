@@ -24,6 +24,7 @@ from jax import tree_util as jtu
 import jax.numpy as jnp
 import optax
 from flax import jax_utils
+from flax import traverse_util as tu
 from jax import lax
 
 from optax._src import transform, combine, base, numerics, utils
@@ -49,6 +50,38 @@ HPARAMS = {
         }
         
 _GRAD_CLIP_EPS = 1e-6
+
+def _path_matches_embedding(path_segments: tuple) -> bool:
+    return any(("embedding_table" in s) or ("embedding" in s) for s in path_segments)
+
+def build_embedding_name_mask(params_tree):
+    flat = tu.flatten_dict(params_tree, keep_empty_nodes=True)
+    mask_flat = {}
+    for path, leaf in flat.items():
+        mask_flat[path] = _path_matches_embedding(path)
+    return tu.unflatten_dict(mask_flat)
+
+def _choose_sharding(mask_tree, target_tree, sharded, replicated):
+    return jax.tree.map(
+            lambda m, _: sharded if m else replicated, mask_tree, target_tree)
+
+def create_ademamix_sharding_from_names(
+        optimizer_state: ScaleByAdemamixState,
+        params_tree,
+        replicated,
+        sharded
+        ) -> ScaleByAdemamixState:
+    embed_mask = build_embedding_name_mask(params_tree)
+    m1_sharding = _choose_sharding(embed_mask, optimizer_state.m1, sharded, replicated)
+    m2_sharding = _choose_sharding(embed_mask, optimizer_state.m2, sharded, replicated)
+    nu_sharding = _choose_sharding(embed_mask, optimizer_state.nu, sharded, replicated)
+    return ScaleByAdemamixState(
+            count=replicated,
+            count_m2=replicated,
+            m1=m1_sharding,
+            m2=m2_sharding,
+            nu=nu_sharding
+            )
 
 def alpha_scheduler(alpha, alpha_start=0, warmup=0):
     warmup_fn = optax.linear_schedule(init_value=alpha_start, end_value=alpha, transition_steps=warmup)
@@ -174,6 +207,43 @@ def _bias_correction(moment, decay, count):
   return jax.tree.map(
       lambda t: t / bias_correction_.astype(t.dtype), moment)
 
+  def create_optimizer_sharding(optimizer_state, replicated, sharded):
+    """
+    Create sharding spec for optimizer
+
+    Args:
+        optimizer_state: The optimizer state structure
+        replicated: Sharding spec for replicated data
+        sharded: Sharding spec for batch sharded data
+
+    Returns:
+        Sharding spec sharding rng key across batches and replicating
+        all other optimizer variables
+    """
+    def shard_optimizer_component(state_component):
+        if isinstance(state_component, ScaleByLowRankOrthogonalUpdateState):
+            return ScaleByLowRankOrthogonalUpdateState(
+                    step=replicated,
+                    shape_info=replicated,
+                    momentum=jax.tree.map(lambda _: replicated, state_component.momentum),
+                    key=jax.tree.map(lambda _: sharded, state_component.key),
+                    )
+        else:
+            return jax.tree.map(lambda _: replicated, state_component)
+
+    return jax.tree.map(
+            shard_optimizer_component,
+            optimizer_state,
+            is_leaf=lambda x: (
+                isinstance(x, ScaleByLowRankOrthogonalUpdateState) or
+                (
+                    hasattr(x, '_fields') and
+                    not isinstance(x, ScaleByLowRankOrthogonalUpdateState)
+                    )
+                )
+            )
+
+
 def train_step(workload,
                opt_update_fn,
                model_state,
@@ -265,9 +335,15 @@ def update_params(
   sharded = (
           jax_sharding_utils.get_batch_dim_sharding()
           )
+  optimizer_state_sharding = create_ademamix_sharding_from_names(
+          optimizer_state=optimizer_state,
+          params_tree=current_param_container,
+          replicated=replicated,
+          sharded=sharded
+          )
   arg_shardings = (
           replicated, #model_state
-          sharded, #optimizer_state # change to optimizer sharding eventually
+          optimizer_state_sharding, #optimizer_state # change to optimizer sharding eventually
           replicated, # current_param_container
           sharded, # batch
           replicated, # per_device_rngs
@@ -276,7 +352,7 @@ def update_params(
           replicated, #dropout_rate
           )
   out_shardings = (
-          replicated, # new_optimizer_state # maybe sharded eventually
+          optimizer_state_sharding, # new_optimizer_state # maybe sharded eventually
           replicated, # updated_params
           replicated, # new_model_state
           replicated, # loss
