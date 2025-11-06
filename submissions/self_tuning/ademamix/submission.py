@@ -116,6 +116,22 @@ def create_ademamix_sharding_from_names(
             nu=nu_sharding
             )
 
+def create_full_optimizer_sharding_from_names(
+        optimizer_chain_state,
+        params_tree,
+        replicated,
+        sharded
+        ):
+    if isinstance(optimizer_chain_state, tuple) and len(optimizer_chain_state) >= 1:
+        ademamix_state = optimizer_chain_state[0]
+        ademamix_sharding = _ademamix_component_sharding(ademamix_state, params_tree, replicated, sharded)
+        rest_shardings = tuple(
+                jax.tree.map(lambda _: replicated, s) for s in optimizer_chain_state[1:]
+                )
+        return (ademamix_sharding, *rest_shardings)
+    else:
+        return _ademamix_component_sharding(optimizer_chain_state, params_tree, replicated, sharded)
+
 
 def ademamix(lr, b1=0.9, b2=0.999, b3=0.9999, alpha=5.0, b3_scheduler=None, alpha_scheduler=None,
              eps=1e-8, eps_root=0.0, weight_decay=0.0, mask=None):
@@ -207,42 +223,6 @@ def _bias_correction(moment, decay, count):
   # Perform division in the original precision.
   return jax.tree.map(
       lambda t: t / bias_correction_.astype(t.dtype), moment)
-
-  def create_optimizer_sharding(optimizer_state, replicated, sharded):
-    """
-    Create sharding spec for optimizer
-
-    Args:
-        optimizer_state: The optimizer state structure
-        replicated: Sharding spec for replicated data
-        sharded: Sharding spec for batch sharded data
-
-    Returns:
-        Sharding spec sharding rng key across batches and replicating
-        all other optimizer variables
-    """
-    def shard_optimizer_component(state_component):
-        if isinstance(state_component, ScaleByLowRankOrthogonalUpdateState):
-            return ScaleByLowRankOrthogonalUpdateState(
-                    step=replicated,
-                    shape_info=replicated,
-                    momentum=jax.tree.map(lambda _: replicated, state_component.momentum),
-                    key=jax.tree.map(lambda _: sharded, state_component.key),
-                    )
-        else:
-            return jax.tree.map(lambda _: replicated, state_component)
-
-    return jax.tree.map(
-            shard_optimizer_component,
-            optimizer_state,
-            is_leaf=lambda x: (
-                isinstance(x, ScaleByLowRankOrthogonalUpdateState) or
-                (
-                    hasattr(x, '_fields') and
-                    not isinstance(x, ScaleByLowRankOrthogonalUpdateState)
-                    )
-                )
-            )
 
 
 def train_step(workload,
@@ -336,7 +316,7 @@ def update_params(
   sharded = (
           jax_sharding_utils.get_batch_dim_sharding()
           )
-  optimizer_state_sharding = create_ademamix_sharding_from_names(
+  optimizer_state_sharding = create_full_optimizer_sharding_from_names(
           optimizer_state=optimizer_state,
           params_tree=current_param_container,
           replicated=replicated,
