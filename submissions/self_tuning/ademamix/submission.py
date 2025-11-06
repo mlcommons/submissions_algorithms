@@ -124,13 +124,13 @@ def create_full_optimizer_sharding_from_names(
         ):
     if isinstance(optimizer_chain_state, tuple) and len(optimizer_chain_state) >= 1:
         ademamix_state = optimizer_chain_state[0]
-        ademamix_sharding = _ademamix_component_sharding(ademamix_state, params_tree, replicated, sharded)
+        ademamix_sharding = create_ademamix_sharding_from_names(ademamix_state, params_tree, replicated, sharded)
         rest_shardings = tuple(
                 jax.tree.map(lambda _: replicated, s) for s in optimizer_chain_state[1:]
                 )
         return (ademamix_sharding, *rest_shardings)
     else:
-        return _ademamix_component_sharding(optimizer_chain_state, params_tree, replicated, sharded)
+        return create_ademamix_sharding_from_names(optimizer_chain_state, params_tree, replicated, sharded)
 
 
 def ademamix(lr, b1=0.9, b2=0.999, b3=0.9999, alpha=5.0, b3_scheduler=None, alpha_scheduler=None,
