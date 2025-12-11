@@ -1,5 +1,6 @@
-"""
-MuonVanilla, see the corresponding algorithm in `muon_algos.py` for more details.
+""""
+Vanilla Muon PyTorch implementation.
+See  ``MuonVanilla`` in muon_algos.py for more details.
 """
 
 from typing import Any, Dict, Iterator, List, Optional, Tuple
@@ -43,21 +44,23 @@ def init_optimizer_state(
     muon_params, adam_params = _split_params_muon_adam(model_params)
 
     optimizer_state = {
-        "muon": MuonVanilla(
+        'muon': MuonVanilla(
             muon_params,
-            lr=hyperparameters.muon_learning_rate,
-            weight_decay=hyperparameters.muon_weight_decay,
+            lr=hyperparameters.learning_rate,  # shared
+            weight_decay=hyperparameters.muon_weight_decay,  # shared
             beta=hyperparameters.muon_beta,
             nesterov=hyperparameters.muon_nesterov,
             ns_steps=hyperparameters.muon_ns_steps,
             ns_eps=hyperparameters.muon_ns_eps,
+            adjust_lr=hyperparameters.muon_adjust_lr,
         ),
-        "adamw": torch.optim.AdamW(
+        'adamw': torch.optim.AdamW(
             adam_params,
-            lr=hyperparameters.adamw_learning_rate,
-            weight_decay=hyperparameters.adamw_weight_decay,
+            lr=hyperparameters.learning_rate,  # shared
+            weight_decay=hyperparameters.adamw_weight_decay,  # shared
             betas=(hyperparameters.adamw_beta1, hyperparameters.adamw_beta2),
             eps=hyperparameters.adamw_eps,
+            fused=True,
         ),
     }
 
@@ -129,8 +132,6 @@ def update_params(
     n_valid_examples = loss_dict["n_valid_examples"]
     if USE_PYTORCH_DDP:
         # Use dist_nn.all_reduce to ensure correct loss and gradient scaling.
-        # TODO @nico: is it ever the case that n_valid_examples differs across ranks?
-        #             if not, we can safely remove this sync point.
         summed_loss = dist_nn.all_reduce(summed_loss)
         n_valid_examples = dist_nn.all_reduce(n_valid_examples)
     loss = summed_loss / n_valid_examples

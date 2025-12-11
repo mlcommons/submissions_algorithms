@@ -18,10 +18,13 @@ def _split_params_muon_adam(model):
         if not p.requires_grad:
             continue
 
-        # Assign embeddings to Adam (wmt, criteo)
+        # Assign embeddings to Adam (wmt, criteo, fwedu)
         if "embedding" in n.lower():
             adam_params.append(p)
             adam_infos.append(f"{n} (ndim={p.ndim})")
+        elif "lm_head" in n.lower():
+            adam_params.append(p)
+            adam_infos.append(f'{n} (ndim={p.ndim})')
         elif p.ndim >= 2:
             muon_params.append(p)
             muon_infos.append(f"{n} (ndim={p.ndim})")
