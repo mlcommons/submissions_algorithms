@@ -20,8 +20,7 @@ from algoperf.pytorch_utils import pytorch_setup
 from reference_algorithms.muon.pytorch.muon_algos import MuonDataParallel
 from reference_algorithms.muon.pytorch.utils import _split_params_muon_adam
 
-USE_PYTORCH_DDP, RANK, DEVICE, N_GPUS = pytorch_setup()
-WORLD_SIZE = N_GPUS # single-node assumption
+USE_PYTORCH_DDP = pytorch_setup()[0]
 
 
 def _pytorch_cosine_warmup(step_hint: int, hyperparameters, optimizer):
@@ -153,11 +152,13 @@ def update_params(
       if p.grad is not None:
         dist.all_reduce(p.grad, op=dist.ReduceOp.AVG)
 
-  # Reduce-Scatter + update + AllGather Muon
+  # Muon: ReduceScatter + update params + AllGather params
   optimizer_state['muon'].step()
 
-  # Update Muon
+  # AdamW: update params
   optimizer_state['adamw'].step()
+
+  # Step LR schedulers
   optimizer_state['muon_scheduler'].step()
   optimizer_state['adamw_scheduler'].step()
 
