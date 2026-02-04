@@ -27,6 +27,31 @@ HPARAMS = {
   'eps': 1e-8,
 }
 
+def prepare_for_eval(
+    workload: spec.Workload,
+    current_param_container: spec.ParameterContainer,
+    current_params_types: spec.ParameterTypeTree,
+    model_state: spec.ModelAuxiliaryState,
+    hyperparameters: spec.Hyperparameters,
+    loss_type: spec.LossType,
+    optimizer_state: spec.OptimizerState,
+    eval_results: List[Tuple[int, float]],
+    global_step: int,
+    rng: spec.RandomState,
+) -> Tuple[spec.OptimizerState, spec.ParameterContainer, spec.ModelAuxiliaryState]:
+    """Converts y (training params) to x (eval params) using the SF state."""
+    (state, _), opt_update_fn = optimizer_state
+    
+    # Calculate x = (y - (1 - b1) * z) / b1
+    params_for_eval = schedule_free_eval_params(state, current_param_container) # (current_param_container - (1 - state.b1) * state.z) / state.b1
+
+    is_holding_x = jnp.array(1, dtype=jnp.int32)
+
+    new_optimizer_state = ((state, is_holding_x), opt_update_fn)
+    
+    # We return params_for_eval x
+    return new_optimizer_state, params_for_eval, model_state
+
 
 def init_optimizer_state(
   workload: spec.Workload,
@@ -53,8 +78,9 @@ def init_optimizer_state(
 
   model_params = jax_utils.unreplicate(model_params)
   optimizer_state = opt_init_fn(model_params)
+  is_holding_x = jnp.array(0, dtype=jnp.int32)
 
-  return optimizer_state, opt_update_fn
+  return (optimizer_state, is_holding_x), opt_update_fn
 
 
 def train_step(
@@ -139,7 +165,7 @@ def update_params(
   del loss_type
   del eval_results
 
-  optimizer_state, opt_update_fn = optimizer_state
+  (optimizer_state, is_holding_x), opt_update_fn = optimizer_state
   per_device_rngs = jax.random.split(rng, jax.local_device_count())
   if hasattr(hyperparameters, 'label_smoothing'):
     label_smoothing = hyperparameters.label_smoothing
@@ -150,6 +176,16 @@ def update_params(
   else:
     grad_clip = None
 
+  if is_holding_x > 0:
+    beta1 = 1.0 - HPARAMS['one_minus_beta1']
+    z = optimizer_state.z
+        
+    # restore Y: y = (1 - b) * z + b * x
+    current_param_container = jax.tree.map(
+        lambda x_leaf, z_leaf: (1 - beta1) * z_leaf + beta1 * x_leaf,
+        current_param_container, # x
+        z
+    )
 
   # Set up mesh and sharding
   mesh = jax.sharding.Mesh(jax.devices(), ('batch'))
@@ -204,6 +240,9 @@ def update_params(
       },
       global_step,
     )
+  
+  new_is_holding_x = jnp.array(0, dtype=jnp.int32)
+  new_optimizer_state = ((new_optimizer_state, new_is_holding_x), opt_update_fn)
 
   return (new_optimizer_state, opt_update_fn), new_params, new_model_state
 
