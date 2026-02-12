@@ -313,27 +313,19 @@ def update_params(
   
   # mesh = jax.sharding.Mesh(jax.devices(), ('batch'))
   replicated = jax_sharding_utils.get_replicate_sharding()
-  sharded = (
-          jax_sharding_utils.get_batch_dim_sharding()
-          )
-  optimizer_state_sharding = create_full_optimizer_sharding_from_names(
-          optimizer_chain_state=optimizer_state,
-          params_tree=current_param_container,
-          replicated=replicated,
-          sharded=sharded
-          )
+  sharded = jax_sharding_utils.get_batch_dim_sharding()
   arg_shardings = (
-          replicated, #model_state
-          optimizer_state_sharding, #optimizer_state # change to optimizer sharding eventually
-          replicated, # current_param_container
-          sharded, # batch
-          replicated, # per_device_rngs
-          replicated, # grad_clip
-          replicated, #label_smoothing
-          replicated, #dropout_rate
+          replicated,  # model_state
+          replicated,  # optimizer_state
+          replicated,  # current_param_container
+          sharded,     # batch
+          replicated,  # per_device_rngs
+          replicated,  # grad_clip
+          replicated,  # label_smoothing
+          replicated,  # dropout_rate
           )
   out_shardings = (
-          optimizer_state_sharding, # new_optimizer_state # maybe sharded eventually
+          replicated, # new_optimizer_state
           replicated, # updated_params
           replicated, # new_model_state
           replicated, # loss
