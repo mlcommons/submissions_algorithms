@@ -51,6 +51,14 @@ HPARAMS = {
         
 _GRAD_CLIP_EPS = 1e-6
 
+def lr_scheduler(learning_rate, warmup_steps, total_steps):
+    return optax.warmup_cosine_decay_schedule(
+            init_value=0.0,
+            peak_value=learning_rate,
+            warmup_steps=warmup_steps,
+            decay_steps=total_steps,
+            end_value=learning_rate * 0.01
+            )
 
 def alpha_scheduler(alpha, alpha_start=0, warmup=0):
     warmup_fn = optax.linear_schedule(init_value=alpha_start, end_value=alpha, transition_steps=warmup)
@@ -83,54 +91,6 @@ class ScaleByAdemamixState(NamedTuple):
   m1: optax.Updates
   m2: optax.Updates
   nu: optax.Updates
-
-def _path_matches_embedding(path_segments: tuple) -> bool:
-    return any(("embedding_table" in s) or ("embedding" in s) for s in path_segments)
-
-def build_embedding_name_mask(params_tree):
-    flat = tu.flatten_dict(params_tree, keep_empty_nodes=True)
-    mask_flat = {}
-    for path, leaf in flat.items():
-        mask_flat[path] = _path_matches_embedding(path)
-    return tu.unflatten_dict(mask_flat)
-
-def _choose_sharding(mask_tree, target_tree, sharded, replicated):
-    return jax.tree.map(
-            lambda m, _: sharded if m else replicated, mask_tree, target_tree)
-
-def create_ademamix_sharding_from_names(
-        optimizer_state: ScaleByAdemamixState,
-        params_tree,
-        replicated,
-        sharded
-        ) -> ScaleByAdemamixState:
-    embed_mask = build_embedding_name_mask(params_tree)
-    m1_sharding = _choose_sharding(embed_mask, optimizer_state.m1, sharded, replicated)
-    m2_sharding = _choose_sharding(embed_mask, optimizer_state.m2, sharded, replicated)
-    nu_sharding = _choose_sharding(embed_mask, optimizer_state.nu, sharded, replicated)
-    return ScaleByAdemamixState(
-            count=replicated,
-            count_m2=replicated,
-            m1=m1_sharding,
-            m2=m2_sharding,
-            nu=nu_sharding
-            )
-
-def create_full_optimizer_sharding_from_names(
-        optimizer_chain_state,
-        params_tree,
-        replicated,
-        sharded
-        ):
-    if isinstance(optimizer_chain_state, tuple) and len(optimizer_chain_state) >= 1:
-        ademamix_state = optimizer_chain_state[0]
-        ademamix_sharding = create_ademamix_sharding_from_names(ademamix_state, params_tree, replicated, sharded)
-        rest_shardings = tuple(
-                jax.tree.map(lambda _: replicated, s) for s in optimizer_chain_state[1:]
-                )
-        return (ademamix_sharding, *rest_shardings)
-    else:
-        return create_ademamix_sharding_from_names(optimizer_chain_state, params_tree, replicated, sharded)
 
 
 def ademamix(lr, b1=0.9, b2=0.999, b3=0.9999, alpha=5.0, b3_scheduler=None, alpha_scheduler=None,
@@ -277,6 +237,33 @@ def train_step(workload,
   updated_params = optax.apply_updates(current_param_container, updates)
   return new_optimizer_state, updated_params, new_model_state, loss, grad_norm
 
+  
+replicated = jax_sharding_utils.get_replicate_sharding()
+sharded = jax_sharding_utils.get_batch_dim_sharding()
+arg_shardings = (
+        replicated,  # model_state
+        replicated,  # optimizer_state
+        replicated,  # current_param_container
+        sharded,     # batch
+        replicated,  # per_device_rngs
+        replicated,  # grad_clip
+        replicated,  # label_smoothing
+        replicated,  # dropout_rate
+        )
+out_shardings = (
+        replicated, # new_optimizer_state
+        replicated, # updated_params
+        replicated, # new_model_state
+        replicated, # loss
+        replicated, # grad_norm
+        )
+jitted_train_step = jax.jit(
+        train_step,
+        static_argnums=(0, 1),
+        donate_argnums=(2, 3, 4),
+        in_shardings=arg_shardings,
+        out_shardings=out_shardings,
+        )
 
 def update_params(
     workload: spec.Workload,
@@ -312,32 +299,6 @@ def update_params(
   dropout_rate = hyperparameters['dropout_rate']
   
   # mesh = jax.sharding.Mesh(jax.devices(), ('batch'))
-  replicated = jax_sharding_utils.get_replicate_sharding()
-  sharded = jax_sharding_utils.get_batch_dim_sharding()
-  arg_shardings = (
-          replicated,  # model_state
-          replicated,  # optimizer_state
-          replicated,  # current_param_container
-          sharded,     # batch
-          replicated,  # per_device_rngs
-          replicated,  # grad_clip
-          replicated,  # label_smoothing
-          replicated,  # dropout_rate
-          )
-  out_shardings = (
-          replicated, # new_optimizer_state
-          replicated, # updated_params
-          replicated, # new_model_state
-          replicated, # loss
-          replicated, # grad_norm
-          )
-  jitted_train_step = jax.jit(
-          train_step,
-          static_argnums=(0, 1),
-          donate_argnums=(2, 3, 4),
-          in_shardings=arg_shardings,
-          out_shardings=out_shardings,
-          )
   outputs = jitted_train_step(workload,
                               opt_update_fn,
                               model_state,
@@ -449,11 +410,13 @@ def init_optimizer_state(
     b2 = HPARAMS['b2']
     b3 = HPARAMS['b3']
     alpha = HPARAMS['alpha']
+    warmup = HPARAMS['warmup']
     T = workload.step_hint
     f_b3 = beta3_scheduler(b3, beta_start=b1, warmup=T)
     f_a = alpha_scheduler(alpha, alpha_start=0, warmup=T)
+    f_lr = learning_rate_scheduler(lr, warmup, T)
     weight_decay = HPARAMS['weight_decay']
-    opt_init_fn, opt_update_fn = ademamix(lr=lr,
+    opt_init_fn, opt_update_fn = ademamix(lr=f_lr,
                                           b1=b1,
                                           b2=b2,
                                           b3=b3,
