@@ -6,13 +6,14 @@ import jax
 import jax.numpy as jnp
 import optax
 from flax import jax_utils
-from optax.contrib import schedule_free_adamw
+from optax.contrib import schedule_free_adamw, schedule_free_eval_params
 
 from algoperf import spec
 from jax.sharding import NamedSharding, PartitionSpec as P
 
 
 _GRAD_CLIP_EPS = 1e-6
+_JITTED_TRAIN_STEP = None
 
 HPARAMS = {
   'dropout_rate': 0.1,
@@ -120,7 +121,7 @@ def train_step(
   )
 
   loss = summed_loss / n_valid_examples
-  grad = jax.tree_map(lambda x: x / n_valid_examples, grad)
+  grad = jax.tree.map(lambda x: x / n_valid_examples, grad)
 
   grad_norm = jnp.sqrt(
     sum(jnp.sum(g**2) for g in jax.tree_util.tree_leaves(grad))
@@ -138,7 +139,7 @@ def train_step(
   if grad_clip is not None:
     grad_scaling_factor = grad_clip / (grad_norm + _GRAD_CLIP_EPS)
     grad_scaling_factor = jax.lax.clamp(min=0.0, x=grad_scaling_factor, max=1.0)
-    grad = jax.tree_map(lambda x: x * grad_scaling_factor, grad)
+    grad = jax.tree.map(lambda x: x * grad_scaling_factor, grad)
 
   updates, new_optimizer_state = opt_update_fn(
     grad, optimizer_state, current_param_container
@@ -165,6 +166,7 @@ def update_params(
   del loss_type
   del eval_results
 
+  global _JITTED_TRAIN_STEP
   (optimizer_state, is_holding_x), opt_update_fn = optimizer_state
   per_device_rngs = jax.random.split(rng, jax.local_device_count())
   if hasattr(hyperparameters, 'label_smoothing'):
@@ -186,14 +188,14 @@ def update_params(
         current_param_container, # x
         z
     )
-
-  # Set up mesh and sharding
-  mesh = jax.sharding.Mesh(jax.devices(), ('batch'))
-  replicated = NamedSharding(mesh, P())  # No partitioning
-  sharded = NamedSharding(mesh, P('batch'))  # Partition along batch dimension
   
-  
-  jitted_train_step = jax.jit(
+  if _JITTED_TRAIN_STEP is None:
+    # Set up mesh and sharding
+    mesh = jax.sharding.Mesh(jax.devices(), ('batch'))
+    replicated = NamedSharding(mesh, P())  # No partitioning
+    sharded = NamedSharding(mesh, P('batch'))  # Partition along batch dimension
+    
+    _JITTED_TRAIN_STEP = jax.jit(
       train_step,
       static_argnums=(0, 1),
       donate_argnums=(2, 3, 4),
@@ -216,9 +218,9 @@ def update_params(
         replicated,  # grad_norm
       ),
     )
-    # print(batch)
+
   new_optimizer_state, new_params, new_model_state, loss, grad_norm = (
-      jitted_train_step(
+      _JITTED_TRAIN_STEP(
         workload,
         opt_update_fn,
         model_state,
@@ -244,7 +246,7 @@ def update_params(
   new_is_holding_x = jnp.array(0, dtype=jnp.int32)
   new_optimizer_state = ((new_optimizer_state, new_is_holding_x), opt_update_fn)
 
-  return (new_optimizer_state, opt_update_fn), new_params, new_model_state
+  return new_optimizer_state, new_params, new_model_state
 
 
 def get_batch_size(workload_name):
