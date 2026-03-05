@@ -414,7 +414,7 @@ def init_optimizer_state(
     T = workload.step_hint
     f_b3 = beta3_scheduler(b3, beta_start=b1, warmup=T)
     f_a = alpha_scheduler(alpha, alpha_start=0, warmup=T)
-    f_lr = learning_rate_scheduler(lr, warmup, T)
+    f_lr = lr_scheduler(lr, warmup, T)
     weight_decay = HPARAMS['weight_decay']
     opt_init_fn, opt_update_fn = ademamix(lr=f_lr,
                                           b1=b1,
