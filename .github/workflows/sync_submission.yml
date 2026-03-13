@@ -1,0 +1,94 @@
+name: Sync Submission on Merge
+
+on:
+  pull_request_target:
+    types: [closed]
+
+jobs:
+  sync_on_merge:
+    # 1. Only run if merged AND title contains [submission]
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.title, '[submission]')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    
+    steps:
+      - name: Checkout Base Branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install js-yaml
+
+      - name: Extract and Generate File
+        id: generator
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs').promises;
+            const yaml = require('js-yaml');
+            const prBody = context.payload.pull_request.body || '';
+            
+            // Extraction Logic
+            const normalizedBody = prBody.replace(/\r\n/g, '\n');
+            const startMarker = '```yaml\n';
+            const endMarker = '\n```';
+            
+            const startIndex = normalizedBody.indexOf(startMarker);
+            const contentStart = startIndex + startMarker.length;
+            const endIndex = normalizedBody.indexOf(endMarker, contentStart);
+            
+            if (startIndex === -1 || endIndex === -1) {
+              console.log('No YAML block found. Skipping.');
+              return;
+            }
+            
+            const yamlContent = normalizedBody.slice(contentStart, endIndex);
+            let data;
+            
+            try {
+              const cleanYaml = yamlContent.split('\n').map(l => l.split('#')[0].trim()).join('\n');
+              data = yaml.load(cleanYaml);
+            } catch (error) {
+              core.setFailed(`YAML parse error: ${error.message}`);
+              return;
+            }
+
+            // Path Logic for submissions_algorithms
+            const cleanFolder = data.submission_folder.replace(/^\/+|\/+$/g, '').replace(/^(external_tuning|self_tuning)\//, '');
+            const subDir = data.ruleset === 'external' ? 'external_tuning' : 'self_tuning';
+            const finalPath = `submissions/${subDir}/${cleanFolder}`;
+            
+            core.setOutput('path', finalPath);
+            core.setOutput('yaml_string', yaml.dump(data));
+            core.setOutput('should_commit', 'true');
+
+      - name: Commit and Push
+        if: steps.generator.outputs.should_commit == 'true'
+        run: |
+          mkdir -p "${{ steps.generator.outputs.path }}"
+          
+          # Write the validated YAML to the repository
+          cat <<EOF > "${{ steps.generator.outputs.path }}/submission_info.yml"
+          ${{ steps.generator.outputs.yaml_string }}
+          EOF
+          
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add submissions/
+          
+          if ! git diff --staged --quiet; then
+            git commit -m "Final submission sync for PR #${{ github.event.pull_request.number }}"
+            # Pushes directly to your main/base branch
+            git push origin HEAD:${{ github.event.pull_request.base.ref }}
+          else
+            echo "No changes detected."
+          fi
