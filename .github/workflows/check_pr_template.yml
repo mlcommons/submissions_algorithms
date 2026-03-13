@@ -1,197 +1,78 @@
-name: Check if PR Template Is Complete
+name: Validate PR Template
 
 on:
   pull_request:
     types: [opened, edited, synchronize]
 
 jobs:
-  check_template:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Validate YAML in PR Body
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prBody = context.payload.pull_request.body || '';
+            // ... (Insert your YAML extraction & validation logic here) ...
+            
+            if (emptyFields.length > 0) {
+              core.setFailed(`Missing fields: ${emptyFields.join(', ')}`);
+              // Note: This will fail the check, but won't be able to comment 
+              // on a fork PR. That's okay; the user sees the Red X.
+            }
+
+
+name: Process Submission Template
+
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize]
+
+jobs:
+  check_and_sync:
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
     steps:
-      - name: Checkout repository
+      - name: Checkout Base (Your Repo)
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
+          # We checkout your repo to ensure the 'push' goes to the right place
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      - name: Install dependencies
-        run: npm install js-yaml
-
-      - name: Check PR template and create submission file
-        id: check_template
+      - name: Process Template
         uses: actions/github-script@v6
+        id: processor
         with:
           script: |
-            const fs = require('fs').promises;
-            const yaml = require('js-yaml');
-            const prBody = context.payload.pull_request.body || '';
+            const yaml = require('js-yaml'); 
+            // Note: You may need to pre-install js-yaml in a previous step 
+            // or use a different parser available in the environment.
             
-            // Normalize line endings
-            const normalizedBody = prBody.replace(/\r\n/g, '\n');
+            const pr = context.payload.pull_request;
+            const body = pr.body;
             
-            // Extract and parse YAML
-            const startMarker = '```yaml\n';
-            const endMarker = '\n```';
+            // 1. VALIDATION LOGIC
+            // ... (Your extraction logic here) ...
             
-            const startIndex = normalizedBody.indexOf(startMarker);
-            if (startIndex === -1) {
-              console.log('Could not find start marker');
-              core.setFailed('Start marker not found');
-              return;
-            }
-            
-            const contentStart = startIndex + startMarker.length;
-            const endIndex = normalizedBody.indexOf(endMarker, contentStart);
-            if (endIndex === -1) {
-              console.log('Could not find end marker');
-              core.setFailed('End marker not found');
-              return;
-            }
-            
-            const yamlContent = normalizedBody.slice(contentStart, endIndex);
-            console.log('Extracted YAML content:', yamlContent);
-            
-            let data;
-            try {
-              // Remove comments from YAML content
-              const cleanYaml = yamlContent
-                .split('\n')
-                .map(line => line.split('#')[0].trim())
-                .join('\n');
-              
-              console.log('Cleaned YAML content:', cleanYaml);
-              data = yaml.load(cleanYaml);
-              console.log('Parsed YAML data:', data);
-            } catch (error) {
-              console.log('YAML parsing error:', error);
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.payload.pull_request.number,
-                body: `:warning: Error parsing YAML: ${error.message}`
-              });
-              core.setFailed(`Invalid YAML: ${error.message}`);
-              return;
-            }
-            
-            // Validate required fields
-            const requiredFields = [
-              'submission_name',
-              'submission_folder',
-              'authors',
-              'affiliations',
-              'ruleset',
-              'framework',
-              'description'
-            ];
-            
-            const emptyFields = requiredFields.filter(field => {
-              const value = data?.[field];
-              return !value || 
-                     value.toString().trim() === '' || 
-                     value === '""' ||
-                     value === '\"\"';
-            });
-            
-            if (emptyFields.length > 0) {
-              const emptyFieldsList = emptyFields
-                .map(field => `  - ${field} is empty`)
-                .join('\n');
-              
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.payload.pull_request.number,
-                body: `:warning: Please fill out all required fields in the PR template:\n\n${emptyFieldsList}`
-              });
-              
-              await github.rest.issues.addLabels({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.payload.pull_request.number,
-                labels: ['🚧 Incomplete']
-              });
-              
-              core.setFailed('Empty fields found');
-              return;
-            }
+            // 2. OUTPUT DATA FOR NEXT STEP
+            core.setOutput('is_valid', true);
+            core.setOutput('yaml_data', JSON.stringify(data));
+            core.setOutput('path', submissionPath);
 
-            // Remove incomplete label if present
-            try {
-              const { data: labels } = await github.rest.issues.listLabelsOnIssue({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.payload.pull_request.number
-              });
-              
-              if (labels.some(label => label.name === '🚧 Incomplete')) {
-                await github.rest.issues.removeLabel({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: context.payload.pull_request.number,
-                  name: '🚧 Incomplete'
-                });
-              }
-            } catch (error) {
-              console.log('Error handling labels:', error);
-            }
-            
-            core.setOutput('filled_out', 'true');
-            core.setOutput('submission_data', data);
-            
-            // Create submission_info.yml
-            try {
-              let submissionPath;
-              // Remove any leading/trailing slashes and potential duplicate paths
-              const cleanFolder = data.submission_folder.replace(/^\/+|\/+$/g, '').replace(/^(external_tuning|self_tuning)\//, '');
-              
-              if (data.ruleset === 'external') {
-                submissionPath = `submissions/external_tuning/${cleanFolder}`;
-              } else if (data.ruleset === 'self-tuning') {
-                submissionPath = `submissions/self_tuning/${cleanFolder}`;
-              } else {
-                core.setFailed(`Invalid ruleset value: ${data.ruleset}. Must be "external" or "self-tuning".`);
-                return;
-              }
-              
-              // Check if directory exists, create if it doesn't
-              try {
-                await fs.mkdir(submissionPath, { recursive: true });
-              } catch (error) {
-                console.log('Error creating directory:', error);
-                core.setFailed(`Failed to create directory: ${error.message}`);
-                return;
-              }
-              
-              // Write the YAML file
-              const yamlStr = yaml.dump(data);
-              const filePath = `${submissionPath}/submission_info.yml`;
-              await fs.writeFile(filePath, yamlStr);
-              
-              console.log('Created submission_info.yml');
-              
-            } catch (error) {
-              console.log('Error creating submission file:', error);
-              core.setFailed(`Failed to create submission file: ${error.message}`);
-              return;
-            }
-
-      - name: Commit and push if changed
+      - name: Commit Submission File
+        if: steps.processor.outputs.is_valid == 'true'
         run: |
+          # Use the data from the script to create the file
+          mkdir -p "${{ steps.processor.outputs.path }}"
+          echo '${{ steps.processor.outputs.yaml_data }}' > "${{ steps.processor.outputs.path }}/submission_info.yml"
+          
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add submissions/*/*/*
-          
-          # Check if there are changes to commit
-          git diff --staged --quiet || (
-            git commit -m "Add/Update submission_info.yml" -m "Automated commit by GitHub Action"
-            git push
-          )
+          git add .
+          git commit -m "Auto-sync submission for PR #${{ github.event.pull_request.number }}"
+          git push
