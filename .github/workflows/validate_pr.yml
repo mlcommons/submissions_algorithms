@@ -1,0 +1,74 @@
+name: Validate PR Template
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  validate:
+    # This ensures the script ONLY runs if "[submission]" is in the title
+    if: contains(github.event.pull_request.title, '[submission]')
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install js-yaml
+
+      - name: Validate YAML
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const yaml = require('js-yaml');
+            const prBody = context.payload.pull_request.body || '';
+            
+            // 1. Extraction
+            const normalizedBody = prBody.replace(/\r\n/g, '\n');
+            const startMarker = '```yaml\n';
+            const endMarker = '\n```';
+            
+            const startIndex = normalizedBody.indexOf(startMarker);
+            const contentStart = startIndex + startMarker.length;
+            const endIndex = normalizedBody.indexOf(endMarker, contentStart);
+            
+            if (startIndex === -1 || endIndex === -1) {
+              core.setFailed('No YAML block found. Please use the [submission] template.');
+              return;
+            }
+            
+            // 2. Parsing & Field Check
+            let data;
+            try {
+              const yamlContent = normalizedBody.slice(contentStart, endIndex);
+              const cleanYaml = yamlContent.split('\n').map(l => l.split('#')[0].trim()).join('\n');
+              data = yaml.load(cleanYaml);
+            } catch (e) {
+              core.setFailed(`YAML Syntax Error: ${e.message}`);
+              return;
+            }
+            
+            const requiredFields = ['submission_name', 'submission_folder', 'authors', 'ruleset'];
+            const emptyFields = requiredFields.filter(f => !data?.[f] || data[f].toString().trim() === '');
+            
+            if (emptyFields.length > 0) {
+              const errorMsg = `⚠️ Missing required fields: ${emptyFields.join(', ')}`;
+              
+              // Post a comment so the user knows exactly what to fix
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: errorMsg
+              });
+              
+              core.setFailed(errorMsg);
+            }
