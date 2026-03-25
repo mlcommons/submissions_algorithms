@@ -251,6 +251,8 @@ def get_batch_size(workload_name):
     return 512
   elif workload_name == 'imagenet_resnet_silu':
     return 512
+  elif workload_name == 'finewebedu_lm':
+    return 64
   else:
     raise ValueError(f'Unsupported workload name: {workload_name}.')
 
