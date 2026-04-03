@@ -1,0 +1,776 @@
+torchrun --redirects 1:0,2:0,3:0 --standalone --nnodes=1 --nproc_per_node=4 submission_runner.py --framework=pytorch --workload=librispeech_conformer --submission_path=submissions_algorithms/submissions/self_tuning/muon_torch/submission.py --data_dir=/data/librispeech --experiment_dir=/experiment_runs --experiment_name=submissions_a100/muon_torch/study_2 --overwrite=True --save_checkpoints=False --rng_seed=-1817561950 --librispeech_tokenizer_vocab_path=/data/librispeech/spm_model.vocab --torch_compile=true --tuning_ruleset=self 2>&1 | tee -a /logs/librispeech_conformer_pytorch_05-20-2026-18-49-24.log
+W0520 18:49:26.258000 9 site-packages/torch/distributed/run.py:803] 
+W0520 18:49:26.258000 9 site-packages/torch/distributed/run.py:803] *****************************************
+W0520 18:49:26.258000 9 site-packages/torch/distributed/run.py:803] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0520 18:49:26.258000 9 site-packages/torch/distributed/run.py:803] *****************************************
+2026-05-20 18:49:27.640097: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-05-20 18:49:27.640096: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-05-20 18:49:27.640098: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-05-20 18:49:27.640099: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1779302967.660993      41 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1779302967.660993      38 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1779302967.660993      39 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1779302967.661000      40 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1779302967.667803      40 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1779302967.667807      39 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1779302967.667806      38 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1779302967.667810      41 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1779302967.685307      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685310      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685312      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685315      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685331      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685332      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685333      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685334      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685334      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685335      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685336      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685336      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685337      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685338      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685339      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302967.685340      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779302973.162129      41 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1779302973.253861      38 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1779302973.345244      40 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+W0000 00:00:1779302973.668843      39 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+I0520 18:49:35.447596 140413445747904 logger_utils.py:59] Removing existing experiment directory /experiment_runs/submissions_a100/muon_torch/study_2/librispeech_conformer_pytorch because --overwrite was set.
+I0520 18:49:35.447600 140374959355072 logger_utils.py:59] Removing existing experiment directory /experiment_runs/submissions_a100/muon_torch/study_2/librispeech_conformer_pytorch because --overwrite was set.
+I0520 18:49:35.447592 140716886439104 logger_utils.py:59] Removing existing experiment directory /experiment_runs/submissions_a100/muon_torch/study_2/librispeech_conformer_pytorch because --overwrite was set.
+I0520 18:49:35.453100 139730756957376 logger_utils.py:59] Removing existing experiment directory /experiment_runs/submissions_a100/muon_torch/study_2/librispeech_conformer_pytorch because --overwrite was set.
+/usr/local/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4876: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  warnings.warn(  # warn only once
+[rank0]:[W520 18:49:35.233169259 ProcessGroupNCCL.cpp:5068] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+I0520 18:49:36.162966 140413445747904 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch/study_2/librispeech_conformer_pytorch.
+I0520 18:49:36.162967 140374959355072 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch/study_2/librispeech_conformer_pytorch.
+I0520 18:49:36.162969 139730756957376 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch/study_2/librispeech_conformer_pytorch.
+I0520 18:49:36.163007 140716886439104 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch/study_2/librispeech_conformer_pytorch.
+I0520 18:49:38.692538 139730756957376 submission_runner.py:741] Creating directory at /experiment_runs/submissions_a100/muon_torch/study_2/librispeech_conformer_pytorch/trial_1.
+I0520 18:49:39.024938 139730756957376 submission_runner.py:242] Initializing dataset.
+I0520 18:49:39.025131 139730756957376 input_pipeline.py:19] Loading split = train-clean-100
+I0520 18:49:39.123349 139730756957376 input_pipeline.py:19] Loading split = train-clean-360
+I0520 18:49:39.332836 139730756957376 input_pipeline.py:19] Loading split = train-other-500
+I0520 18:49:39.925784 139730756957376 submission_runner.py:251] Initializing model.
+W0520 18:49:40.387135 139730756957376 submission_runner.py:273] These workloads cannot be fully compiled under current PyTorch version. Proceeding without `torch.compile`.
+I0520 18:49:40.387309 139730756957376 submission_runner.py:294] Initializing optimizer.
+I0520 18:49:40.387766 139730756957376 muon.py:324] Muon params:
+	module.subsample.conv1.kernel (ndim=4)
+	module.subsample.conv2.kernel (ndim=4)
+	module.subsample.linear.weight (ndim=2)
+	module.conformers.0.ff1.linear1.weight (ndim=2)
+	module.conformers.0.ff1.linear2.weight (ndim=2)
+	module.conformers.0.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.0.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.0.conv.lin1.weight (ndim=2)
+	module.conformers.0.conv.lin2.weight (ndim=2)
+	module.conformers.0.conv.conv1.weight (ndim=3)
+	module.conformers.0.conv.lin3.weight (ndim=2)
+	module.conformers.0.ff2.linear1.weight (ndim=2)
+	module.conformers.0.ff2.linear2.weight (ndim=2)
+	module.conformers.1.ff1.linear1.weight (ndim=2)
+	module.conformers.1.ff1.linear2.weight (ndim=2)
+	module.conformers.1.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.1.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.1.conv.lin1.weight (ndim=2)
+	module.conformers.1.conv.lin2.weight (ndim=2)
+	module.conformers.1.conv.conv1.weight (ndim=3)
+	module.conformers.1.conv.lin3.weight (ndim=2)
+	module.conformers.1.ff2.linear1.weight (ndim=2)
+	module.conformers.1.ff2.linear2.weight (ndim=2)
+	module.conformers.2.ff1.linear1.weight (ndim=2)
+	module.conformers.2.ff1.linear2.weight (ndim=2)
+	module.conformers.2.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.2.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.2.conv.lin1.weight (ndim=2)
+	module.conformers.2.conv.lin2.weight (ndim=2)
+	module.conformers.2.conv.conv1.weight (ndim=3)
+	module.conformers.2.conv.lin3.weight (ndim=2)
+	module.conformers.2.ff2.linear1.weight (ndim=2)
+	module.conformers.2.ff2.linear2.weight (ndim=2)
+	module.conformers.3.ff1.linear1.weight (ndim=2)
+	module.conformers.3.ff1.linear2.weight (ndim=2)
+	module.conformers.3.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.3.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.3.conv.lin1.weight (ndim=2)
+	module.conformers.3.conv.lin2.weight (ndim=2)
+	module.conformers.3.conv.conv1.weight (ndim=3)
+	module.conformers.3.conv.lin3.weight (ndim=2)
+	module.conformers.3.ff2.linear1.weight (ndim=2)
+	module.conformers.3.ff2.linear2.weight (ndim=2)
+	module.lin.weight (ndim=2)
+I0520 18:49:40.387827 139730756957376 muon.py:325] Adam params:
+	module.subsample.conv1.bias (ndim=1)
+	module.subsample.conv2.bias (ndim=1)
+	module.subsample.linear.bias (ndim=1)
+	module.conformers.0.ff1.ln.scale (ndim=1)
+	module.conformers.0.ff1.ln.bias (ndim=1)
+	module.conformers.0.ff1.linear1.bias (ndim=1)
+	module.conformers.0.ff1.linear2.bias (ndim=1)
+	module.conformers.0.mhsa.ln.scale (ndim=1)
+	module.conformers.0.mhsa.ln.bias (ndim=1)
+	module.conformers.0.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.0.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.0.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.0.conv.ln.scale (ndim=1)
+	module.conformers.0.conv.ln.bias (ndim=1)
+	module.conformers.0.conv.lin1.bias (ndim=1)
+	module.conformers.0.conv.lin2.bias (ndim=1)
+	module.conformers.0.conv.bn.scale (ndim=1)
+	module.conformers.0.conv.bn.bias (ndim=1)
+	module.conformers.0.conv.lin3.bias (ndim=1)
+	module.conformers.0.ff2.ln.scale (ndim=1)
+	module.conformers.0.ff2.ln.bias (ndim=1)
+	module.conformers.0.ff2.linear1.bias (ndim=1)
+	module.conformers.0.ff2.linear2.bias (ndim=1)
+	module.conformers.0.ln.scale (ndim=1)
+	module.conformers.0.ln.bias (ndim=1)
+	module.conformers.1.ff1.ln.scale (ndim=1)
+	module.conformers.1.ff1.ln.bias (ndim=1)
+	module.conformers.1.ff1.linear1.bias (ndim=1)
+	module.conformers.1.ff1.linear2.bias (ndim=1)
+	module.conformers.1.mhsa.ln.scale (ndim=1)
+	module.conformers.1.mhsa.ln.bias (ndim=1)
+	module.conformers.1.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.1.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.1.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.1.conv.ln.scale (ndim=1)
+	module.conformers.1.conv.ln.bias (ndim=1)
+	module.conformers.1.conv.lin1.bias (ndim=1)
+	module.conformers.1.conv.lin2.bias (ndim=1)
+	module.conformers.1.conv.bn.scale (ndim=1)
+	module.conformers.1.conv.bn.bias (ndim=1)
+	module.conformers.1.conv.lin3.bias (ndim=1)
+	module.conformers.1.ff2.ln.scale (ndim=1)
+	module.conformers.1.ff2.ln.bias (ndim=1)
+	module.conformers.1.ff2.linear1.bias (ndim=1)
+	module.conformers.1.ff2.linear2.bias (ndim=1)
+	module.conformers.1.ln.scale (ndim=1)
+	module.conformers.1.ln.bias (ndim=1)
+	module.conformers.2.ff1.ln.scale (ndim=1)
+	module.conformers.2.ff1.ln.bias (ndim=1)
+	module.conformers.2.ff1.linear1.bias (ndim=1)
+	module.conformers.2.ff1.linear2.bias (ndim=1)
+	module.conformers.2.mhsa.ln.scale (ndim=1)
+	module.conformers.2.mhsa.ln.bias (ndim=1)
+	module.conformers.2.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.2.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.2.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.2.conv.ln.scale (ndim=1)
+	module.conformers.2.conv.ln.bias (ndim=1)
+	module.conformers.2.conv.lin1.bias (ndim=1)
+	module.conformers.2.conv.lin2.bias (ndim=1)
+	module.conformers.2.conv.bn.scale (ndim=1)
+	module.conformers.2.conv.bn.bias (ndim=1)
+	module.conformers.2.conv.lin3.bias (ndim=1)
+	module.conformers.2.ff2.ln.scale (ndim=1)
+	module.conformers.2.ff2.ln.bias (ndim=1)
+	module.conformers.2.ff2.linear1.bias (ndim=1)
+	module.conformers.2.ff2.linear2.bias (ndim=1)
+	module.conformers.2.ln.scale (ndim=1)
+	module.conformers.2.ln.bias (ndim=1)
+	module.conformers.3.ff1.ln.scale (ndim=1)
+	module.conformers.3.ff1.ln.bias (ndim=1)
+	module.conformers.3.ff1.linear1.bias (ndim=1)
+	module.conformers.3.ff1.linear2.bias (ndim=1)
+	module.conformers.3.mhsa.ln.scale (ndim=1)
+	module.conformers.3.mhsa.ln.bias (ndim=1)
+	module.conformers.3.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.3.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.3.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.3.conv.ln.scale (ndim=1)
+	module.conformers.3.conv.ln.bias (ndim=1)
+	module.conformers.3.conv.lin1.bias (ndim=1)
+	module.conformers.3.conv.lin2.bias (ndim=1)
+	module.conformers.3.conv.bn.scale (ndim=1)
+	module.conformers.3.conv.bn.bias (ndim=1)
+	module.conformers.3.conv.lin3.bias (ndim=1)
+	module.conformers.3.ff2.ln.scale (ndim=1)
+	module.conformers.3.ff2.ln.bias (ndim=1)
+	module.conformers.3.ff2.linear1.bias (ndim=1)
+	module.conformers.3.ff2.linear2.bias (ndim=1)
+	module.conformers.3.ln.scale (ndim=1)
+	module.conformers.3.ln.bias (ndim=1)
+	module.ln.scale (ndim=1)
+	module.ln.bias (ndim=1)
+	module.lin.bias (ndim=1)
+W0520 18:49:40.388740 140413445747904 submission_runner.py:273] These workloads cannot be fully compiled under current PyTorch version. Proceeding without `torch.compile`.
+W0520 18:49:40.388875 140374959355072 submission_runner.py:273] These workloads cannot be fully compiled under current PyTorch version. Proceeding without `torch.compile`.
+W0520 18:49:40.389012 140716886439104 submission_runner.py:273] These workloads cannot be fully compiled under current PyTorch version. Proceeding without `torch.compile`.
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/algorithmic-efficiency/submission_runner.py", line 873, in <module>
+[rank0]:     app.run(main)
+[rank0]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 308, in run
+[rank0]:     _run_main(main, args)
+[rank0]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 254, in _run_main
+[rank0]:     sys.exit(main(argv))
+[rank0]:              ^^^^^^^^^^
+[rank0]:   File "/algorithmic-efficiency/submission_runner.py", line 838, in main
+[rank0]:     score = score_submission_on_workload(
+[rank0]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/algorithmic-efficiency/submission_runner.py", line 747, in score_submission_on_workload
+[rank0]:     score, _ = train_once(
+[rank0]:                ^^^^^^^^^^^
+[rank0]:   File "/algorithmic-efficiency/submission_runner.py", line 296, in train_once
+[rank0]:     optimizer_state = init_optimizer_state(
+[rank0]:                       ^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/algorithmic-efficiency/submissions_algorithms/submissions/self_tuning/muon_torch/submission.py", line 73, in init_optimizer_state
+[rank0]:     lr=hyperparameters.learning_rate,  # shared
+[rank0]:        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]: AttributeError: 'NoneType' object has no attribute 'learning_rate'
+I0520 18:49:40.389325 140413445747904 muon.py:324] Muon params:
+	module.subsample.conv1.kernel (ndim=4)
+	module.subsample.conv2.kernel (ndim=4)
+	module.subsample.linear.weight (ndim=2)
+	module.conformers.0.ff1.linear1.weight (ndim=2)
+	module.conformers.0.ff1.linear2.weight (ndim=2)
+	module.conformers.0.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.0.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.0.conv.lin1.weight (ndim=2)
+	module.conformers.0.conv.lin2.weight (ndim=2)
+	module.conformers.0.conv.conv1.weight (ndim=3)
+	module.conformers.0.conv.lin3.weight (ndim=2)
+	module.conformers.0.ff2.linear1.weight (ndim=2)
+	module.conformers.0.ff2.linear2.weight (ndim=2)
+	module.conformers.1.ff1.linear1.weight (ndim=2)
+	module.conformers.1.ff1.linear2.weight (ndim=2)
+	module.conformers.1.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.1.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.1.conv.lin1.weight (ndim=2)
+	module.conformers.1.conv.lin2.weight (ndim=2)
+	module.conformers.1.conv.conv1.weight (ndim=3)
+	module.conformers.1.conv.lin3.weight (ndim=2)
+	module.conformers.1.ff2.linear1.weight (ndim=2)
+	module.conformers.1.ff2.linear2.weight (ndim=2)
+	module.conformers.2.ff1.linear1.weight (ndim=2)
+	module.conformers.2.ff1.linear2.weight (ndim=2)
+	module.conformers.2.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.2.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.2.conv.lin1.weight (ndim=2)
+	module.conformers.2.conv.lin2.weight (ndim=2)
+	module.conformers.2.conv.conv1.weight (ndim=3)
+	module.conformers.2.conv.lin3.weight (ndim=2)
+	module.conformers.2.ff2.linear1.weight (ndim=2)
+	module.conformers.2.ff2.linear2.weight (ndim=2)
+	module.conformers.3.ff1.linear1.weight (ndim=2)
+	module.conformers.3.ff1.linear2.weight (ndim=2)
+	module.conformers.3.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.3.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.3.conv.lin1.weight (ndim=2)
+	module.conformers.3.conv.lin2.weight (ndim=2)
+	module.conformers.3.conv.conv1.weight (ndim=3)
+	module.conformers.3.conv.lin3.weight (ndim=2)
+	module.conformers.3.ff2.linear1.weight (ndim=2)
+	module.conformers.3.ff2.linear2.weight (ndim=2)
+	module.lin.weight (ndim=2)
+I0520 18:49:40.389422 140413445747904 muon.py:325] Adam params:
+	module.subsample.conv1.bias (ndim=1)
+	module.subsample.conv2.bias (ndim=1)
+	module.subsample.linear.bias (ndim=1)
+	module.conformers.0.ff1.ln.scale (ndim=1)
+	module.conformers.0.ff1.ln.bias (ndim=1)
+	module.conformers.0.ff1.linear1.bias (ndim=1)
+	module.conformers.0.ff1.linear2.bias (ndim=1)
+	module.conformers.0.mhsa.ln.scale (ndim=1)
+	module.conformers.0.mhsa.ln.bias (ndim=1)
+	module.conformers.0.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.0.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.0.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.0.conv.ln.scale (ndim=1)
+	module.conformers.0.conv.ln.bias (ndim=1)
+	module.conformers.0.conv.lin1.bias (ndim=1)
+	module.conformers.0.conv.lin2.bias (ndim=1)
+	module.conformers.0.conv.bn.scale (ndim=1)
+	module.conformers.0.conv.bn.bias (ndim=1)
+	module.conformers.0.conv.lin3.bias (ndim=1)
+	module.conformers.0.ff2.ln.scale (ndim=1)
+	module.conformers.0.ff2.ln.bias (ndim=1)
+	module.conformers.0.ff2.linear1.bias (ndim=1)
+	module.conformers.0.ff2.linear2.bias (ndim=1)
+	module.conformers.0.ln.scale (ndim=1)
+	module.conformers.0.ln.bias (ndim=1)
+	module.conformers.1.ff1.ln.scale (ndim=1)
+	module.conformers.1.ff1.ln.bias (ndim=1)
+	module.conformers.1.ff1.linear1.bias (ndim=1)
+	module.conformers.1.ff1.linear2.bias (ndim=1)
+	module.conformers.1.mhsa.ln.scale (ndim=1)
+	module.conformers.1.mhsa.ln.bias (ndim=1)
+	module.conformers.1.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.1.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.1.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.1.conv.ln.scale (ndim=1)
+	module.conformers.1.conv.ln.bias (ndim=1)
+	module.conformers.1.conv.lin1.bias (ndim=1)
+	module.conformers.1.conv.lin2.bias (ndim=1)
+	module.conformers.1.conv.bn.scale (ndim=1)
+	module.conformers.1.conv.bn.bias (ndim=1)
+	module.conformers.1.conv.lin3.bias (ndim=1)
+	module.conformers.1.ff2.ln.scale (ndim=1)
+	module.conformers.1.ff2.ln.bias (ndim=1)
+	module.conformers.1.ff2.linear1.bias (ndim=1)
+	module.conformers.1.ff2.linear2.bias (ndim=1)
+	module.conformers.1.ln.scale (ndim=1)
+	module.conformers.1.ln.bias (ndim=1)
+	module.conformers.2.ff1.ln.scale (ndim=1)
+	module.conformers.2.ff1.ln.bias (ndim=1)
+	module.conformers.2.ff1.linear1.bias (ndim=1)
+	module.conformers.2.ff1.linear2.bias (ndim=1)
+	module.conformers.2.mhsa.ln.scale (ndim=1)
+	module.conformers.2.mhsa.ln.bias (ndim=1)
+	module.conformers.2.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.2.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.2.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.2.conv.ln.scale (ndim=1)
+	module.conformers.2.conv.ln.bias (ndim=1)
+	module.conformers.2.conv.lin1.bias (ndim=1)
+	module.conformers.2.conv.lin2.bias (ndim=1)
+	module.conformers.2.conv.bn.scale (ndim=1)
+	module.conformers.2.conv.bn.bias (ndim=1)
+	module.conformers.2.conv.lin3.bias (ndim=1)
+	module.conformers.2.ff2.ln.scale (ndim=1)
+	module.conformers.2.ff2.ln.bias (ndim=1)
+	module.conformers.2.ff2.linear1.bias (ndim=1)
+	module.conformers.2.ff2.linear2.bias (ndim=1)
+	module.conformers.2.ln.scale (ndim=1)
+	module.conformers.2.ln.bias (ndim=1)
+	module.conformers.3.ff1.ln.scale (ndim=1)
+	module.conformers.3.ff1.ln.bias (ndim=1)
+	module.conformers.3.ff1.linear1.bias (ndim=1)
+	module.conformers.3.ff1.linear2.bias (ndim=1)
+	module.conformers.3.mhsa.ln.scale (ndim=1)
+	module.conformers.3.mhsa.ln.bias (ndim=1)
+	module.conformers.3.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.3.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.3.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.3.conv.ln.scale (ndim=1)
+	module.conformers.3.conv.ln.bias (ndim=1)
+	module.conformers.3.conv.lin1.bias (ndim=1)
+	module.conformers.3.conv.lin2.bias (ndim=1)
+	module.conformers.3.conv.bn.scale (ndim=1)
+	module.conformers.3.conv.bn.bias (ndim=1)
+	module.conformers.3.conv.lin3.bias (ndim=1)
+	module.conformers.3.ff2.ln.scale (ndim=1)
+	module.conformers.3.ff2.ln.bias (ndim=1)
+	module.conformers.3.ff2.linear1.bias (ndim=1)
+	module.conformers.3.ff2.linear2.bias (ndim=1)
+	module.conformers.3.ln.scale (ndim=1)
+	module.conformers.3.ln.bias (ndim=1)
+	module.ln.scale (ndim=1)
+	module.ln.bias (ndim=1)
+	module.lin.bias (ndim=1)
+I0520 18:49:40.389522 140374959355072 muon.py:324] Muon params:
+	module.subsample.conv1.kernel (ndim=4)
+	module.subsample.conv2.kernel (ndim=4)
+	module.subsample.linear.weight (ndim=2)
+	module.conformers.0.ff1.linear1.weight (ndim=2)
+	module.conformers.0.ff1.linear2.weight (ndim=2)
+	module.conformers.0.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.0.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.0.conv.lin1.weight (ndim=2)
+	module.conformers.0.conv.lin2.weight (ndim=2)
+	module.conformers.0.conv.conv1.weight (ndim=3)
+	module.conformers.0.conv.lin3.weight (ndim=2)
+	module.conformers.0.ff2.linear1.weight (ndim=2)
+	module.conformers.0.ff2.linear2.weight (ndim=2)
+	module.conformers.1.ff1.linear1.weight (ndim=2)
+	module.conformers.1.ff1.linear2.weight (ndim=2)
+	module.conformers.1.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.1.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.1.conv.lin1.weight (ndim=2)
+	module.conformers.1.conv.lin2.weight (ndim=2)
+	module.conformers.1.conv.conv1.weight (ndim=3)
+	module.conformers.1.conv.lin3.weight (ndim=2)
+	module.conformers.1.ff2.linear1.weight (ndim=2)
+	module.conformers.1.ff2.linear2.weight (ndim=2)
+	module.conformers.2.ff1.linear1.weight (ndim=2)
+	module.conformers.2.ff1.linear2.weight (ndim=2)
+	module.conformers.2.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.2.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.2.conv.lin1.weight (ndim=2)
+	module.conformers.2.conv.lin2.weight (ndim=2)
+	module.conformers.2.conv.conv1.weight (ndim=3)
+	module.conformers.2.conv.lin3.weight (ndim=2)
+	module.conformers.2.ff2.linear1.weight (ndim=2)
+	module.conformers.2.ff2.linear2.weight (ndim=2)
+	module.conformers.3.ff1.linear1.weight (ndim=2)
+	module.conformers.3.ff1.linear2.weight (ndim=2)
+	module.conformers.3.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.3.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.3.conv.lin1.weight (ndim=2)
+	module.conformers.3.conv.lin2.weight (ndim=2)
+	module.conformers.3.conv.conv1.weight (ndim=3)
+	module.conformers.3.conv.lin3.weight (ndim=2)
+	module.conformers.3.ff2.linear1.weight (ndim=2)
+	module.conformers.3.ff2.linear2.weight (ndim=2)
+	module.lin.weight (ndim=2)
+I0520 18:49:40.389611 140716886439104 muon.py:324] Muon params:
+	module.subsample.conv1.kernel (ndim=4)
+	module.subsample.conv2.kernel (ndim=4)
+	module.subsample.linear.weight (ndim=2)
+	module.conformers.0.ff1.linear1.weight (ndim=2)
+	module.conformers.0.ff1.linear2.weight (ndim=2)
+	module.conformers.0.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.0.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.0.conv.lin1.weight (ndim=2)
+	module.conformers.0.conv.lin2.weight (ndim=2)
+	module.conformers.0.conv.conv1.weight (ndim=3)
+	module.conformers.0.conv.lin3.weight (ndim=2)
+	module.conformers.0.ff2.linear1.weight (ndim=2)
+	module.conformers.0.ff2.linear2.weight (ndim=2)
+	module.conformers.1.ff1.linear1.weight (ndim=2)
+	module.conformers.1.ff1.linear2.weight (ndim=2)
+	module.conformers.1.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.1.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.1.conv.lin1.weight (ndim=2)
+	module.conformers.1.conv.lin2.weight (ndim=2)
+	module.conformers.1.conv.conv1.weight (ndim=3)
+	module.conformers.1.conv.lin3.weight (ndim=2)
+	module.conformers.1.ff2.linear1.weight (ndim=2)
+	module.conformers.1.ff2.linear2.weight (ndim=2)
+	module.conformers.2.ff1.linear1.weight (ndim=2)
+	module.conformers.2.ff1.linear2.weight (ndim=2)
+	module.conformers.2.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.2.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.2.conv.lin1.weight (ndim=2)
+	module.conformers.2.conv.lin2.weight (ndim=2)
+	module.conformers.2.conv.conv1.weight (ndim=3)
+	module.conformers.2.conv.lin3.weight (ndim=2)
+	module.conformers.2.ff2.linear1.weight (ndim=2)
+	module.conformers.2.ff2.linear2.weight (ndim=2)
+	module.conformers.3.ff1.linear1.weight (ndim=2)
+	module.conformers.3.ff1.linear2.weight (ndim=2)
+	module.conformers.3.mhsa.self_attention.in_proj.weight (ndim=2)
+	module.conformers.3.mhsa.self_attention.out_proj.weight (ndim=2)
+	module.conformers.3.conv.lin1.weight (ndim=2)
+	module.conformers.3.conv.lin2.weight (ndim=2)
+	module.conformers.3.conv.conv1.weight (ndim=3)
+	module.conformers.3.conv.lin3.weight (ndim=2)
+	module.conformers.3.ff2.linear1.weight (ndim=2)
+	module.conformers.3.ff2.linear2.weight (ndim=2)
+	module.lin.weight (ndim=2)
+I0520 18:49:40.389629 140374959355072 muon.py:325] Adam params:
+	module.subsample.conv1.bias (ndim=1)
+	module.subsample.conv2.bias (ndim=1)
+	module.subsample.linear.bias (ndim=1)
+	module.conformers.0.ff1.ln.scale (ndim=1)
+	module.conformers.0.ff1.ln.bias (ndim=1)
+	module.conformers.0.ff1.linear1.bias (ndim=1)
+	module.conformers.0.ff1.linear2.bias (ndim=1)
+	module.conformers.0.mhsa.ln.scale (ndim=1)
+	module.conformers.0.mhsa.ln.bias (ndim=1)
+	module.conformers.0.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.0.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.0.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.0.conv.ln.scale (ndim=1)
+	module.conformers.0.conv.ln.bias (ndim=1)
+	module.conformers.0.conv.lin1.bias (ndim=1)
+	module.conformers.0.conv.lin2.bias (ndim=1)
+	module.conformers.0.conv.bn.scale (ndim=1)
+	module.conformers.0.conv.bn.bias (ndim=1)
+	module.conformers.0.conv.lin3.bias (ndim=1)
+	module.conformers.0.ff2.ln.scale (ndim=1)
+	module.conformers.0.ff2.ln.bias (ndim=1)
+	module.conformers.0.ff2.linear1.bias (ndim=1)
+	module.conformers.0.ff2.linear2.bias (ndim=1)
+	module.conformers.0.ln.scale (ndim=1)
+	module.conformers.0.ln.bias (ndim=1)
+	module.conformers.1.ff1.ln.scale (ndim=1)
+	module.conformers.1.ff1.ln.bias (ndim=1)
+	module.conformers.1.ff1.linear1.bias (ndim=1)
+	module.conformers.1.ff1.linear2.bias (ndim=1)
+	module.conformers.1.mhsa.ln.scale (ndim=1)
+	module.conformers.1.mhsa.ln.bias (ndim=1)
+	module.conformers.1.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.1.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.1.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.1.conv.ln.scale (ndim=1)
+	module.conformers.1.conv.ln.bias (ndim=1)
+	module.conformers.1.conv.lin1.bias (ndim=1)
+	module.conformers.1.conv.lin2.bias (ndim=1)
+	module.conformers.1.conv.bn.scale (ndim=1)
+	module.conformers.1.conv.bn.bias (ndim=1)
+	module.conformers.1.conv.lin3.bias (ndim=1)
+	module.conformers.1.ff2.ln.scale (ndim=1)
+	module.conformers.1.ff2.ln.bias (ndim=1)
+	module.conformers.1.ff2.linear1.bias (ndim=1)
+	module.conformers.1.ff2.linear2.bias (ndim=1)
+	module.conformers.1.ln.scale (ndim=1)
+	module.conformers.1.ln.bias (ndim=1)
+	module.conformers.2.ff1.ln.scale (ndim=1)
+	module.conformers.2.ff1.ln.bias (ndim=1)
+	module.conformers.2.ff1.linear1.bias (ndim=1)
+	module.conformers.2.ff1.linear2.bias (ndim=1)
+	module.conformers.2.mhsa.ln.scale (ndim=1)
+	module.conformers.2.mhsa.ln.bias (ndim=1)
+	module.conformers.2.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.2.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.2.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.2.conv.ln.scale (ndim=1)
+	module.conformers.2.conv.ln.bias (ndim=1)
+	module.conformers.2.conv.lin1.bias (ndim=1)
+	module.conformers.2.conv.lin2.bias (ndim=1)
+	module.conformers.2.conv.bn.scale (ndim=1)
+	module.conformers.2.conv.bn.bias (ndim=1)
+	module.conformers.2.conv.lin3.bias (ndim=1)
+	module.conformers.2.ff2.ln.scale (ndim=1)
+	module.conformers.2.ff2.ln.bias (ndim=1)
+	module.conformers.2.ff2.linear1.bias (ndim=1)
+	module.conformers.2.ff2.linear2.bias (ndim=1)
+	module.conformers.2.ln.scale (ndim=1)
+	module.conformers.2.ln.bias (ndim=1)
+	module.conformers.3.ff1.ln.scale (ndim=1)
+	module.conformers.3.ff1.ln.bias (ndim=1)
+	module.conformers.3.ff1.linear1.bias (ndim=1)
+	module.conformers.3.ff1.linear2.bias (ndim=1)
+	module.conformers.3.mhsa.ln.scale (ndim=1)
+	module.conformers.3.mhsa.ln.bias (ndim=1)
+	module.conformers.3.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.3.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.3.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.3.conv.ln.scale (ndim=1)
+	module.conformers.3.conv.ln.bias (ndim=1)
+	module.conformers.3.conv.lin1.bias (ndim=1)
+	module.conformers.3.conv.lin2.bias (ndim=1)
+	module.conformers.3.conv.bn.scale (ndim=1)
+	module.conformers.3.conv.bn.bias (ndim=1)
+	module.conformers.3.conv.lin3.bias (ndim=1)
+	module.conformers.3.ff2.ln.scale (ndim=1)
+	module.conformers.3.ff2.ln.bias (ndim=1)
+	module.conformers.3.ff2.linear1.bias (ndim=1)
+	module.conformers.3.ff2.linear2.bias (ndim=1)
+	module.conformers.3.ln.scale (ndim=1)
+	module.conformers.3.ln.bias (ndim=1)
+	module.ln.scale (ndim=1)
+	module.ln.bias (ndim=1)
+	module.lin.bias (ndim=1)
+I0520 18:49:40.389707 140716886439104 muon.py:325] Adam params:
+	module.subsample.conv1.bias (ndim=1)
+	module.subsample.conv2.bias (ndim=1)
+	module.subsample.linear.bias (ndim=1)
+	module.conformers.0.ff1.ln.scale (ndim=1)
+	module.conformers.0.ff1.ln.bias (ndim=1)
+	module.conformers.0.ff1.linear1.bias (ndim=1)
+	module.conformers.0.ff1.linear2.bias (ndim=1)
+	module.conformers.0.mhsa.ln.scale (ndim=1)
+	module.conformers.0.mhsa.ln.bias (ndim=1)
+	module.conformers.0.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.0.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.0.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.0.conv.ln.scale (ndim=1)
+	module.conformers.0.conv.ln.bias (ndim=1)
+	module.conformers.0.conv.lin1.bias (ndim=1)
+	module.conformers.0.conv.lin2.bias (ndim=1)
+	module.conformers.0.conv.bn.scale (ndim=1)
+	module.conformers.0.conv.bn.bias (ndim=1)
+	module.conformers.0.conv.lin3.bias (ndim=1)
+	module.conformers.0.ff2.ln.scale (ndim=1)
+	module.conformers.0.ff2.ln.bias (ndim=1)
+	module.conformers.0.ff2.linear1.bias (ndim=1)
+	module.conformers.0.ff2.linear2.bias (ndim=1)
+	module.conformers.0.ln.scale (ndim=1)
+	module.conformers.0.ln.bias (ndim=1)
+	module.conformers.1.ff1.ln.scale (ndim=1)
+	module.conformers.1.ff1.ln.bias (ndim=1)
+	module.conformers.1.ff1.linear1.bias (ndim=1)
+	module.conformers.1.ff1.linear2.bias (ndim=1)
+	module.conformers.1.mhsa.ln.scale (ndim=1)
+	module.conformers.1.mhsa.ln.bias (ndim=1)
+	module.conformers.1.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.1.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.1.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.1.conv.ln.scale (ndim=1)
+	module.conformers.1.conv.ln.bias (ndim=1)
+	module.conformers.1.conv.lin1.bias (ndim=1)
+	module.conformers.1.conv.lin2.bias (ndim=1)
+	module.conformers.1.conv.bn.scale (ndim=1)
+	module.conformers.1.conv.bn.bias (ndim=1)
+	module.conformers.1.conv.lin3.bias (ndim=1)
+	module.conformers.1.ff2.ln.scale (ndim=1)
+	module.conformers.1.ff2.ln.bias (ndim=1)
+	module.conformers.1.ff2.linear1.bias (ndim=1)
+	module.conformers.1.ff2.linear2.bias (ndim=1)
+	module.conformers.1.ln.scale (ndim=1)
+	module.conformers.1.ln.bias (ndim=1)
+	module.conformers.2.ff1.ln.scale (ndim=1)
+	module.conformers.2.ff1.ln.bias (ndim=1)
+	module.conformers.2.ff1.linear1.bias (ndim=1)
+	module.conformers.2.ff1.linear2.bias (ndim=1)
+	module.conformers.2.mhsa.ln.scale (ndim=1)
+	module.conformers.2.mhsa.ln.bias (ndim=1)
+	module.conformers.2.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.2.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.2.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.2.conv.ln.scale (ndim=1)
+	module.conformers.2.conv.ln.bias (ndim=1)
+	module.conformers.2.conv.lin1.bias (ndim=1)
+	module.conformers.2.conv.lin2.bias (ndim=1)
+	module.conformers.2.conv.bn.scale (ndim=1)
+	module.conformers.2.conv.bn.bias (ndim=1)
+	module.conformers.2.conv.lin3.bias (ndim=1)
+	module.conformers.2.ff2.ln.scale (ndim=1)
+	module.conformers.2.ff2.ln.bias (ndim=1)
+	module.conformers.2.ff2.linear1.bias (ndim=1)
+	module.conformers.2.ff2.linear2.bias (ndim=1)
+	module.conformers.2.ln.scale (ndim=1)
+	module.conformers.2.ln.bias (ndim=1)
+	module.conformers.3.ff1.ln.scale (ndim=1)
+	module.conformers.3.ff1.ln.bias (ndim=1)
+	module.conformers.3.ff1.linear1.bias (ndim=1)
+	module.conformers.3.ff1.linear2.bias (ndim=1)
+	module.conformers.3.mhsa.ln.scale (ndim=1)
+	module.conformers.3.mhsa.ln.bias (ndim=1)
+	module.conformers.3.mhsa.self_attention.in_proj.bias (ndim=1)
+	module.conformers.3.mhsa.self_attention.out_proj.bias (ndim=1)
+	module.conformers.3.mhsa.self_attention.qs.scale (ndim=1)
+	module.conformers.3.conv.ln.scale (ndim=1)
+	module.conformers.3.conv.ln.bias (ndim=1)
+	module.conformers.3.conv.lin1.bias (ndim=1)
+	module.conformers.3.conv.lin2.bias (ndim=1)
+	module.conformers.3.conv.bn.scale (ndim=1)
+	module.conformers.3.conv.bn.bias (ndim=1)
+	module.conformers.3.conv.lin3.bias (ndim=1)
+	module.conformers.3.ff2.ln.scale (ndim=1)
+	module.conformers.3.ff2.ln.bias (ndim=1)
+	module.conformers.3.ff2.linear1.bias (ndim=1)
+	module.conformers.3.ff2.linear2.bias (ndim=1)
+	module.conformers.3.ln.scale (ndim=1)
+	module.conformers.3.ln.bias (ndim=1)
+	module.ln.scale (ndim=1)
+	module.ln.bias (ndim=1)
+	module.lin.bias (ndim=1)
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/algorithmic-efficiency/submission_runner.py", line 873, in <module>
+[rank3]:     app.run(main)
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 308, in run
+[rank3]:     _run_main(main, args)
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 254, in _run_main
+[rank3]:     sys.exit(main(argv))
+[rank3]:              ^^^^^^^^^^
+[rank3]:   File "/algorithmic-efficiency/submission_runner.py", line 838, in main
+[rank3]:     score = score_submission_on_workload(
+[rank3]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/algorithmic-efficiency/submission_runner.py", line 747, in score_submission_on_workload
+[rank3]:     score, _ = train_once(
+[rank3]:                ^^^^^^^^^^^
+[rank3]:   File "/algorithmic-efficiency/submission_runner.py", line 296, in train_once
+[rank3]:     optimizer_state = init_optimizer_state(
+[rank3]:                       ^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/algorithmic-efficiency/submissions_algorithms/submissions/self_tuning/muon_torch/submission.py", line 73, in init_optimizer_state
+[rank3]:     lr=hyperparameters.learning_rate,  # shared
+[rank3]:        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]: AttributeError: 'NoneType' object has no attribute 'learning_rate'
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/algorithmic-efficiency/submission_runner.py", line 873, in <module>
+[rank1]:     app.run(main)
+[rank1]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 308, in run
+[rank1]:     _run_main(main, args)
+[rank1]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 254, in _run_main
+[rank1]:     sys.exit(main(argv))
+[rank1]:              ^^^^^^^^^^
+[rank1]:   File "/algorithmic-efficiency/submission_runner.py", line 838, in main
+[rank1]:     score = score_submission_on_workload(
+[rank1]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/algorithmic-efficiency/submission_runner.py", line 747, in score_submission_on_workload
+[rank1]:     score, _ = train_once(
+[rank1]:                ^^^^^^^^^^^
+[rank1]:   File "/algorithmic-efficiency/submission_runner.py", line 296, in train_once
+[rank1]:     optimizer_state = init_optimizer_state(
+[rank1]:                       ^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/algorithmic-efficiency/submissions_algorithms/submissions/self_tuning/muon_torch/submission.py", line 73, in init_optimizer_state
+[rank1]:     lr=hyperparameters.learning_rate,  # shared
+[rank1]:        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]: AttributeError: 'NoneType' object has no attribute 'learning_rate'
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/algorithmic-efficiency/submission_runner.py", line 873, in <module>
+[rank2]:     app.run(main)
+[rank2]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 308, in run
+[rank2]:     _run_main(main, args)
+[rank2]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 254, in _run_main
+[rank2]:     sys.exit(main(argv))
+[rank2]:              ^^^^^^^^^^
+[rank2]:   File "/algorithmic-efficiency/submission_runner.py", line 838, in main
+[rank2]:     score = score_submission_on_workload(
+[rank2]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/algorithmic-efficiency/submission_runner.py", line 747, in score_submission_on_workload
+[rank2]:     score, _ = train_once(
+[rank2]:                ^^^^^^^^^^^
+[rank2]:   File "/algorithmic-efficiency/submission_runner.py", line 296, in train_once
+[rank2]:     optimizer_state = init_optimizer_state(
+[rank2]:                       ^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/algorithmic-efficiency/submissions_algorithms/submissions/self_tuning/muon_torch/submission.py", line 73, in init_optimizer_state
+[rank2]:     lr=hyperparameters.learning_rate,  # shared
+[rank2]:        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]: AttributeError: 'NoneType' object has no attribute 'learning_rate'
+[rank0]:[W520 18:49:41.022001893 ProcessGroupNCCL.cpp:1524] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+[rank3]:[W520 18:49:42.353758777 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+[rank0]:[W520 18:49:42.353801435 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+[rank1]:[W520 18:49:42.357593841 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+[rank2]:[W520 18:49:42.447203892 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+W0520 18:49:43.019000 9 site-packages/torch/distributed/elastic/multiprocessing/api.py:908] Sending process 38 closing signal SIGTERM
+W0520 18:49:43.019000 9 site-packages/torch/distributed/elastic/multiprocessing/api.py:908] Sending process 39 closing signal SIGTERM
+W0520 18:49:43.019000 9 site-packages/torch/distributed/elastic/multiprocessing/api.py:908] Sending process 40 closing signal SIGTERM
+E0520 18:49:43.115000 9 site-packages/torch/distributed/elastic/multiprocessing/api.py:882] failed (exitcode: 1) local_rank: 3 (pid: 41) of binary: /usr/local/bin/python3.11
+Traceback (most recent call last):
+  File "/usr/local/bin/torchrun", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/run.py", line 936, in main
+    run(args)
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/run.py", line 927, in run
+    elastic_launch(
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 156, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 293, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+submission_runner.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-05-20_18:49:43
+  host      : c89822eafaa5
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 41)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
