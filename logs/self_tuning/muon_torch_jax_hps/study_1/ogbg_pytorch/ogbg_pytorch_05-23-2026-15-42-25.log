@@ -1,0 +1,524 @@
+torchrun --redirects 1:0,2:0,3:0 --standalone --nnodes=1 --nproc_per_node=4 submission_runner.py --framework=pytorch --workload=ogbg --submission_path=submissions_algorithms/submissions/self_tuning/muon_torch_jax_hps/submission.py --data_dir=/data/ogbg --experiment_dir=/experiment_runs --experiment_name=submissions_a100/muon_torch_jax_hps/study_1 --overwrite=True --save_checkpoints=False --rng_seed=-1902523499 --torch_compile=true --tuning_ruleset=self 2>&1 | tee -a /logs/ogbg_pytorch_05-23-2026-15-42-25.log
+W0523 15:42:27.212000 9 site-packages/torch/distributed/run.py:803] 
+W0523 15:42:27.212000 9 site-packages/torch/distributed/run.py:803] *****************************************
+W0523 15:42:27.212000 9 site-packages/torch/distributed/run.py:803] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0523 15:42:27.212000 9 site-packages/torch/distributed/run.py:803] *****************************************
+2026-05-23 15:42:28.828321: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-05-23 15:42:28.828321: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-05-23 15:42:28.828321: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-05-23 15:42:28.828321: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1779550948.852437      40 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1779550948.852439      39 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1779550948.852439      41 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1779550948.852439      38 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1779550948.860187      40 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1779550948.860188      41 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1779550948.860188      39 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1779550948.860189      38 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1779550948.885023      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885023      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885023      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885023      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885051      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885051      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885052      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885054      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885054      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885055      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885056      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885057      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885057      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885057      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885059      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550948.885062      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779550954.634815      40 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1779550954.713807      41 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1779550954.805586      38 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1779550955.108684      39 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4876: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  warnings.warn(  # warn only once
+[rank0]:[W523 15:42:36.308356656 ProcessGroupNCCL.cpp:5068] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+I0523 15:42:37.687983 140169957000384 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps/study_1/ogbg_pytorch.
+I0523 15:42:37.687986 140715185050816 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps/study_1/ogbg_pytorch.
+I0523 15:42:37.687985 139673142232256 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps/study_1/ogbg_pytorch.
+I0523 15:42:37.688015 140716696716480 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps/study_1/ogbg_pytorch.
+I0523 15:42:40.378009 140169957000384 submission_runner.py:741] Creating directory at /experiment_runs/submissions_a100/muon_torch_jax_hps/study_1/ogbg_pytorch/trial_1.
+I0523 15:42:40.760300 140169957000384 submission_runner.py:242] Initializing dataset.
+I0523 15:42:40.760480 140169957000384 submission_runner.py:251] Initializing model.
+W0523 15:42:40.843391 139673142232256 submission_runner.py:273] These workloads cannot be fully compiled under current PyTorch version. Proceeding without `torch.compile`.
+W0523 15:42:40.844170 140169957000384 submission_runner.py:273] These workloads cannot be fully compiled under current PyTorch version. Proceeding without `torch.compile`.
+W0523 15:42:40.844681 140716696716480 submission_runner.py:273] These workloads cannot be fully compiled under current PyTorch version. Proceeding without `torch.compile`.
+W0523 15:42:40.845025 140715185050816 submission_runner.py:273] These workloads cannot be fully compiled under current PyTorch version. Proceeding without `torch.compile`.
+I0523 15:42:40.845697 139673142232256 muon.py:324] Muon params:
+	module.node_embedder.weight (ndim=2)
+	module.edge_embedder.weight (ndim=2)
+	module.graph_network.0.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.0.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.0.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.1.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.1.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.1.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.2.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.2.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.2.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.3.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.3.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.3.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.4.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.4.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.4.update_global_fn.dense_0.weight (ndim=2)
+	module.decoder.weight (ndim=2)
+I0523 15:42:40.845826 139673142232256 muon.py:325] Adam params:
+	module.node_embedder.bias (ndim=1)
+	module.edge_embedder.bias (ndim=1)
+	module.graph_network.0.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.0.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.0.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.0.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.0.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.0.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.0.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.0.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.0.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.1.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.1.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.1.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.1.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.1.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.1.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.1.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.1.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.1.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.2.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.2.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.2.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.2.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.2.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.2.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.2.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.2.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.2.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.3.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.3.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.3.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.3.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.3.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.3.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.3.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.3.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.3.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.4.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.4.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.4.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.4.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.4.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.4.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.4.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.4.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.4.update_global_fn.norm_0.bias (ndim=1)
+	module.decoder.bias (ndim=1)
+I0523 15:42:40.846153 140169957000384 submission_runner.py:294] Initializing optimizer.
+I0523 15:42:40.846555 140169957000384 muon.py:324] Muon params:
+	module.node_embedder.weight (ndim=2)
+	module.edge_embedder.weight (ndim=2)
+	module.graph_network.0.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.0.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.0.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.1.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.1.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.1.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.2.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.2.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.2.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.3.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.3.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.3.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.4.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.4.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.4.update_global_fn.dense_0.weight (ndim=2)
+	module.decoder.weight (ndim=2)
+I0523 15:42:40.846637 140169957000384 muon.py:325] Adam params:
+	module.node_embedder.bias (ndim=1)
+	module.edge_embedder.bias (ndim=1)
+	module.graph_network.0.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.0.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.0.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.0.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.0.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.0.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.0.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.0.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.0.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.1.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.1.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.1.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.1.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.1.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.1.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.1.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.1.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.1.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.2.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.2.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.2.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.2.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.2.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.2.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.2.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.2.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.2.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.3.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.3.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.3.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.3.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.3.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.3.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.3.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.3.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.3.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.4.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.4.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.4.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.4.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.4.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.4.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.4.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.4.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.4.update_global_fn.norm_0.bias (ndim=1)
+	module.decoder.bias (ndim=1)
+I0523 15:42:40.846974 140716696716480 muon.py:324] Muon params:
+	module.node_embedder.weight (ndim=2)
+	module.edge_embedder.weight (ndim=2)
+	module.graph_network.0.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.0.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.0.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.1.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.1.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.1.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.2.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.2.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.2.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.3.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.3.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.3.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.4.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.4.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.4.update_global_fn.dense_0.weight (ndim=2)
+	module.decoder.weight (ndim=2)
+I0523 15:42:40.847096 140716696716480 muon.py:325] Adam params:
+	module.node_embedder.bias (ndim=1)
+	module.edge_embedder.bias (ndim=1)
+	module.graph_network.0.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.0.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.0.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.0.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.0.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.0.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.0.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.0.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.0.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.1.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.1.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.1.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.1.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.1.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.1.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.1.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.1.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.1.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.2.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.2.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.2.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.2.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.2.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.2.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.2.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.2.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.2.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.3.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.3.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.3.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.3.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.3.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.3.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.3.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.3.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.3.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.4.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.4.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.4.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.4.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.4.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.4.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.4.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.4.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.4.update_global_fn.norm_0.bias (ndim=1)
+	module.decoder.bias (ndim=1)
+I0523 15:42:40.847304 140715185050816 muon.py:324] Muon params:
+	module.node_embedder.weight (ndim=2)
+	module.edge_embedder.weight (ndim=2)
+	module.graph_network.0.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.0.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.0.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.1.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.1.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.1.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.2.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.2.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.2.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.3.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.3.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.3.update_global_fn.dense_0.weight (ndim=2)
+	module.graph_network.4.update_edge_fn.dense_0.weight (ndim=2)
+	module.graph_network.4.update_node_fn.dense_0.weight (ndim=2)
+	module.graph_network.4.update_global_fn.dense_0.weight (ndim=2)
+	module.decoder.weight (ndim=2)
+I0523 15:42:40.847431 140715185050816 muon.py:325] Adam params:
+	module.node_embedder.bias (ndim=1)
+	module.edge_embedder.bias (ndim=1)
+	module.graph_network.0.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.0.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.0.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.0.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.0.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.0.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.0.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.0.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.0.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.1.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.1.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.1.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.1.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.1.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.1.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.1.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.1.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.1.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.2.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.2.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.2.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.2.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.2.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.2.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.2.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.2.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.2.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.3.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.3.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.3.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.3.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.3.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.3.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.3.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.3.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.3.update_global_fn.norm_0.bias (ndim=1)
+	module.graph_network.4.update_edge_fn.dense_0.bias (ndim=1)
+	module.graph_network.4.update_edge_fn.norm_0.weight (ndim=1)
+	module.graph_network.4.update_edge_fn.norm_0.bias (ndim=1)
+	module.graph_network.4.update_node_fn.dense_0.bias (ndim=1)
+	module.graph_network.4.update_node_fn.norm_0.weight (ndim=1)
+	module.graph_network.4.update_node_fn.norm_0.bias (ndim=1)
+	module.graph_network.4.update_global_fn.dense_0.bias (ndim=1)
+	module.graph_network.4.update_global_fn.norm_0.weight (ndim=1)
+	module.graph_network.4.update_global_fn.norm_0.bias (ndim=1)
+	module.decoder.bias (ndim=1)
+I0523 15:42:40.847494 140169957000384 submission_runner.py:299] Initializing metrics bundle.
+I0523 15:42:40.847673 140169957000384 submission_runner.py:321] Initializing checkpoint and logger.
+I0523 15:42:40.848053 139673142232256 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0523 15:42:40.848090 140169957000384 submission_runner.py:344] Saving meta data to /experiment_runs/submissions_a100/muon_torch_jax_hps/study_1/ogbg_pytorch/trial_1/meta_data_0.json.
+I0523 15:42:40.848177 139673142232256 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0523 15:42:40.848259 140169957000384 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0523 15:42:40.848317 140169957000384 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0523 15:42:40.848464 140716696716480 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0523 15:42:40.848583 140716696716480 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0523 15:42:40.848809 140715185050816 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0523 15:42:40.848925 140715185050816 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0523 15:42:41.111608 140169957000384 submission_runner.py:348] Saving flags to /experiment_runs/submissions_a100/muon_torch_jax_hps/study_1/ogbg_pytorch/trial_1/flags_0.json.
+I0523 15:42:41.151242 140169957000384 submission_runner.py:359] Starting training loop.
+I0523 15:42:41.478350 140169957000384 dataset_info.py:707] Load dataset info from /data/ogbg/ogbg_molpcba/0.1.3
+I0523 15:42:41.483542 140169957000384 reader.py:262] Creating a tf.data.Dataset reading 8 files located in folders: /data/ogbg/ogbg_molpcba/0.1.3.
+WARNING:tensorflow:From /usr/local/lib/python3.11/site-packages/tensorflow_datasets/core/reader.py:102: CounterV2 (from tensorflow.python.data.experimental.ops.counter) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.data.Dataset.counter(...)` instead.
+W0523 15:42:41.557003 140169957000384 deprecation.py:50] From /usr/local/lib/python3.11/site-packages/tensorflow_datasets/core/reader.py:102: CounterV2 (from tensorflow.python.data.experimental.ops.counter) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.data.Dataset.counter(...)` instead.
+I0523 15:42:41.609234 140169957000384 logging_logger.py:49] Constructing tf.data.Dataset ogbg_molpcba for split train, from /data/ogbg/ogbg_molpcba/0.1.3
+I0523 15:43:07.101951 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 15:43:07.105567 140169957000384 dataset_info.py:707] Load dataset info from /data/ogbg/ogbg_molpcba/0.1.3
+I0523 15:43:07.108902 140169957000384 reader.py:262] Creating a tf.data.Dataset reading 8 files located in folders: /data/ogbg/ogbg_molpcba/0.1.3.
+I0523 15:43:07.171571 140169957000384 logging_logger.py:49] Constructing tf.data.Dataset ogbg_molpcba for split train, from /data/ogbg/ogbg_molpcba/0.1.3
+I0523 15:43:37.216973 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 15:43:37.219513 140169957000384 dataset_info.py:707] Load dataset info from /data/ogbg/ogbg_molpcba/0.1.3
+I0523 15:43:37.222834 140169957000384 reader.py:262] Creating a tf.data.Dataset reading 1 files located in folders: /data/ogbg/ogbg_molpcba/0.1.3.
+I0523 15:43:37.286292 140169957000384 logging_logger.py:49] Constructing tf.data.Dataset ogbg_molpcba for split validation, from /data/ogbg/ogbg_molpcba/0.1.3
+I0523 15:43:55.889065 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 15:43:55.891320 140169957000384 dataset_info.py:707] Load dataset info from /data/ogbg/ogbg_molpcba/0.1.3
+I0523 15:43:55.894539 140169957000384 reader.py:262] Creating a tf.data.Dataset reading 1 files located in folders: /data/ogbg/ogbg_molpcba/0.1.3.
+I0523 15:43:55.954016 140169957000384 logging_logger.py:49] Constructing tf.data.Dataset ogbg_molpcba for split test, from /data/ogbg/ogbg_molpcba/0.1.3
+I0523 15:44:13.637026 140169957000384 submission_runner.py:516] Time since start: 92.49s, 	Step: 1, 	{'train/accuracy': 0.5270630941348422, 'train/loss': 0.698864195524586, 'train/mean_average_precision': 0.02168568951465796, 'validation/accuracy': 0.5326787529348345, 'validation/loss': 0.6953178023894343, 'validation/mean_average_precision': 0.025359908000098998, 'validation/num_examples': 43793, 'test/accuracy': 0.5330531594733664, 'test/loss': 0.6940150635213297, 'test/mean_average_precision': 0.027829081581016678, 'test/num_examples': 43793, 'score': 25.483561515808105, 'total_duration': 92.48579812049866, 'accumulated_submission_time': 25.483561515808105, 'accumulated_eval_time': 66.53502154350281, 'accumulated_logging_time': 0}
+I0523 15:44:14.079332 140136360359680 logging_writer.py:48] [1] accumulated_eval_time=66.535, accumulated_logging_time=0, accumulated_submission_time=25.4836, global_step=1, preemption_count=0, score=25.4836, test/accuracy=0.533053, test/loss=0.694015, test/mean_average_precision=0.0278291, test/num_examples=43793, total_duration=92.4858, train/accuracy=0.527063, train/loss=0.698864, train/mean_average_precision=0.0216857, validation/accuracy=0.532679, validation/loss=0.695318, validation/mean_average_precision=0.0253599, validation/num_examples=43793
+I0523 15:51:46.098401 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 15:52:12.792448 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 15:52:14.811444 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 15:52:16.807099 140169957000384 submission_runner.py:516] Time since start: 575.66s, 	Step: 1954, 	{'train/accuracy': 0.5271056714603851, 'train/loss': 0.6989905482220157, 'train/mean_average_precision': 0.022004485668313162, 'validation/accuracy': 0.5326811884821344, 'validation/loss': 0.6953178023894343, 'validation/mean_average_precision': 0.025352548759075395, 'validation/num_examples': 43793, 'test/accuracy': 0.5330544229089509, 'test/loss': 0.6940150108781804, 'test/mean_average_precision': 0.027876866166307485, 'test/num_examples': 43793, 'score': 476.04969215393066, 'total_duration': 575.6559147834778, 'accumulated_submission_time': 476.04969215393066, 'accumulated_eval_time': 97.243723154068, 'accumulated_logging_time': 0.48793864250183105}
+I0523 15:52:16.839837 140136368752384 logging_writer.py:48] [1954] accumulated_eval_time=97.2437, accumulated_logging_time=0.487939, accumulated_submission_time=476.05, global_step=1954, preemption_count=0, score=476.05, test/accuracy=0.533054, test/loss=0.694015, test/mean_average_precision=0.0278769, test/num_examples=43793, total_duration=575.656, train/accuracy=0.527106, train/loss=0.698991, train/mean_average_precision=0.0220045, validation/accuracy=0.532681, validation/loss=0.695318, validation/mean_average_precision=0.0253525, validation/num_examples=43793
+I0523 15:59:49.267055 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 16:00:15.731997 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 16:00:17.723614 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 16:00:19.718054 140169957000384 submission_runner.py:516] Time since start: 1058.57s, 	Step: 3912, 	{'train/accuracy': 0.5269721326599369, 'train/loss': 0.6988743883700573, 'train/mean_average_precision': 0.021081213412649208, 'validation/accuracy': 0.5326799707084845, 'validation/loss': 0.695317853130003, 'validation/mean_average_precision': 0.02535591538527029, 'validation/num_examples': 43793, 'test/accuracy': 0.5330527383281715, 'test/loss': 0.6940150108781804, 'test/mean_average_precision': 0.027827511530070945, 'test/num_examples': 43793, 'score': 927.0677506923676, 'total_duration': 1058.5668365955353, 'accumulated_submission_time': 927.0677506923676, 'accumulated_eval_time': 127.69465613365173, 'accumulated_logging_time': 0.5312960147857666}
+I0523 16:00:19.745193 140136360359680 logging_writer.py:48] [3912] accumulated_eval_time=127.695, accumulated_logging_time=0.531296, accumulated_submission_time=927.068, global_step=3912, preemption_count=0, score=927.068, test/accuracy=0.533053, test/loss=0.694015, test/mean_average_precision=0.0278275, test/num_examples=43793, total_duration=1058.57, train/accuracy=0.526972, train/loss=0.698874, train/mean_average_precision=0.0210812, validation/accuracy=0.53268, validation/loss=0.695318, validation/mean_average_precision=0.0253559, validation/num_examples=43793
+I0523 16:07:52.188678 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 16:08:18.545242 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 16:08:20.519780 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 16:08:22.507669 140169957000384 submission_runner.py:516] Time since start: 1541.36s, 	Step: 5856, 	{'train/accuracy': 0.5270843586783199, 'train/loss': 0.6988893115447564, 'train/mean_average_precision': 0.022846194126930335, 'validation/accuracy': 0.5326779410857345, 'validation/loss': 0.695317853130003, 'validation/mean_average_precision': 0.025371870344334933, 'validation/num_examples': 43793, 'test/accuracy': 0.5330533700459638, 'test/loss': 0.6940150635213297, 'test/mean_average_precision': 0.02783532854880766, 'test/num_examples': 43793, 'score': 1378.1026248931885, 'total_duration': 1541.3564312458038, 'accumulated_submission_time': 1378.1026248931885, 'accumulated_eval_time': 158.0135796070099, 'accumulated_logging_time': 0.5690944194793701}
+I0523 16:08:22.536182 140136368752384 logging_writer.py:48] [5856] accumulated_eval_time=158.014, accumulated_logging_time=0.569094, accumulated_submission_time=1378.1, global_step=5856, preemption_count=0, score=1378.1, test/accuracy=0.533053, test/loss=0.694015, test/mean_average_precision=0.0278353, test/num_examples=43793, total_duration=1541.36, train/accuracy=0.527084, train/loss=0.698889, train/mean_average_precision=0.0228462, validation/accuracy=0.532678, validation/loss=0.695318, validation/mean_average_precision=0.0253719, validation/num_examples=43793
+I0523 16:15:54.995894 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 16:16:21.625169 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 16:16:23.648799 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 16:16:25.647615 140169957000384 submission_runner.py:516] Time since start: 2024.50s, 	Step: 7798, 	{'train/accuracy': 0.526985646967911, 'train/loss': 0.6989331329014675, 'train/mean_average_precision': 0.021549710989054435, 'validation/accuracy': 0.5326783470102845, 'validation/loss': 0.695317853130003, 'validation/mean_average_precision': 0.025374722286153305, 'validation/num_examples': 43793, 'test/accuracy': 0.5330527383281715, 'test/loss': 0.6940150635213297, 'test/mean_average_precision': 0.027880398516094862, 'test/num_examples': 43793, 'score': 1829.1607730388641, 'total_duration': 2024.4964125156403, 'accumulated_submission_time': 1829.1607730388641, 'accumulated_eval_time': 188.66532397270203, 'accumulated_logging_time': 0.6082713603973389}
+I0523 16:16:25.673634 140136360359680 logging_writer.py:48] [7798] accumulated_eval_time=188.665, accumulated_logging_time=0.608271, accumulated_submission_time=1829.16, global_step=7798, preemption_count=0, score=1829.16, test/accuracy=0.533053, test/loss=0.694015, test/mean_average_precision=0.0278804, test/num_examples=43793, total_duration=2024.5, train/accuracy=0.526986, train/loss=0.698933, train/mean_average_precision=0.0215497, validation/accuracy=0.532678, validation/loss=0.695318, validation/mean_average_precision=0.0253747, validation/num_examples=43793
+I0523 16:23:58.318900 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 16:24:24.923168 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 16:24:26.928437 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 16:24:28.907110 140169957000384 submission_runner.py:516] Time since start: 2507.76s, 	Step: 9742, 	{'train/accuracy': 0.5270554015111237, 'train/loss': 0.6988987675330854, 'train/mean_average_precision': 0.021451847620093903, 'validation/accuracy': 0.5326801736707595, 'validation/loss': 0.6953178023894343, 'validation/mean_average_precision': 0.025375018677845727, 'validation/num_examples': 43793, 'test/accuracy': 0.5330527383281715, 'test/loss': 0.6940150635213297, 'test/mean_average_precision': 0.027829177419276055, 'test/num_examples': 43793, 'score': 2280.399673938751, 'total_duration': 2507.7559213638306, 'accumulated_submission_time': 2280.399673938751, 'accumulated_eval_time': 219.2534999847412, 'accumulated_logging_time': 0.6448352336883545}
+I0523 16:24:28.939026 140136368752384 logging_writer.py:48] [9742] accumulated_eval_time=219.253, accumulated_logging_time=0.644835, accumulated_submission_time=2280.4, global_step=9742, preemption_count=0, score=2280.4, test/accuracy=0.533053, test/loss=0.694015, test/mean_average_precision=0.0278292, test/num_examples=43793, total_duration=2507.76, train/accuracy=0.527055, train/loss=0.698899, train/mean_average_precision=0.0214518, validation/accuracy=0.53268, validation/loss=0.695318, validation/mean_average_precision=0.025375, validation/num_examples=43793
+I0523 16:32:01.413571 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 16:32:28.098718 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 16:32:30.096229 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 16:32:32.093989 140169957000384 submission_runner.py:516] Time since start: 2990.94s, 	Step: 11684, 	{'train/accuracy': 0.5269974695136789, 'train/loss': 0.6989493644623411, 'train/mean_average_precision': 0.021798932804466514, 'validation/accuracy': 0.5326791588593844, 'validation/loss': 0.6953178023894343, 'validation/mean_average_precision': 0.025366971597443895, 'validation/num_examples': 43793, 'test/accuracy': 0.5330537911911587, 'test/loss': 0.6940150635213297, 'test/mean_average_precision': 0.027874194838448538, 'test/num_examples': 43793, 'score': 2731.4762601852417, 'total_duration': 2990.942803621292, 'accumulated_submission_time': 2731.4762601852417, 'accumulated_eval_time': 249.9339039325714, 'accumulated_logging_time': 0.6876063346862793}
+I0523 16:32:32.128494 140136360359680 logging_writer.py:48] [11684] accumulated_eval_time=249.934, accumulated_logging_time=0.687606, accumulated_submission_time=2731.48, global_step=11684, preemption_count=0, score=2731.48, test/accuracy=0.533054, test/loss=0.694015, test/mean_average_precision=0.0278742, test/num_examples=43793, total_duration=2990.94, train/accuracy=0.526997, train/loss=0.698949, train/mean_average_precision=0.0217989, validation/accuracy=0.532679, validation/loss=0.695318, validation/mean_average_precision=0.025367, validation/num_examples=43793
+I0523 16:40:04.645129 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 16:40:31.054494 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 16:40:33.032767 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 16:40:34.986912 140169957000384 submission_runner.py:516] Time since start: 3473.84s, 	Step: 13627, 	{'train/accuracy': 0.527050249719903, 'train/loss': 0.6989316941402199, 'train/mean_average_precision': 0.02189565090735849, 'validation/accuracy': 0.5326799707084845, 'validation/loss': 0.6953179038705718, 'validation/mean_average_precision': 0.025362316521250147, 'validation/num_examples': 43793, 'test/accuracy': 0.5330540017637561, 'test/loss': 0.6940150108781804, 'test/mean_average_precision': 0.027874628319992597, 'test/num_examples': 43793, 'score': 3182.5924305915833, 'total_duration': 3473.835702419281, 'accumulated_submission_time': 3182.5924305915833, 'accumulated_eval_time': 280.2756917476654, 'accumulated_logging_time': 0.732736349105835}
+I0523 16:40:35.019335 140136368752384 logging_writer.py:48] [13627] accumulated_eval_time=280.276, accumulated_logging_time=0.732736, accumulated_submission_time=3182.59, global_step=13627, preemption_count=0, score=3182.59, test/accuracy=0.533054, test/loss=0.694015, test/mean_average_precision=0.0278746, test/num_examples=43793, total_duration=3473.84, train/accuracy=0.52705, train/loss=0.698932, train/mean_average_precision=0.0218957, validation/accuracy=0.53268, validation/loss=0.695318, validation/mean_average_precision=0.0253623, validation/num_examples=43793
+I0523 16:48:07.502006 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 16:48:34.055154 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 16:48:36.080260 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 16:48:38.102523 140169957000384 submission_runner.py:516] Time since start: 3956.95s, 	Step: 15575, 	{'train/accuracy': 0.5271627992136797, 'train/loss': 0.6987539756524205, 'train/mean_average_precision': 0.02280392604721116, 'validation/accuracy': 0.5326789558971095, 'validation/loss': 0.6953178023894343, 'validation/mean_average_precision': 0.025366485522528875, 'validation/num_examples': 43793, 'test/accuracy': 0.5330514748925869, 'test/loss': 0.6940150635213297, 'test/mean_average_precision': 0.027879210757004724, 'test/num_examples': 43793, 'score': 3633.6742174625397, 'total_duration': 3956.951315641403, 'accumulated_submission_time': 3633.6742174625397, 'accumulated_eval_time': 310.87615990638733, 'accumulated_logging_time': 0.7772936820983887}
+I0523 16:48:38.130336 140136360359680 logging_writer.py:48] [15575] accumulated_eval_time=310.876, accumulated_logging_time=0.777294, accumulated_submission_time=3633.67, global_step=15575, preemption_count=0, score=3633.67, test/accuracy=0.533051, test/loss=0.694015, test/mean_average_precision=0.0278792, test/num_examples=43793, total_duration=3956.95, train/accuracy=0.527163, train/loss=0.698754, train/mean_average_precision=0.0228039, validation/accuracy=0.532679, validation/loss=0.695318, validation/mean_average_precision=0.0253665, validation/num_examples=43793
+I0523 16:56:10.705857 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 16:56:37.418152 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 16:56:39.436645 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 16:56:41.442708 140169957000384 submission_runner.py:516] Time since start: 4440.29s, 	Step: 17529, 	{'train/accuracy': 0.5269336384169556, 'train/loss': 0.6990272708443787, 'train/mean_average_precision': 0.021729238060347864, 'validation/accuracy': 0.5326791588593844, 'validation/loss': 0.6953179038705718, 'validation/mean_average_precision': 0.025380326837298475, 'validation/num_examples': 43793, 'test/accuracy': 0.5330537911911587, 'test/loss': 0.6940150108781804, 'test/mean_average_precision': 0.027824019344108452, 'test/num_examples': 43793, 'score': 4084.8578436374664, 'total_duration': 4440.291471004486, 'accumulated_submission_time': 4084.8578436374664, 'accumulated_eval_time': 341.612930059433, 'accumulated_logging_time': 0.8155717849731445}
+I0523 16:56:41.468392 140136368752384 logging_writer.py:48] [17529] accumulated_eval_time=341.613, accumulated_logging_time=0.815572, accumulated_submission_time=4084.86, global_step=17529, preemption_count=0, score=4084.86, test/accuracy=0.533054, test/loss=0.694015, test/mean_average_precision=0.027824, test/num_examples=43793, total_duration=4440.29, train/accuracy=0.526934, train/loss=0.699027, train/mean_average_precision=0.0217292, validation/accuracy=0.532679, validation/loss=0.695318, validation/mean_average_precision=0.0253803, validation/num_examples=43793
+I0523 17:04:13.968317 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 17:04:40.475559 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 17:04:42.478867 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 17:04:44.521883 140169957000384 submission_runner.py:516] Time since start: 4923.37s, 	Step: 19492, 	{'train/accuracy': 0.5270639589457473, 'train/loss': 0.6988814790267601, 'train/mean_average_precision': 0.02122894769105574, 'validation/accuracy': 0.5326799707084845, 'validation/loss': 0.6953179038705718, 'validation/mean_average_precision': 0.025372500613123638, 'validation/num_examples': 43793, 'test/accuracy': 0.5330521066103792, 'test/loss': 0.6940150108781804, 'test/mean_average_precision': 0.027827919225466003, 'test/num_examples': 43793, 'score': 4535.959568738937, 'total_duration': 4923.370661973953, 'accumulated_submission_time': 4535.959568738937, 'accumulated_eval_time': 372.16644978523254, 'accumulated_logging_time': 0.8518502712249756}
+I0523 17:04:44.547728 140136360359680 logging_writer.py:48] [19492] accumulated_eval_time=372.166, accumulated_logging_time=0.85185, accumulated_submission_time=4535.96, global_step=19492, preemption_count=0, score=4535.96, test/accuracy=0.533052, test/loss=0.694015, test/mean_average_precision=0.0278279, test/num_examples=43793, total_duration=4923.37, train/accuracy=0.527064, train/loss=0.698881, train/mean_average_precision=0.0212289, validation/accuracy=0.53268, validation/loss=0.695318, validation/mean_average_precision=0.0253725, validation/num_examples=43793
+I0523 17:12:16.988451 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 17:12:42.370038 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 17:12:44.346389 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 17:12:46.335462 140169957000384 submission_runner.py:516] Time since start: 5405.18s, 	Step: 21471, 	{'train/accuracy': 0.5270317509994155, 'train/loss': 0.6988676244520684, 'train/mean_average_precision': 0.02154331762567653, 'validation/accuracy': 0.5326799707084845, 'validation/loss': 0.695317853130003, 'validation/mean_average_precision': 0.025368698907705888, 'validation/num_examples': 43793, 'test/accuracy': 0.5330531594733664, 'test/loss': 0.6940151161644791, 'test/mean_average_precision': 0.027878277589244563, 'test/num_examples': 43793, 'score': 4987.018608570099, 'total_duration': 5405.184236526489, 'accumulated_submission_time': 4987.018608570099, 'accumulated_eval_time': 401.51339507102966, 'accumulated_logging_time': 0.8881874084472656}
+I0523 17:12:46.366333 140136368752384 logging_writer.py:48] [21471] accumulated_eval_time=401.513, accumulated_logging_time=0.888187, accumulated_submission_time=4987.02, global_step=21471, preemption_count=0, score=4987.02, test/accuracy=0.533053, test/loss=0.694015, test/mean_average_precision=0.0278783, test/num_examples=43793, total_duration=5405.18, train/accuracy=0.527032, train/loss=0.698868, train/mean_average_precision=0.0215433, validation/accuracy=0.53268, validation/loss=0.695318, validation/mean_average_precision=0.0253687, validation/num_examples=43793
+I0523 17:20:18.988559 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 17:20:44.377521 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 17:20:46.406896 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 17:20:48.434745 140169957000384 submission_runner.py:516] Time since start: 5887.28s, 	Step: 23520, 	{'train/accuracy': 0.5270609340862406, 'train/loss': 0.6989308973920477, 'train/mean_average_precision': 0.02185998945771478, 'validation/accuracy': 0.5326826092180594, 'validation/loss': 0.695317853130003, 'validation/mean_average_precision': 0.025373436333726383, 'validation/num_examples': 43793, 'test/accuracy': 0.5330544229089509, 'test/loss': 0.6940150108781804, 'test/mean_average_precision': 0.027829762407211838, 'test/num_examples': 43793, 'score': 5438.243068933487, 'total_duration': 5887.283574581146, 'accumulated_submission_time': 5438.243068933487, 'accumulated_eval_time': 430.9595501422882, 'accumulated_logging_time': 0.9293856620788574}
+I0523 17:20:48.461188 140136360359680 logging_writer.py:48] [23520] accumulated_eval_time=430.96, accumulated_logging_time=0.929386, accumulated_submission_time=5438.24, global_step=23520, preemption_count=0, score=5438.24, test/accuracy=0.533054, test/loss=0.694015, test/mean_average_precision=0.0278298, test/num_examples=43793, total_duration=5887.28, train/accuracy=0.527061, train/loss=0.698931, train/mean_average_precision=0.02186, validation/accuracy=0.532683, validation/loss=0.695318, validation/mean_average_precision=0.0253734, validation/num_examples=43793
+I0523 17:28:21.003654 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 17:28:46.459934 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 17:28:48.406788 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 17:28:50.420998 140169957000384 submission_runner.py:516] Time since start: 6369.27s, 	Step: 25595, 	{'train/accuracy': 0.5271427372356687, 'train/loss': 0.6988883435519966, 'train/mean_average_precision': 0.02250855994795648, 'validation/accuracy': 0.5326805795953095, 'validation/loss': 0.6953178023894343, 'validation/mean_average_precision': 0.02537538604868942, 'validation/num_examples': 43793, 'test/accuracy': 0.5330535806185612, 'test/loss': 0.6940151161644791, 'test/mean_average_precision': 0.027879203575423644, 'test/num_examples': 43793, 'score': 5889.411885976791, 'total_duration': 6369.269827365875, 'accumulated_submission_time': 5889.411885976791, 'accumulated_eval_time': 460.37685108184814, 'accumulated_logging_time': 0.966515302658081}
+I0523 17:28:50.447201 140136368752384 logging_writer.py:48] [25595] accumulated_eval_time=460.377, accumulated_logging_time=0.966515, accumulated_submission_time=5889.41, global_step=25595, preemption_count=0, score=5889.41, test/accuracy=0.533054, test/loss=0.694015, test/mean_average_precision=0.0278792, test/num_examples=43793, total_duration=6369.27, train/accuracy=0.527143, train/loss=0.698888, train/mean_average_precision=0.0225086, validation/accuracy=0.532681, validation/loss=0.695318, validation/mean_average_precision=0.0253754, validation/num_examples=43793
+I0523 17:36:23.042226 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 17:36:48.538705 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 17:36:50.555325 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 17:36:52.552348 140169957000384 submission_runner.py:516] Time since start: 6851.40s, 	Step: 27671, 	{'train/accuracy': 0.5270286006759609, 'train/loss': 0.6988748016710578, 'train/mean_average_precision': 0.021753345860511815, 'validation/accuracy': 0.5326791588593844, 'validation/loss': 0.695317853130003, 'validation/mean_average_precision': 0.025362526815635434, 'validation/num_examples': 43793, 'test/accuracy': 0.5330531594733664, 'test/loss': 0.6940150108781804, 'test/mean_average_precision': 0.02782910869921386, 'test/num_examples': 43793, 'score': 6340.654826164246, 'total_duration': 6851.401124715805, 'accumulated_submission_time': 6340.654826164246, 'accumulated_eval_time': 489.88692140579224, 'accumulated_logging_time': 1.0026957988739014}
+I0523 17:36:52.578443 140136360359680 logging_writer.py:48] [27671] accumulated_eval_time=489.887, accumulated_logging_time=1.0027, accumulated_submission_time=6340.65, global_step=27671, preemption_count=0, score=6340.65, test/accuracy=0.533053, test/loss=0.694015, test/mean_average_precision=0.0278291, test/num_examples=43793, total_duration=6851.4, train/accuracy=0.527029, train/loss=0.698875, train/mean_average_precision=0.0217533, validation/accuracy=0.532679, validation/loss=0.695318, validation/mean_average_precision=0.0253625, validation/num_examples=43793
+I0523 17:44:24.989810 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 17:44:50.344834 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 17:44:52.329115 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 17:44:54.285980 140169957000384 submission_runner.py:516] Time since start: 7333.13s, 	Step: 29743, 	{'train/accuracy': 0.5269740452301998, 'train/loss': 0.6989517147255229, 'train/mean_average_precision': 0.021180251934894666, 'validation/accuracy': 0.5326795647839345, 'validation/loss': 0.6953179038705718, 'validation/mean_average_precision': 0.02537623237894509, 'validation/num_examples': 43793, 'test/accuracy': 0.5330544229089509, 'test/loss': 0.694014958235031, 'test/mean_average_precision': 0.02782944079737586, 'test/num_examples': 43793, 'score': 6791.720841884613, 'total_duration': 7333.134787559509, 'accumulated_submission_time': 6791.720841884613, 'accumulated_eval_time': 519.1830129623413, 'accumulated_logging_time': 1.0389118194580078}
+I0523 17:44:54.311349 140136368752384 logging_writer.py:48] [29743] accumulated_eval_time=519.183, accumulated_logging_time=1.03891, accumulated_submission_time=6791.72, global_step=29743, preemption_count=0, score=6791.72, test/accuracy=0.533054, test/loss=0.694015, test/mean_average_precision=0.0278294, test/num_examples=43793, total_duration=7333.13, train/accuracy=0.526974, train/loss=0.698952, train/mean_average_precision=0.0211803, validation/accuracy=0.53268, validation/loss=0.695318, validation/mean_average_precision=0.0253762, validation/num_examples=43793
+I0523 17:52:26.734279 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 17:52:51.842797 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 17:52:53.852021 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 17:52:55.824622 140169957000384 submission_runner.py:516] Time since start: 7814.67s, 	Step: 31825, 	{'train/accuracy': 0.5271563148732548, 'train/loss': 0.6987708650305504, 'train/mean_average_precision': 0.02170572226081122, 'validation/accuracy': 0.5326803766330345, 'validation/loss': 0.6953179038705718, 'validation/mean_average_precision': 0.025375144069473828, 'validation/num_examples': 43793, 'test/accuracy': 0.5330537911911587, 'test/loss': 0.6940150635213297, 'test/mean_average_precision': 0.02782735371159219, 'test/num_examples': 43793, 'score': 7242.790361404419, 'total_duration': 7814.67344045639, 'accumulated_submission_time': 7242.790361404419, 'accumulated_eval_time': 548.2733452320099, 'accumulated_logging_time': 1.0744125843048096}
+I0523 17:52:55.851013 140136360359680 logging_writer.py:48] [31825] accumulated_eval_time=548.273, accumulated_logging_time=1.07441, accumulated_submission_time=7242.79, global_step=31825, preemption_count=0, score=7242.79, test/accuracy=0.533054, test/loss=0.694015, test/mean_average_precision=0.0278274, test/num_examples=43793, total_duration=7814.67, train/accuracy=0.527156, train/loss=0.698771, train/mean_average_precision=0.0217057, validation/accuracy=0.53268, validation/loss=0.695318, validation/mean_average_precision=0.0253751, validation/num_examples=43793
+I0523 18:00:28.278475 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 18:00:53.658955 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 18:00:55.632726 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 18:00:57.624593 140169957000384 submission_runner.py:516] Time since start: 8296.47s, 	Step: 33914, 	{'train/accuracy': 0.5268088606433937, 'train/loss': 0.6991006610668788, 'train/mean_average_precision': 0.02185888599101666, 'validation/accuracy': 0.5326783470102845, 'validation/loss': 0.695317853130003, 'validation/mean_average_precision': 0.025369004553133165, 'validation/num_examples': 43793, 'test/accuracy': 0.5330531594733664, 'test/loss': 0.6940151161644791, 'test/mean_average_precision': 0.027879739591215594, 'test/num_examples': 43793, 'score': 7693.8649888038635, 'total_duration': 8296.473419427872, 'accumulated_submission_time': 7693.8649888038635, 'accumulated_eval_time': 577.6194303035736, 'accumulated_logging_time': 1.1110925674438477}
+I0523 18:00:57.650684 140136368752384 logging_writer.py:48] [33914] accumulated_eval_time=577.619, accumulated_logging_time=1.11109, accumulated_submission_time=7693.86, global_step=33914, preemption_count=0, score=7693.86, test/accuracy=0.533053, test/loss=0.694015, test/mean_average_precision=0.0278797, test/num_examples=43793, total_duration=8296.47, train/accuracy=0.526809, train/loss=0.699101, train/mean_average_precision=0.0218589, validation/accuracy=0.532678, validation/loss=0.695318, validation/mean_average_precision=0.025369, validation/num_examples=43793
+I0523 18:08:30.153720 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 18:08:55.471113 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 18:08:57.475416 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 18:08:59.468490 140169957000384 submission_runner.py:516] Time since start: 8778.32s, 	Step: 35999, 	{'train/accuracy': 0.5271713106339815, 'train/loss': 0.6988521432469513, 'train/mean_average_precision': 0.021244461709421455, 'validation/accuracy': 0.5326795647839345, 'validation/loss': 0.695317853130003, 'validation/mean_average_precision': 0.025371297097206397, 'validation/num_examples': 43793, 'test/accuracy': 0.5330535806185612, 'test/loss': 0.6940150108781804, 'test/mean_average_precision': 0.02787608911171903, 'test/num_examples': 43793, 'score': 8144.996466636658, 'total_duration': 8778.317326784134, 'accumulated_submission_time': 8144.996466636658, 'accumulated_eval_time': 606.9341723918915, 'accumulated_logging_time': 1.1470956802368164}
+I0523 18:08:59.497322 140136360359680 logging_writer.py:48] [35999] accumulated_eval_time=606.934, accumulated_logging_time=1.1471, accumulated_submission_time=8145, global_step=35999, preemption_count=0, score=8145, test/accuracy=0.533054, test/loss=0.694015, test/mean_average_precision=0.0278761, test/num_examples=43793, total_duration=8778.32, train/accuracy=0.527171, train/loss=0.698852, train/mean_average_precision=0.0212445, validation/accuracy=0.53268, validation/loss=0.695318, validation/mean_average_precision=0.0253713, validation/num_examples=43793
+I0523 18:16:32.001480 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 18:16:57.320311 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 18:16:59.285203 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 18:17:01.295561 140169957000384 submission_runner.py:516] Time since start: 9260.14s, 	Step: 38080, 	{'train/accuracy': 0.5271610916756916, 'train/loss': 0.6988563207380538, 'train/mean_average_precision': 0.022984982589902173, 'validation/accuracy': 0.5326797677462095, 'validation/loss': 0.695317853130003, 'validation/mean_average_precision': 0.025359491348752747, 'validation/num_examples': 43793, 'test/accuracy': 0.5330525277555741, 'test/loss': 0.6940150635213297, 'test/mean_average_precision': 0.027880579360601194, 'test/num_examples': 43793, 'score': 8596.144224405289, 'total_duration': 9260.144381046295, 'accumulated_submission_time': 8596.144224405289, 'accumulated_eval_time': 636.2282137870789, 'accumulated_logging_time': 1.1859562397003174}
+I0523 18:17:01.324115 140136368752384 logging_writer.py:48] [38080] accumulated_eval_time=636.228, accumulated_logging_time=1.18596, accumulated_submission_time=8596.14, global_step=38080, preemption_count=0, score=8596.14, test/accuracy=0.533053, test/loss=0.694015, test/mean_average_precision=0.0278806, test/num_examples=43793, total_duration=9260.14, train/accuracy=0.527161, train/loss=0.698856, train/mean_average_precision=0.022985, validation/accuracy=0.53268, validation/loss=0.695318, validation/mean_average_precision=0.0253595, validation/num_examples=43793
+I0523 18:24:33.843829 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 18:24:59.027947 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 18:25:01.031388 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 18:25:03.014655 140169957000384 submission_runner.py:516] Time since start: 9741.86s, 	Step: 40162, 	{'train/accuracy': 0.5269856950244735, 'train/loss': 0.6989343480452004, 'train/mean_average_precision': 0.02123417416305532, 'validation/accuracy': 0.5326801736707595, 'validation/loss': 0.6953178023894343, 'validation/mean_average_precision': 0.02536283314329497, 'validation/num_examples': 43793, 'test/accuracy': 0.5330512643199895, 'test/loss': 0.6940150635213297, 'test/mean_average_precision': 0.02783170002432725, 'test/num_examples': 43793, 'score': 9047.30940937996, 'total_duration': 9741.863471508026, 'accumulated_submission_time': 9047.30940937996, 'accumulated_eval_time': 665.3989782333374, 'accumulated_logging_time': 1.224717617034912}
+I0523 18:25:03.045404 140136360359680 logging_writer.py:48] [40162] accumulated_eval_time=665.399, accumulated_logging_time=1.22472, accumulated_submission_time=9047.31, global_step=40162, preemption_count=0, score=9047.31, test/accuracy=0.533051, test/loss=0.694015, test/mean_average_precision=0.0278317, test/num_examples=43793, total_duration=9741.86, train/accuracy=0.526986, train/loss=0.698934, train/mean_average_precision=0.0212342, validation/accuracy=0.53268, validation/loss=0.695318, validation/mean_average_precision=0.0253628, validation/num_examples=43793
+I0523 18:32:35.630835 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 18:33:00.878545 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 18:33:02.867417 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 18:33:04.862910 140169957000384 submission_runner.py:516] Time since start: 10223.71s, 	Step: 42250, 	{'train/accuracy': 0.5270406048297215, 'train/loss': 0.6988542676809857, 'train/mean_average_precision': 0.02153373426279503, 'validation/accuracy': 0.5326811884821344, 'validation/loss': 0.6953178023894343, 'validation/mean_average_precision': 0.02536543481610156, 'validation/num_examples': 43793, 'test/accuracy': 0.5330540017637561, 'test/loss': 0.6940150635213297, 'test/mean_average_precision': 0.027826687204744526, 'test/num_examples': 43793, 'score': 9498.53984451294, 'total_duration': 10223.711745738983, 'accumulated_submission_time': 9498.53984451294, 'accumulated_eval_time': 694.631017446518, 'accumulated_logging_time': 1.2661042213439941}
+I0523 18:33:04.888593 140136368752384 logging_writer.py:48] [42250] accumulated_eval_time=694.631, accumulated_logging_time=1.2661, accumulated_submission_time=9498.54, global_step=42250, preemption_count=0, score=9498.54, test/accuracy=0.533054, test/loss=0.694015, test/mean_average_precision=0.0278267, test/num_examples=43793, total_duration=10223.7, train/accuracy=0.527041, train/loss=0.698854, train/mean_average_precision=0.0215337, validation/accuracy=0.532681, validation/loss=0.695318, validation/mean_average_precision=0.0253654, validation/num_examples=43793
+I0523 18:40:37.517873 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 18:41:02.601947 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 18:41:04.564497 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 18:41:06.509710 140169957000384 submission_runner.py:516] Time since start: 10705.36s, 	Step: 44327, 	{'train/accuracy': 0.5269399016158942, 'train/loss': 0.6989698876301885, 'train/mean_average_precision': 0.02228261738892769, 'validation/accuracy': 0.5326783470102845, 'validation/loss': 0.6953178023894343, 'validation/mean_average_precision': 0.02536293830383324, 'validation/num_examples': 43793, 'test/accuracy': 0.5330535806185612, 'test/loss': 0.6940150108781804, 'test/mean_average_precision': 0.027877596721441314, 'test/num_examples': 43793, 'score': 9949.82063794136, 'total_duration': 10705.358571052551, 'accumulated_submission_time': 9949.82063794136, 'accumulated_eval_time': 723.6228635311127, 'accumulated_logging_time': 1.3015189170837402}
+I0523 18:41:06.538120 140136360359680 logging_writer.py:48] [44327] accumulated_eval_time=723.623, accumulated_logging_time=1.30152, accumulated_submission_time=9949.82, global_step=44327, preemption_count=0, score=9949.82, test/accuracy=0.533054, test/loss=0.694015, test/mean_average_precision=0.0278776, test/num_examples=43793, total_duration=10705.4, train/accuracy=0.52694, train/loss=0.69897, train/mean_average_precision=0.0222826, validation/accuracy=0.532678, validation/loss=0.695318, validation/mean_average_precision=0.0253629, validation/num_examples=43793
+I0523 18:48:39.055587 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 18:49:04.225398 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 18:49:06.202249 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 18:49:08.160987 140169957000384 submission_runner.py:516] Time since start: 11187.01s, 	Step: 46408, 	{'train/accuracy': 0.5270464343602843, 'train/loss': 0.6989360885004204, 'train/mean_average_precision': 0.021898042729104516, 'validation/accuracy': 0.5326791588593844, 'validation/loss': 0.6953178023894343, 'validation/mean_average_precision': 0.025374917802742397, 'validation/num_examples': 43793, 'test/accuracy': 0.5330529489007689, 'test/loss': 0.6940150635213297, 'test/mean_average_precision': 0.027881669072061424, 'test/num_examples': 43793, 'score': 10400.99355340004, 'total_duration': 11187.00978064537, 'accumulated_submission_time': 10400.99355340004, 'accumulated_eval_time': 752.7281897068024, 'accumulated_logging_time': 1.339745044708252}
+I0523 18:49:08.188221 140136368752384 logging_writer.py:48] [46408] accumulated_eval_time=752.728, accumulated_logging_time=1.33975, accumulated_submission_time=10401, global_step=46408, preemption_count=0, score=10401, test/accuracy=0.533053, test/loss=0.694015, test/mean_average_precision=0.0278817, test/num_examples=43793, total_duration=11187, train/accuracy=0.527046, train/loss=0.698936, train/mean_average_precision=0.021898, validation/accuracy=0.532679, validation/loss=0.695318, validation/mean_average_precision=0.0253749, validation/num_examples=43793
+I0523 18:56:40.748146 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 18:57:06.079992 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 18:57:08.043315 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 18:57:09.982104 140169957000384 submission_runner.py:516] Time since start: 11668.83s, 	Step: 48497, 	{'train/accuracy': 0.5270348255492406, 'train/loss': 0.6988935517900445, 'train/mean_average_precision': 0.02325899936746359, 'validation/accuracy': 0.5326795647839345, 'validation/loss': 0.6953178023894343, 'validation/mean_average_precision': 0.025372432119238744, 'validation/num_examples': 43793, 'test/accuracy': 0.5330529489007689, 'test/loss': 0.6940150635213297, 'test/mean_average_precision': 0.02788415582089011, 'test/num_examples': 43793, 'score': 10852.195463180542, 'total_duration': 11668.830935955048, 'accumulated_submission_time': 10852.195463180542, 'accumulated_eval_time': 781.9621095657349, 'accumulated_logging_time': 1.376997470855713}
+I0523 18:57:10.009928 140136360359680 logging_writer.py:48] [48497] accumulated_eval_time=781.962, accumulated_logging_time=1.377, accumulated_submission_time=10852.2, global_step=48497, preemption_count=0, score=10852.2, test/accuracy=0.533053, test/loss=0.694015, test/mean_average_precision=0.0278842, test/num_examples=43793, total_duration=11668.8, train/accuracy=0.527035, train/loss=0.698894, train/mean_average_precision=0.023259, validation/accuracy=0.53268, validation/loss=0.695318, validation/mean_average_precision=0.0253724, validation/num_examples=43793
+I0523 19:04:42.570971 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 19:05:07.918039 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 19:05:09.862226 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 19:05:11.830805 140169957000384 submission_runner.py:516] Time since start: 12150.68s, 	Step: 50581, 	{'train/accuracy': 0.5271398792542279, 'train/loss': 0.6989029126289948, 'train/mean_average_precision': 0.020977502332979306, 'validation/accuracy': 0.5326781440480095, 'validation/loss': 0.695317853130003, 'validation/mean_average_precision': 0.025366731591800473, 'validation/num_examples': 43793, 'test/accuracy': 0.5330535806185612, 'test/loss': 0.6940150635213297, 'test/mean_average_precision': 0.027828387835003816, 'test/num_examples': 43793, 'score': 11303.406362056732, 'total_duration': 12150.679593324661, 'accumulated_submission_time': 11303.406362056732, 'accumulated_eval_time': 811.221848487854, 'accumulated_logging_time': 1.4148802757263184}
+I0523 19:05:11.856457 140136368752384 logging_writer.py:48] [50581] accumulated_eval_time=811.222, accumulated_logging_time=1.41488, accumulated_submission_time=11303.4, global_step=50581, preemption_count=0, score=11303.4, test/accuracy=0.533054, test/loss=0.694015, test/mean_average_precision=0.0278284, test/num_examples=43793, total_duration=12150.7, train/accuracy=0.52714, train/loss=0.698903, train/mean_average_precision=0.0209775, validation/accuracy=0.532678, validation/loss=0.695318, validation/mean_average_precision=0.0253667, validation/num_examples=43793
+I0523 19:10:21.079489 140169957000384 spec.py:333] Evaluating on the training split.
+I0523 19:10:46.365805 140169957000384 spec.py:346] Evaluating on the validation split.
+I0523 19:10:48.358675 140169957000384 spec.py:363] Evaluating on the test split.
+I0523 19:10:50.341963 140169957000384 submission_runner.py:516] Time since start: 12489.19s, 	Step: 52001, 	{'train/accuracy': 0.5269371813718594, 'train/loss': 0.6988748733554907, 'train/mean_average_precision': 0.02152230729531574, 'validation/accuracy': 0.5326807825575844, 'validation/loss': 0.695317853130003, 'validation/mean_average_precision': 0.025356490457394062, 'validation/num_examples': 43793, 'test/accuracy': 0.5330548440541458, 'test/loss': 0.6940150635213297, 'test/mean_average_precision': 0.027880442760500092, 'test/num_examples': 43793, 'score': 11611.418913602829, 'total_duration': 12489.190783262253, 'accumulated_submission_time': 11611.418913602829, 'accumulated_eval_time': 840.4842705726624, 'accumulated_logging_time': 1.4505019187927246}
+I0523 19:10:50.368912 140136360359680 logging_writer.py:48] [52001] accumulated_eval_time=840.484, accumulated_logging_time=1.4505, accumulated_submission_time=11611.4, global_step=52001, preemption_count=0, score=11611.4, test/accuracy=0.533055, test/loss=0.694015, test/mean_average_precision=0.0278804, test/num_examples=43793, total_duration=12489.2, train/accuracy=0.526937, train/loss=0.698875, train/mean_average_precision=0.0215223, validation/accuracy=0.532681, validation/loss=0.695318, validation/mean_average_precision=0.0253565, validation/num_examples=43793
+I0523 19:10:50.828593 140136368752384 logging_writer.py:48] [52001] global_step=52001, preemption_count=0, score=11611.4
+I0523 19:10:50.949482 140169957000384 submission_runner.py:857] Final ogbg score: 11611.418913602829
