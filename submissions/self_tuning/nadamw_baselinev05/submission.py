@@ -16,7 +16,6 @@ import chex
 import jax
 import jax.numpy as jnp
 import optax
-from flax import jax_utils
 
 from algoperf import jax_sharding_utils, spec
 
@@ -212,7 +211,7 @@ def init_optimizer_state(
   )
   optimizer_state = opt_init_fn(params_zeros_like)
 
-  return jax_utils.replicate(optimizer_state), opt_update_fn
+  return optimizer_state, opt_update_fn
 
 
 def train_step(
@@ -307,12 +306,9 @@ def update_params(
   dropout_rate = hyperparameters['dropout_rate']
 
   # Create shardings for each argument
-  mesh = jax.sharding.Mesh(jax.devices(), ('batch'))
-  replicated = jax_sharding_utils.get_replicate_sharding(
-    mesh
-  )  # No partitioning
-  sharded = jax_sharding_utils.get_batch_sharding(
-    mesh
+  replicated = jax_sharding_utils.get_replicate_sharding()  # No partitioning
+  sharded = (
+    jax_sharding_utils.get_batch_dim_sharding()
   )  # Partition along batch dimension
 
   # Create the sharding rules for each argument
@@ -344,29 +340,21 @@ def update_params(
     in_shardings=arg_shardings,
     out_shardings=out_shardings,
   )
-  outputs = jitted_train_step(
-    workload,
-    opt_update_fn,
-    model_state,
-    optimizer_state,
-    current_param_container,
-    batch,
-    rng,
-    grad_clip,
-    label_smoothing,
-    dropout_rate,
-  )
-  new_optimizer_state, new_params, new_model_state, loss, grad_norm = outputs
 
-  # Log loss, grad_norm.
-  if global_step % 100 == 0 and workload.metrics_logger is not None:
-    workload.metrics_logger.append_scalar_metrics(
-      {
-        'loss': loss[0],
-        'grad_norm': grad_norm[0],
-      },
-      global_step,
+  new_optimizer_state, new_params, new_model_state, loss, grad_norm = (
+    jitted_train_step(
+      workload,
+      opt_update_fn,
+      model_state,
+      optimizer_state,
+      current_param_container,
+      batch,
+      rng,
+      grad_clip,
+      label_smoothing,
+      dropout_rate,
     )
+  )
   return (new_optimizer_state, opt_update_fn), new_params, new_model_state
 
 
@@ -415,6 +403,8 @@ def get_batch_size(workload_name):
     return 512
   elif workload_name == 'wmt':
     return 128
+  elif workload_name == 'finewebedu_lm':
+    return 64
   elif workload_name == 'mnist':
     return 16
   else:
