@@ -20,39 +20,41 @@ from algoperf import spec, jax_sharding_utils
 HPARAMS = {
         'ademamix_variant': 'simplified',
         'alpha': 8.0,
-        'alpha_start': 0,
-        'warmup': 10,
-        'beta_end': 0.9999,
-        'beta_start': 0.9,
-        'learning_rate': 0.01,
-        'b1': 0.9,
-        'b2': 0.999,
-        'b3': 0.9999,
+        'warmup_factor': 0.02,
+        'beta3_warmup': 500e3,
+        'alpha_warmup': 500e3,
+        'learning_rate': 2e-3,
+        'one_minus_beta1': 0.2,
+        'beta2': 0.995,
+        'beta3': 0.9995,
         'eps': 1e-8,
         'eps_root': 0.0,
-        'weight_decay': 0.01,
+        'weight_decay': 0.1,
+        'grad_clip': 0.5,
         'dropout_rate': 0.1,
         }
         
 _GRAD_CLIP_EPS = 1e-6
 
-def lr_scheduler(learning_rate, warmup_steps, total_steps):
+def lr_scheduler(learning_rate, warmup_factor, total_steps):
+    warmup_steps = int(warmup_factor * total_steps)
+    cosine_steps = max(total_steps - warmup_steps, 1)
     return optax.warmup_cosine_decay_schedule(
-            init_value=0.0,
+            init_value=learning_rate * 1e-10,
             peak_value=learning_rate,
             warmup_steps=warmup_steps,
-            decay_steps=total_steps,
-            end_value=learning_rate * 0.01
+            decay_steps=warmup_steps + cosine_steps,
+            end_value=0.0
             )
 
-def alpha_scheduler(alpha, alpha_start=0, warmup=0):
-    warmup_fn = optax.linear_schedule(init_value=alpha_start, end_value=alpha, transition_steps=warmup)
+def alpha_scheduler(alpha, warmup=0):
+    warmup_fn = optax.linear_schedule(init_value=0, end_value=alpha, transition_steps=warmup)
     constant_fn = optax.constant_schedule(alpha)
     schedule_fn = optax.join_schedules(schedules=[warmup_fn, constant_fn], boundaries=[warmup])
     return schedule_fn
 
 
-def beta3_scheduler(beta_end, beta_start=0, warmup=0):
+def beta3_scheduler(beta3, beta1=0, warmup=0):
 
     def f(beta):
         return jnp.log(0.5)/jnp.log(beta)-1
@@ -62,9 +64,9 @@ def beta3_scheduler(beta_end, beta_start=0, warmup=0):
 
     def warmup_fn(step):
         frac = 1 - step / warmup
-        return f_inv( frac * f(beta_start) + (1 - frac) * f(beta_end))
+        return f_inv( frac * f(beta1) + (1 - frac) * f(beta3))
 
-    constant_fn = optax.constant_schedule(beta_end)
+    constant_fn = optax.constant_schedule(beta3)
     schedule_fn = optax.join_schedules(schedules=[warmup_fn, constant_fn], boundaries=[warmup])
     return schedule_fn
 
@@ -329,16 +331,19 @@ def init_optimizer_state(
             lambda s: jnp.zeros(s.shape_tuple), workload.param_shapes
             )
     lr = HPARAMS['learning_rate']
-    b1 = HPARAMS['b1']
-    b2 = HPARAMS['b2']
-    b3 = HPARAMS['b3']
+    one_minus_beta1 = HPARAMS['one_minus_beta1']
+    b1 = 1.0 - one_minus_beta1
+    b2 = HPARAMS['beta2']
+    b3 = HPARAMS['beta3']
     alpha = HPARAMS['alpha']
     variant = HPARAMS['ademamix_variant']
-    warmup = HPARAMS['warmup']
+    warmup_factor = HPARAMS['warmup_factor']
+    beta3_warmup = HPARAMS['beta3_warmup']
+    alpha_warmup = HPARAMS['alpha_warmup']
     T = workload.step_hint
-    f_b3 = beta3_scheduler(b3, beta_start=b1, warmup=T)
-    f_a = alpha_scheduler(alpha, alpha_start=0, warmup=T)
-    f_lr = lr_scheduler(lr, warmup, T)
+    f_b3 = beta3_scheduler(b3, beta1=b1, warmup=beta3_warmup)
+    f_a = alpha_scheduler(alpha, warmup=alpha_warmup)
+    f_lr = lr_scheduler(lr, warmup_factor, T)
     weight_decay = HPARAMS['weight_decay']
     optimizer = build_ademamix_optimizer(
         lr=f_lr,
@@ -361,10 +366,12 @@ if __name__ == "__main__": # dummy test
     def f(x): return jnp.sum(x ** 2)  # simple quadratic function
 
     alpha = 8.0
-    b1, b2, b3 = 0.9, 0.999, 0.9999
+    one_minus_beta1 = 0.1
+    b1 = 1.0 - one_minus_beta1
+    b2, b3 = 0.999, 0.9999
 
-    f_a = alpha_scheduler(alpha, alpha_start=0, warmup=10)
-    f_b3 = beta3_scheduler(b3, beta_start=b1, warmup=10)
+    f_a = alpha_scheduler(alpha, warmup=10)
+    f_b3 = beta3_scheduler(b3, beta1=b1, warmup=10)
 
     solver = build_ademamix_optimizer(
         lr=0.01,
