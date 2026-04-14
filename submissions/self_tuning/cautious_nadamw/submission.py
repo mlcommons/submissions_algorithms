@@ -1,4 +1,7 @@
-"""Submission file for an NAdamW optimizer with warmup+cosine LR in Jax."""
+"""Submission file for an Cautious NAdamW optimizer. 
+
+Based on v05 AlgoPerf NadamW baseline.
+"""
 
 from typing import (
   Any,
