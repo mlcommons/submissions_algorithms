@@ -19,7 +19,6 @@ _JITTED_CALCULATE_LOSS_AND_GRAD = None
 _JITTED_UPDATE_OPT=None
 
 HPARAMS = {
-  'dropout_rate': 0.1,
   'learning_rate': 0.0025,
   'one_minus_beta1': 0.1,
   'beta2': 0.9955159689799007,
@@ -27,7 +26,6 @@ HPARAMS = {
   'warmup_factor': 0.02,
   'weight_lr_power': 2,
   'label_smoothing': 0.2,
-  'r': 0.75,
   'eps': 1e-8,
 }
 
@@ -345,7 +343,7 @@ def get_batch_size(workload_name):
   elif workload_name == 'librispeech_conformer':
     return 256
   elif workload_name == 'librispeech_deepspeech':
-    return 256
+    return 128
   elif workload_name == 'ogbg':
     return 512
   elif workload_name == 'wmt':
