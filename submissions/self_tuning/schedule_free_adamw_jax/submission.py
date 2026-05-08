@@ -5,9 +5,7 @@ from typing import Dict, Iterator, List, Tuple
 import jax
 import jax.numpy as jnp
 import optax
-from flax import jax_utils
 from optax.contrib import schedule_free_adamw, schedule_free_eval_params
-from algoperf.workloads.finewebedu_lm.finewebedu_lm_jax.workload import LmWorkload
 from functools import partial
 
 from algoperf import spec
