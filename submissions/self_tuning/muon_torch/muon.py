@@ -1,13 +1,19 @@
 """"
-Muon PyTorch implementations.
+Muon PyTorch DDP implementation.
 
-Two Muon implementations are provides: ``MuonVanilla`` and``MuonDataParallel``.
+The ``MuonDataParallel`` implementation reduce-scatters the gradients internally, distributing the parameter updates across gpus.
+
+The current implementation flattens trailing dimension for any parameter with more than 2 dimensions.
+While this is correct for 4D matrices, it might be problematic for some batched 3D parameters.
+The current implementation is correct for AlgoPerf v07.0 workloads, but might require adjustments in future.
+In its current stage ``MuonDataParallel`` does not support standard gradient clippin.
 """
 
 import os
 import torch
 import torch.distributed as dist
 from abc import ABC, abstractmethod
+import logging
 
 
 # Distributed settings
@@ -42,7 +48,7 @@ def zeropower_via_newtonschulz5(G, steps=NS_STEPS, eps=NS_EPS):
 
   # Ensure spectral norm is at most 1.
   # Ortho(cX)=Ortho(X), so we can normalize by ||X||_2 <= ||X||_F
-  X /= X.norm() + eps
+  X /= (X.norm() + eps)
 
   # NS iterations
   for _ in range(steps):
@@ -55,20 +61,21 @@ def zeropower_via_newtonschulz5(G, steps=NS_STEPS, eps=NS_EPS):
   return X
 
 
-@torch.compile()
 @torch.no_grad()
 def muon_update(g, m, beta, nesterov, ns_steps, ns_eps):
   """Updates momentum ``m`` in-place and returns Muon update."""
   m.mul_(beta).add_(g, alpha=1 - beta)
 
   if nesterov:
-    g = g.add(m, alpha=beta)
+    g = g.mul(1-beta).add(m, alpha=beta)
   else:
     g = m
 
-  g = g.reshape(g.size(0), -1)  # flatten trailing dims on 3D, 4D params
+  if g.ndim == 4:
+    g = g.reshape(g.size(0), -1)  # flatten trailing dims on 4D params
   g = zeropower_via_newtonschulz5(g, steps=ns_steps, eps=ns_eps)
-  g = g.view(m.shape)  # restore original shape
+  if m.ndim == 4:
+    g = g.view(m.shape)  # restore original shape
 
   return g
   
@@ -97,7 +104,8 @@ def _param_to_complexity(p: torch.Tensor) -> int:
 
 
 class MuonBase(torch.optim.Optimizer, ABC):
-  """Muon optimizer - Momentum Orthogonalized by Newton-Schulz.
+  """
+  Muon optimizer - Momentum Orthogonalized by Newton-Schulz.
 
   Abstract class.
   """
@@ -151,60 +159,19 @@ class MuonBase(torch.optim.Optimizer, ABC):
     pass
 
 
-class MuonVanilla(MuonBase):
-  """
-  Single Devide implementation: if used with DDP, 
-  it will replicate computation across devices.
-  """
-  def __init__(self, params, **kwargs):
-    super().__init__(params, **kwargs)
-
-
-  @torch.compile()
-  @torch.no_grad()
-  def step(self, closure=None):
-    loss = None
-    if closure is not None:
-      with torch.enable_grad():
-        loss = closure()
-
-    for group in self.param_groups:
-      lr = group['lr']
-      wd = group['weight_decay']
-      beta = group['beta']
-      nesterov = group['nesterov']
-      ns_steps = group['ns_steps']
-      ns_eps = group['ns_eps']
-
-      for p in group['params']:
-        if p.grad is None:
-          continue
-        g = p.grad
-        state = self.state[p]
-
-        if len(state) == 0:
-          state['m'] = torch.zeros_like(p)
-
-        g = muon_update(g, state['m'], beta=beta, nesterov=nesterov, ns_steps=ns_steps, ns_eps=ns_eps)
-
-        adjusted_lr = self._adjust_lr(lr, p.shape) # optionally adjust lr
-        p.mul_(1 - lr * wd) # weigth decay
-        p.add_(g, alpha=-adjusted_lr)
-
-    return loss
-
-
 class MuonDataParallel(MuonBase):
   """
   Distributed Data Parallel Muon Pytorch implementation.
 
   Modified from: https://github.com/KellerJordan/Muon/blob/master/muon.py#L98
 
-  For each param group, (sorted) parameters are processed in blocks of world_size. 
-  Each block is distributed round-robin across devices.
+  For each parameter group, (sorted) parameters are processed in blocks of world_size. 
+  Each block is distributed round-robin across ranks; 
+  each device updates its assigned parameters locally, 
+  then all_gather syncs the block across ranks.
 
   We sort parameters based on the corresponding Newton-Schultz complexity, 
-  rather then based on thier size.
+  rather then based on thier size. 
 
   ``step`` structure:
     - ReduceScatter gradients round-robin
@@ -236,7 +203,6 @@ class MuonDataParallel(MuonBase):
     super().__init__(params, **kwargs)
 
 
-  @torch.compile()
   @torch.no_grad()
   def step(self, closure=None):
     """
@@ -268,12 +234,12 @@ class MuonDataParallel(MuonBase):
         else:
           receiv = torch.zeros_like(grads_pad[block_start + RANK]) # dummy buffer
 
-        # ReduceScatter this block
+        # ReduceScatter this block (avg)
         with torch.no_grad():
           handle = dist.reduce_scatter(
               receiv, 
               grads_pad[block_start:block_start + WORLD_SIZE], 
-              op=dist.ReduceOp.AVG,
+              op=dist.ReduceOp.AVG, 
               async_op=True
           )
           group['reduce_handles'].append(handle)
@@ -284,7 +250,6 @@ class MuonDataParallel(MuonBase):
       lr = group['lr']
       wd = group['weight_decay']
       beta = group['beta']
-      dampening = group['dampening']
       nesterov = group['nesterov']
       ns_steps = group['ns_steps']
       ns_eps = group['ns_eps']
@@ -312,7 +277,7 @@ class MuonDataParallel(MuonBase):
           if len(state) == 0:
             state['m'] = torch.zeros_like(p)
 
-          g = muon_update(g, state['m'], beta=beta, nesterov=nesterov, ns_steps=ns_steps, ns_eps=ns_eps)
+          g = muon_update(p.grad, state['m'], beta=beta, nesterov=nesterov, ns_steps=ns_steps, ns_eps=ns_eps)
 
           adjusted_lr = self._adjust_lr(lr, p.shape) # optionally adjust lr
           p.mul_(1 - lr * wd)
@@ -326,9 +291,6 @@ class MuonDataParallel(MuonBase):
         )
         gather_handles.append(handle)
 
-    # ## debug
-    # assert len(reduce_handles) == 0, AssertionError('Some reduce futures were not consumed.')
-
     # Sync point
     for handle in gather_handles:
       handle.wait()
@@ -336,5 +298,30 @@ class MuonDataParallel(MuonBase):
     return loss
 
 
-__all__ = [MuonVanilla, MuonDataParallel]
+def split_params_muon_adam(model):
+  """Split parameters:
+    - Muon: all matrix params (ndim ≥ 2) except embeddings
+    - Adam: 1D params, all embeddings
+  """
+  muon_params, adam_params = [], []
+  muon_infos, adam_infos = [], [] # for logging purposes
 
+  for n, p in model.named_parameters():
+    if not p.requires_grad:
+      continue
+
+    # Assign embeddings to Adam (wmt, criteo1tb, finewebedu_lm)
+    if "embedding" in n.lower() or "embed_tokens" in n.lower():
+      adam_params.append(p)
+      adam_infos.append(f'{n} (ndim={p.ndim})')
+    elif p.ndim >= 2:
+      muon_params.append(p)
+      muon_infos.append(f'{n} (ndim={p.ndim})')
+    else:
+      adam_params.append(p)
+      adam_infos.append(f'{n} (ndim={p.ndim})')
+
+  logging.info("Muon params:\n\t" + "\n\t".join(muon_infos))
+  logging.info("Adam params:\n\t" + "\n\t".join(adam_infos))
+  
+  return muon_params, adam_params

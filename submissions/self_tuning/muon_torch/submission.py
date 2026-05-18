@@ -1,12 +1,11 @@
 """"
-Distributed Data Parallel Muon PyTorch implementation.
-See  ``MuonDataParallel`` in muon_algos.py for more details.
-
-NOTE: gradient clipping is not supported, as gradients are reduced *inside* optimizer.step(),
-calling torch.nn.utils.clip_grad_norm_() would wrongly clip the local gradients.
+Muon PyTorch DDP submission.
+Backup optimizer: AdamW.
+LR schedule: linear warmup + cosine decay, we support shorter schedules via `step_reduce` hyperparameter.
 """
 
 from typing import Any, Dict, Iterator, List, Optional, Tuple
+from types import SimpleNamespace
 
 import torch
 import torch.distributed as dist
@@ -17,10 +16,29 @@ from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from algoperf import spec
 from algoperf.pytorch_utils import pytorch_setup
 
-from reference_algorithms.muon.pytorch.muon_algos import MuonDataParallel
-from reference_algorithms.muon.pytorch.utils import _split_params_muon_adam
+from submissions.self_tuning.muon_torch.muon import MuonDataParallel, split_params_muon_adam
 
 USE_PYTORCH_DDP = pytorch_setup()[0]
+
+# Best Muon PyTorch Hyperparameters
+HPARAMS = {
+  "learning_rate": 0.01,
+  "muon_weight_decay": 0.0,
+  "muon_beta": 0.9,
+  "muon_adjust_lr": "spectral_norm",
+  "muon_nesterov": True,
+  "muon_ns_steps": 5,
+  "muon_ns_eps": 1e-07,
+  "adamw_weight_decay": 0.0,
+  "adamw_beta1": 0.9,
+  "adamw_beta2": 0.999,
+  "adamw_eps": 1e-08,
+  "dropout_rate": 0.1,
+  "label_smoothing": 0.1,
+  "warmup_factor": 0.05,
+  "step_reduce": 1.0
+}
+hyperparameters = SimpleNamespace(**HPARAMS)
 
 
 def _pytorch_cosine_warmup(step_hint: int, hyperparameters, optimizer):
@@ -28,59 +46,57 @@ def _pytorch_cosine_warmup(step_hint: int, hyperparameters, optimizer):
   warmup = LinearLR(
     optimizer, start_factor=1e-10, end_factor=1.0, total_iters=warmup_steps
   )
-  cosine_steps = max(step_hint - warmup_steps, 1)
-  cosine_decay = CosineAnnealingLR(optimizer, T_max=cosine_steps)
+  total_steps = int(step_hint * getattr(hyperparameters, "step_reduce", 1.0))
+  decay_steps = max(1, total_steps - warmup_steps)
+  cosine_decay = CosineAnnealingLR(optimizer, T_max=decay_steps)
   return SequentialLR(
     optimizer, schedulers=[warmup, cosine_decay], milestones=[warmup_steps]
   )
 
 
 def init_optimizer_state(
-    workload: spec.Workload,
-    model_params: spec.ParameterContainer,
-    model_state: spec.ModelAuxiliaryState,
-    hyperparameters: spec.Hyperparameters,
-    rng: spec.RandomState,
+  workload: spec.Workload,
+  model_params: spec.ParameterContainer,
+  model_state: spec.ModelAuxiliaryState,
+  hyperparameters: spec.Hyperparameters,
+  rng: spec.RandomState,
 ) -> spec.OptimizerState:
-    """Creates a Muon optimizer and a learning rate schedule."""
-    del model_state
-    del rng
+  """Creates a Muon optimizer and a learning rate schedule."""
+  del model_state
+  del rng
 
-    if getattr(hyperparameters, 'grad_clip', None):
-      raise NotImplementedError('Gradient clipping not supported with custom ReduceScatter.')
-    
-    muon_params, adam_params = _split_params_muon_adam(model_params)
+  muon_params, adam_params = split_params_muon_adam(model_params)
 
-    optimizer_state = {
-        'muon': MuonDataParallel(
-            muon_params,
-            lr=hyperparameters.learning_rate,  # shared
-            weight_decay=hyperparameters.muon_weight_decay,  # shared
-            beta=hyperparameters.muon_beta,
-            nesterov=hyperparameters.muon_nesterov,
-            ns_steps=hyperparameters.muon_ns_steps,
-            ns_eps=hyperparameters.muon_ns_eps,
-            adjust_lr=hyperparameters.muon_adjust_lr,
-        ),
-        'adamw': torch.optim.AdamW(
-            adam_params,
-            lr=hyperparameters.learning_rate,  # shared
-            weight_decay=hyperparameters.adamw_weight_decay,  # shared
-            betas=(hyperparameters.adamw_beta1, hyperparameters.adamw_beta2),
-            eps=hyperparameters.adamw_eps,
-            fused=True,
-        ),
-    }
+  optimizer_state = {
+    'muon': MuonDataParallel(
+      muon_params,
+      lr=hyperparameters.learning_rate,  # shared
+      weight_decay=hyperparameters.muon_weight_decay,
+      beta=hyperparameters.muon_beta,
+      nesterov=hyperparameters.muon_nesterov,
+      ns_steps=hyperparameters.muon_ns_steps,
+      ns_eps=hyperparameters.muon_ns_eps,
+      adjust_lr=hyperparameters.muon_adjust_lr,
+    ),
+    'adamw': torch.optim.AdamW(
+      adam_params,
+      lr=hyperparameters.learning_rate,  # shared
+      weight_decay=hyperparameters.adamw_weight_decay,
+      betas=(hyperparameters.adamw_beta1, hyperparameters.adamw_beta2),
+      eps=hyperparameters.adamw_eps,
+      fused=True
+    ),
+  }
 
-    # One scheduler per optimizer
-    optimizer_state["muon_scheduler"] = _pytorch_cosine_warmup(
-        workload.step_hint, hyperparameters, optimizer_state["muon"]
-    )
-    optimizer_state["adamw_scheduler"] = _pytorch_cosine_warmup(
-        workload.step_hint, hyperparameters, optimizer_state["adamw"]
-    )
+  # One scheduler per optimizer
+  optimizer_state['muon_scheduler'] = _pytorch_cosine_warmup(
+    workload.step_hint, hyperparameters, optimizer_state['muon']
+  )
+  optimizer_state['adamw_scheduler'] = _pytorch_cosine_warmup(
+    workload.step_hint, hyperparameters, optimizer_state['adamw']
+  )
 
-    return optimizer_state
+  return optimizer_state
 
 
 def update_params(
@@ -103,14 +119,21 @@ def update_params(
   del train_state
   del eval_results
 
+  reduced_steps = int(workload.step_hint * getattr(hyperparameters, "step_reduce", 1.0))
+  if global_step >= reduced_steps:
+    raise spec.TrainingCompleteError(
+      f"Stopping at step {global_step}/{reduced_steps} "
+      f"(step_reduce={hyperparameters.step_reduce})"
+    )
+
   current_model = current_param_container
   current_model.train()
   optimizer_state['muon'].zero_grad()
   optimizer_state['adamw'].zero_grad()
 
-  # Skip AllReduce in backward pass
+  # Skip all_reduce in backward pass:
   current_model.require_backward_grad_sync=False
-  
+
   # Fwd pass
   logits_batch, new_model_state = workload.model_fn(
     params=current_model,
@@ -128,6 +151,7 @@ def update_params(
     if hasattr(hyperparameters, 'label_smoothing')
     else 0.0
   )
+  grad_clip = getattr(hyperparameters, 'grad_clip', None)
 
   loss_dict = workload.loss_fn(
     label_batch=batch['targets'],
@@ -146,43 +170,19 @@ def update_params(
   # Compute grads, but do not AllReduce them.
   loss.backward()
 
-  # All-reduce AdamW grads
+  # Manually all-reduce AdamW grads
   for group in optimizer_state['adamw'].param_groups:
     for p in group['params']:
       if p.grad is not None:
         dist.all_reduce(p.grad, op=dist.ReduceOp.AVG)
 
-  # Muon: ReduceScatter + update params + AllGather params
+  if grad_clip is not None and grad_clip != 0:
+    raise NotImplementedError('Grad clipping not supported by MuonDataParallel.')
+
   optimizer_state['muon'].step()
-
-  # AdamW: update params
   optimizer_state['adamw'].step()
-
-  # Step LR schedulers
   optimizer_state['muon_scheduler'].step()
   optimizer_state['adamw_scheduler'].step()
-
-  # # Log training metrics - loss, grad_norm, batch_size.
-  # if global_step <= 100 or global_step % 50 == 0:
-  #   with torch.no_grad():
-  #     parameters = [p for p in current_model.parameters() if p.grad is not None]
-  #     grad_norm = torch.norm(
-  #       torch.stack([torch.norm(p.grad.detach(), 2) for p in parameters]), 2
-  #     )
-  #   if workload.metrics_logger is not None:
-  #     workload.metrics_logger.append_scalar_metrics(
-  #       {
-  #         'loss': loss.item(),
-  #         'grad_norm': grad_norm.item(),
-  #       },
-  #       global_step,
-  #     )
-  #   logging.info(
-  #     '%d) loss = %0.3f, grad_norm = %0.3f',
-  #     global_step,
-  #     loss.item(),
-  #     grad_norm.item(),
-  #   )
 
   return (optimizer_state, current_param_container, new_model_state)
 
@@ -234,6 +234,8 @@ def get_batch_size(workload_name):
     return 128
   elif workload_name == 'mnist':
     return 16
+  elif workload_name == 'finewebedu_lm':
+    return 64
   else:
     raise ValueError(f'Unsupported workload name: {workload_name}.')
 
