@@ -38,7 +38,7 @@ HPARAMS = {
   "warmup_factor": 0.05,
   "step_reduce": 1.0
 }
-hyperparameters = SimpleNamespace(**HPARAMS)
+HPARAMS = SimpleNamespace(**HPARAMS)
 
 
 def _pytorch_cosine_warmup(step_hint: int, hyperparameters, optimizer):
@@ -64,6 +64,8 @@ def init_optimizer_state(
   """Creates a Muon optimizer and a learning rate schedule."""
   del model_state
   del rng
+
+  hyperparameters = HPARAMS
 
   muon_params, adam_params = split_params_muon_adam(model_params)
 
@@ -118,6 +120,8 @@ def update_params(
   del loss_type
   del train_state
   del eval_results
+
+  hyperparameters = HPARAMS
 
   reduced_steps = int(workload.step_hint * getattr(hyperparameters, "step_reduce", 1.0))
   if global_step >= reduced_steps:
