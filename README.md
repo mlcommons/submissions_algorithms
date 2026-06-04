@@ -58,6 +58,46 @@ To submit your algorithm for evaluation on the AlgoPerf leaderboard, please foll
 2. **Create a Pull Request:** Fork this repository, create a new branch and add your submission code to a new folder within either `submissions/external_tuning/` or `submissions/self_tuning`. Open a pull request (PR) to the `evaluation` branch of this repository. Make sure to fill out the PR template asking for information such as submission name, authors, affiliations, etc.
 3. **PR Review and Evaluation:** The AlgoPerf working group will review your PR. Based on our available resources and the perceived potential of the method, it will be selected for a free evaluation and merged into the `evaluation` branch. The working group will run your submission on all workloads and push the results, as well as the updated leaderboard, to the `main`branch.
 
+## Scoring
+
+The code that computes this leaderboard lives in [`scoring/`](./scoring/). Given a
+directory of submission logs (such as those under [`previous_leaderboards/`](./previous_leaderboards/)),
+it computes the performance profiles, time-to-target, AlgoPerf benchmark scores, and
+speedups used in the tables above. This code was moved here from the
+[`scoring/` directory of the algorithmic-efficiency repository](https://github.com/mlcommons/algorithmic-efficiency)
+so that the repository that hosts the leaderboard also owns the code that produces it.
+
+### Installation
+
+The scoring code depends on the [`algoperf`](https://github.com/mlcommons/algorithmic-efficiency)
+package for the workload registry and target metrics. We recommend a fresh conda
+environment:
+
+```bash
+conda create -n algoperf-scoring python=3.11 -y && conda activate algoperf-scoring
+pip install -e .          # installs the scoring tooling and the algoperf dependency
+```
+
+### Regenerating the leaderboard
+
+```bash
+# External tuning ruleset
+python -m scoring.score_submissions \
+  --submission_directory previous_leaderboards/algoperf_v06/logs/external_tuning \
+  --compute_performance_profiles \
+  --output_dir scoring_results_external_tuning
+
+# Self-tuning ruleset (add --self_tuning_ruleset)
+python -m scoring.score_submissions \
+  --submission_directory previous_leaderboards/algoperf_v06/logs/self_tuning \
+  --compute_performance_profiles \
+  --self_tuning_ruleset \
+  --output_dir scoring_results_self_tuning
+```
+
+See the [scoring methodology](https://github.com/mlcommons/algorithmic-efficiency/blob/main/docs/DOCUMENTATION.md#scoring)
+in the benchmark documentation for details on how scores are computed.
+
 ## Citation
 
 If you use the _AlgoPerf benchmark_ in your research, please consider citing our paper.

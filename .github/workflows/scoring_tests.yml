@@ -1,0 +1,48 @@
+name: Scoring Tests
+
+# Runs the scoring code's linting and unit tests. The scoring code lives in
+# `scoring/` and computes the AlgoPerf leaderboard from submission logs.
+on:
+  push:
+    paths:
+      - 'scoring/**'
+      - 'pyproject.toml'
+      - '.github/workflows/scoring_tests.yml'
+  pull_request:
+    paths:
+      - 'scoring/**'
+      - 'pyproject.toml'
+      - '.github/workflows/scoring_tests.yml'
+
+jobs:
+  ruff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install ruff
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff==0.12.0
+      - name: Lint scoring/
+        run: ruff check scoring/
+      - name: Format check scoring/
+        run: ruff format --check scoring/
+
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install scoring package (incl. algoperf with CPU frameworks)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[dev]
+      - name: Run scoring unit tests
+        run: pytest scoring/test_scoring_utils.py
