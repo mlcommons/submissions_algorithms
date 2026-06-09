@@ -16,7 +16,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from algoperf import spec
 from algoperf.pytorch_utils import pytorch_setup
 
-from submissions.self_tuning.muon_torch_jax_hps.muon import MuonDataParallel, split_params_muon_adam
+from submissions.self_tuning.muon_torch_replicated_jax_hps.muon import MuonSingleDevice, split_params_muon_adam
 
 USE_PYTORCH_DDP = pytorch_setup()[0]
 
@@ -72,7 +72,7 @@ def init_optimizer_state(
   muon_params, adam_params = split_params_muon_adam(model_params)
 
   optimizer_state = {
-    'muon': MuonDataParallel(
+    'muon': MuonSingleDevice(
       muon_params,
       lr=hyperparameters.muon_learning_rate,
       weight_decay=hyperparameters.muon_weight_decay,
@@ -138,9 +138,6 @@ def update_params(
   optimizer_state['muon'].zero_grad()
   optimizer_state['nadamw'].zero_grad()
 
-  # Skip all_reduce in backward pass:
-  current_model.require_backward_grad_sync=False
-
   # Fwd pass
   logits_batch, new_model_state = workload.model_fn(
     params=current_model,
@@ -174,17 +171,13 @@ def update_params(
     n_valid_examples = dist_nn.all_reduce(n_valid_examples)
   loss = summed_loss / n_valid_examples
 
-  # Compute grads, but do not AllReduce them.
+  # AllReduce grads
   loss.backward()
 
-  # Manually all-reduce AdamW grads
-  for group in optimizer_state['nadamw'].param_groups:
-    for p in group['params']:
-      if p.grad is not None:
-        dist.all_reduce(p.grad, op=dist.ReduceOp.AVG)
-
-  if grad_clip is not None and grad_clip != 0:
-    raise NotImplementedError('Grad clipping not supported by MuonDataParallel.')
+  if grad_clip is not None:
+    torch.nn.utils.clip_grad_norm_(
+      current_model.parameters(), max_norm=grad_clip
+    )
 
   optimizer_state['muon'].step()
   optimizer_state['nadamw'].step()
