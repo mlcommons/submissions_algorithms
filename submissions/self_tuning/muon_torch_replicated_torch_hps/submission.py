@@ -16,7 +16,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from algoperf import spec
 from algoperf.pytorch_utils import pytorch_setup
 
-from submissions.self_tuning.muon_torch.muon import MuonDataParallel, split_params_muon_adam
+from submissions.self_tuning.muon_torch_replicated_torch_hps.muon import MuonSingleDevice, split_params_muon_adam
 
 USE_PYTORCH_DDP = pytorch_setup()[0]
 
@@ -70,7 +70,7 @@ def init_optimizer_state(
   muon_params, adam_params = split_params_muon_adam(model_params)
 
   optimizer_state = {
-    'muon': MuonDataParallel(
+    'muon': MuonSingleDevice(
       muon_params,
       lr=hyperparameters.learning_rate,  # shared
       weight_decay=hyperparameters.muon_weight_decay,
@@ -135,9 +135,6 @@ def update_params(
   optimizer_state['muon'].zero_grad()
   optimizer_state['adamw'].zero_grad()
 
-  # Skip all_reduce in backward pass:
-  current_model.require_backward_grad_sync=False
-
   # Fwd pass
   logits_batch, new_model_state = workload.model_fn(
     params=current_model,
@@ -171,22 +168,40 @@ def update_params(
     n_valid_examples = dist_nn.all_reduce(n_valid_examples)
   loss = summed_loss / n_valid_examples
 
-  # Compute grads, but do not AllReduce them.
+  # AllReduce grads
   loss.backward()
 
-  # Manually all-reduce AdamW grads
-  for group in optimizer_state['adamw'].param_groups:
-    for p in group['params']:
-      if p.grad is not None:
-        dist.all_reduce(p.grad, op=dist.ReduceOp.AVG)
-
-  if grad_clip is not None and grad_clip != 0:
-    raise NotImplementedError('Grad clipping not supported by MuonDataParallel.')
+  if grad_clip is not None:
+    torch.nn.utils.clip_grad_norm_(
+      current_model.parameters(), max_norm=grad_clip
+    )
 
   optimizer_state['muon'].step()
   optimizer_state['adamw'].step()
   optimizer_state['muon_scheduler'].step()
   optimizer_state['adamw_scheduler'].step()
+
+  # # Log training metrics - loss, grad_norm, batch_size.
+  # if global_step <= 100 or global_step % 50 == 0:
+  #   with torch.no_grad():
+  #     parameters = [p for p in current_model.parameters() if p.grad is not None]
+  #     grad_norm = torch.norm(
+  #       torch.stack([torch.norm(p.grad.detach(), 2) for p in parameters]), 2
+  #     )
+  #   if workload.metrics_logger is not None:
+  #     workload.metrics_logger.append_scalar_metrics(
+  #       {
+  #         'loss': loss.item(),
+  #         'grad_norm': grad_norm.item(),
+  #       },
+  #       global_step,
+  #     )
+  #   logging.info(
+  #     '%d) loss = %0.3f, grad_norm = %0.3f',
+  #     global_step,
+  #     loss.item(),
+  #     grad_norm.item(),
+  #   )
 
   return (optimizer_state, current_param_container, new_model_state)
 
