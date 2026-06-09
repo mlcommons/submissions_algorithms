@@ -71,10 +71,10 @@ def muon_update(g, m, beta, nesterov, ns_steps, ns_eps):
   else:
     g = m
 
-  if g.ndim == 4:
+  if g.ndim >= 3:
     g = g.reshape(g.size(0), -1)  # flatten trailing dims on 4D params
   g = zeropower_via_newtonschulz5(g, steps=ns_steps, eps=ns_eps)
-  if m.ndim == 4:
+  if m.ndim >= 3:
     g = g.view(m.shape)  # restore original shape
 
   return g
