@@ -20,15 +20,15 @@ from algoperf import jax_sharding_utils, spec
 # Fixed hyperparameters matching the Single-Worker DiLoCo init2winit config
 HPARAMS = {
     'dropout_rate': 0.0,
-    'learning_rate': 0.001,
+    'learning_rate': 0.000955,
     'warmup_factor': 0.0,
-    'sync_period': 50,
-    'beta1': 0.9,
+    'sync_period': 75,
+    'beta1': 0.99,
     'beta2': 0.995,
     'epsilon': 1e-8,
-    'weight_decay': 0.2,
-    'outer_lr': 0.4,
-    'outer_momentum': 0.75,
+    'weight_decay': 0.2424,
+    'outer_lr': 0.3006, 
+    'outer_momentum': 0.7675,
     'cpu_offload': True,  # Toggle to False to keep slow_params & nesterov_b continuously on the TPU
 }
 
