@@ -1,0 +1,508 @@
+torchrun --redirects 1:0,2:0,3:0 --standalone --nnodes=1 --nproc_per_node=4 submission_runner.py --framework=pytorch --workload=finewebedu_lm --submission_path=submissions_algorithms/submissions/self_tuning/muon_torch_replicated_jax_hps/submission.py --data_dir=/data/fineweb_edu_10B --experiment_dir=/experiment_runs --experiment_name=submissions_a100/muon_torch_replicated_jax_hps/study_2 --overwrite=True --save_checkpoints=False --rng_seed=-790709220 --torch_compile=true --tuning_ruleset=self 2>&1 | tee -a /logs/finewebedu_lm_pytorch_06-14-2026-18-38-18.log
+W0614 18:38:20.508000 9 site-packages/torch/distributed/run.py:803] 
+W0614 18:38:20.508000 9 site-packages/torch/distributed/run.py:803] *****************************************
+W0614 18:38:20.508000 9 site-packages/torch/distributed/run.py:803] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0614 18:38:20.508000 9 site-packages/torch/distributed/run.py:803] *****************************************
+2026-06-14 18:38:22.175609: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-06-14 18:38:22.175609: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-06-14 18:38:22.175609: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-06-14 18:38:22.175643: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781462302.198240      41 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781462302.198240      40 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781462302.198242      38 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781462302.198241      39 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781462302.205609      41 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781462302.205613      39 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781462302.205611      40 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781462302.205635      38 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1781462302.227341      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227341      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227344      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227341      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227372      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227372      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227374      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227375      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227376      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227377      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227377      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227376      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227378      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227379      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227380      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462302.227382      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781462307.894700      39 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1781462308.044605      38 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1781462308.114690      40 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+W0000 00:00:1781462308.450410      41 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4876: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  warnings.warn(  # warn only once
+[rank0]:[W614 18:38:30.365220823 ProcessGroupNCCL.cpp:5068] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+I0614 18:38:30.859795 139882815751360 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_replicated_jax_hps/study_2/finewebedu_lm_pytorch.
+I0614 18:38:30.859779 140283856061632 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_replicated_jax_hps/study_2/finewebedu_lm_pytorch.
+I0614 18:38:30.859778 140383069570240 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_replicated_jax_hps/study_2/finewebedu_lm_pytorch.
+I0614 18:38:30.859778 140363339424960 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_replicated_jax_hps/study_2/finewebedu_lm_pytorch.
+I0614 18:38:33.491389 139882815751360 submission_runner.py:741] Creating directory at /experiment_runs/submissions_a100/muon_torch_replicated_jax_hps/study_2/finewebedu_lm_pytorch/trial_1.
+I0614 18:38:33.836292 139882815751360 submission_runner.py:242] Initializing dataset.
+I0614 18:38:33.836474 139882815751360 submission_runner.py:251] Initializing model.
+I0614 18:38:39.706682 139882815751360 submission_runner.py:290] Performing `torch.compile`.
+I0614 18:38:39.710386 139882815751360 submission_runner.py:294] Initializing optimizer.
+I0614 18:38:39.710707 140383069570240 muon.py:227] Muon params:
+	_orig_mod.module.layers.0.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc2.weight (ndim=2)
+I0614 18:38:39.710772 140363339424960 muon.py:227] Muon params:
+	_orig_mod.module.layers.0.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc2.weight (ndim=2)
+I0614 18:38:39.710775 140283856061632 muon.py:227] Muon params:
+	_orig_mod.module.layers.0.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc2.weight (ndim=2)
+I0614 18:38:39.710877 140383069570240 muon.py:228] Adam params:
+	_orig_mod.module.embed_tokens.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.0.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.0.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.1.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.2.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.3.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.4.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.5.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.6.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.7.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.8.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.9.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.10.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.11.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.mlp_norm.weight (ndim=1)
+	_orig_mod.module.out_norm.weight (ndim=1)
+I0614 18:38:39.710888 139882815751360 muon.py:227] Muon params:
+	_orig_mod.module.layers.0.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc2.weight (ndim=2)
+I0614 18:38:39.710937 140283856061632 muon.py:228] Adam params:
+	_orig_mod.module.embed_tokens.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.0.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.0.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.1.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.2.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.3.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.4.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.5.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.6.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.7.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.8.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.9.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.10.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.11.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.mlp_norm.weight (ndim=1)
+	_orig_mod.module.out_norm.weight (ndim=1)
+I0614 18:38:39.710939 140363339424960 muon.py:228] Adam params:
+	_orig_mod.module.embed_tokens.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.0.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.0.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.1.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.2.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.3.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.4.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.5.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.6.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.7.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.8.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.9.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.10.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.11.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.mlp_norm.weight (ndim=1)
+	_orig_mod.module.out_norm.weight (ndim=1)
+I0614 18:38:39.710959 139882815751360 muon.py:228] Adam params:
+	_orig_mod.module.embed_tokens.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.0.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.0.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.1.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.2.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.3.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.4.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.5.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.6.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.7.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.8.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.9.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.10.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.11.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.mlp_norm.weight (ndim=1)
+	_orig_mod.module.out_norm.weight (ndim=1)
+I0614 18:38:39.711321 139882815751360 submission_runner.py:299] Initializing metrics bundle.
+I0614 18:38:39.711474 139882815751360 submission_runner.py:321] Initializing checkpoint and logger.
+I0614 18:38:39.713269 139882815751360 submission_runner.py:344] Saving meta data to /experiment_runs/submissions_a100/muon_torch_replicated_jax_hps/study_2/finewebedu_lm_pytorch/trial_1/meta_data_0.json.
+I0614 18:38:39.713325 140283856061632 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0614 18:38:39.713336 140363339424960 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0614 18:38:39.713372 140383069570240 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0614 18:38:39.713452 139882815751360 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0614 18:38:39.713457 140363339424960 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0614 18:38:39.713461 140283856061632 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0614 18:38:39.713506 139882815751360 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0614 18:38:39.713519 140383069570240 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0614 18:38:39.926902 139882815751360 submission_runner.py:348] Saving flags to /experiment_runs/submissions_a100/muon_torch_replicated_jax_hps/study_2/finewebedu_lm_pytorch/trial_1/flags_0.json.
+I0614 18:38:39.953852 139882815751360 submission_runner.py:359] Starting training loop.
+[rank0]:W0614 18:38:42.176000 38 site-packages/torch/_logging/_internal.py:1199] [0/0] Profiler function <class 'torch.autograd.profiler.record_function'> will be ignored
+[rank1]:W0614 18:38:42.194000 39 site-packages/torch/_logging/_internal.py:1199] [0/0] Profiler function <class 'torch.autograd.profiler.record_function'> will be ignored
+[rank3]:W0614 18:38:42.255000 41 site-packages/torch/_logging/_internal.py:1199] [0/0] Profiler function <class 'torch.autograd.profiler.record_function'> will be ignored
+[rank2]:W0614 18:38:42.291000 40 site-packages/torch/_logging/_internal.py:1199] [0/0] Profiler function <class 'torch.autograd.profiler.record_function'> will be ignored
+I0614 18:39:47.016734 139882815751360 spec.py:333] Evaluating on the training split.
+/usr/local/lib/python3.11/site-packages/torch/_dynamo/variables/functions.py:1598: UserWarning: Dynamo does not know how to trace the builtin `torch._C._distributed_c10d.pybind11_detail_function_record_v1_system_libstdcpp_gxx_abi_1xxx_use_cxx11_abi_1._broadcast_coalesced.` This function is either a Python builtin (e.g. _warnings.warn) or a third-party C/C++ Python extension (perhaps created with pybind).
+If it is a Python builtin, please file an issue on GitHub so the PyTorch team can add support for it and see the next case for a workaround.
+If it is a third-party C/C++ Python extension, please either wrap it into a PyTorch-understood custom operator (see https://pytorch.org/tutorials/advanced/custom_ops_landing_page.html for more details) or, if it is traceable, use `torch.compiler.allow_in_graph`.
+  torch._dynamo.utils.warn_once(explanation + "\n" + "\n".join(hints))
+/usr/local/lib/python3.11/site-packages/torch/_dynamo/variables/functions.py:1598: UserWarning: Dynamo does not know how to trace the builtin `torch._C._distributed_c10d.pybind11_detail_function_record_v1_system_libstdcpp_gxx_abi_1xxx_use_cxx11_abi_1._broadcast_coalesced.` This function is either a Python builtin (e.g. _warnings.warn) or a third-party C/C++ Python extension (perhaps created with pybind).
+If it is a Python builtin, please file an issue on GitHub so the PyTorch team can add support for it and see the next case for a workaround.
+If it is a third-party C/C++ Python extension, please either wrap it into a PyTorch-understood custom operator (see https://pytorch.org/tutorials/advanced/custom_ops_landing_page.html for more details) or, if it is traceable, use `torch.compiler.allow_in_graph`.
+  torch._dynamo.utils.warn_once(explanation + "\n" + "\n".join(hints))
+/usr/local/lib/python3.11/site-packages/torch/_dynamo/variables/functions.py:1598: UserWarning: Dynamo does not know how to trace the builtin `torch._C._distributed_c10d.pybind11_detail_function_record_v1_system_libstdcpp_gxx_abi_1xxx_use_cxx11_abi_1._broadcast_coalesced.` This function is either a Python builtin (e.g. _warnings.warn) or a third-party C/C++ Python extension (perhaps created with pybind).
+If it is a Python builtin, please file an issue on GitHub so the PyTorch team can add support for it and see the next case for a workaround.
+If it is a third-party C/C++ Python extension, please either wrap it into a PyTorch-understood custom operator (see https://pytorch.org/tutorials/advanced/custom_ops_landing_page.html for more details) or, if it is traceable, use `torch.compiler.allow_in_graph`.
+  torch._dynamo.utils.warn_once(explanation + "\n" + "\n".join(hints))
+/usr/local/lib/python3.11/site-packages/torch/_dynamo/variables/functions.py:1598: UserWarning: Dynamo does not know how to trace the builtin `torch._C._distributed_c10d.pybind11_detail_function_record_v1_system_libstdcpp_gxx_abi_1xxx_use_cxx11_abi_1._broadcast_coalesced.` This function is either a Python builtin (e.g. _warnings.warn) or a third-party C/C++ Python extension (perhaps created with pybind).
+If it is a Python builtin, please file an issue on GitHub so the PyTorch team can add support for it and see the next case for a workaround.
+If it is a third-party C/C++ Python extension, please either wrap it into a PyTorch-understood custom operator (see https://pytorch.org/tutorials/advanced/custom_ops_landing_page.html for more details) or, if it is traceable, use `torch.compiler.allow_in_graph`.
+  torch._dynamo.utils.warn_once(explanation + "\n" + "\n".join(hints))
+I0614 18:40:33.563512 139882815751360 spec.py:346] Evaluating on the validation split.
+I0614 18:43:17.033102 139882815751360 spec.py:363] Evaluating on the test split.
+I0614 18:43:17.033952 139882815751360 submission_runner.py:516] Time since start: 277.08s, 	Step: 1, 	{'train/loss': 10.555484771728516, 'train/ppl': 38387.40813803308, 'validation/loss': 10.567185501918159, 'validation/ppl': 38839.20687637896, 'validation/num_examples': 100000, 'test/loss': 0.0, 'test/ppl': 1.0, 'test/num_examples': 0, 'score': 66.42039799690247, 'total_duration': 277.0800657272339, 'accumulated_submission_time': 66.42039799690247, 'accumulated_eval_time': 210.0171413421631, 'accumulated_logging_time': 0}
+I0614 18:43:17.063804 139847976220416 logging_writer.py:48] [1] accumulated_eval_time=210.017, accumulated_logging_time=0, accumulated_submission_time=66.4204, global_step=1, preemption_count=0, score=66.4204, test/loss=0, test/num_examples=0, test/ppl=1, total_duration=277.08, train/loss=10.5555, train/ppl=38387.4, validation/loss=10.5672, validation/num_examples=100000, validation/ppl=38839.2
+I0614 19:26:08.850906 139882815751360 spec.py:333] Evaluating on the training split.
+I0614 19:26:25.828581 139882815751360 spec.py:346] Evaluating on the validation split.
+I0614 19:29:09.327345 139882815751360 spec.py:363] Evaluating on the test split.
+I0614 19:29:09.328181 139882815751360 submission_runner.py:516] Time since start: 3029.37s, 	Step: 6133, 	{'train/loss': 3.5112354278564455, 'train/ppl': 33.48961624197436, 'validation/loss': 3.5045275285725705, 'validation/ppl': 33.265723035230806, 'validation/num_examples': 100000, 'test/loss': 0.0, 'test/ppl': 1.0, 'test/num_examples': 0, 'score': 2634.724765062332, 'total_duration': 3029.3742763996124, 'accumulated_submission_time': 2634.724765062332, 'accumulated_eval_time': 390.494343996048, 'accumulated_logging_time': 0.07147836685180664}
+I0614 19:29:09.357021 139847967827712 logging_writer.py:48] [6133] accumulated_eval_time=390.494, accumulated_logging_time=0.0714784, accumulated_submission_time=2634.72, global_step=6133, preemption_count=0, score=2634.72, test/loss=0, test/num_examples=0, test/ppl=1, total_duration=3029.37, train/loss=3.51124, train/ppl=33.4896, validation/loss=3.50453, validation/num_examples=100000, validation/ppl=33.2657
+I0614 20:12:01.283214 139882815751360 spec.py:333] Evaluating on the training split.
+I0614 20:12:18.314674 139882815751360 spec.py:346] Evaluating on the validation split.
+I0614 20:15:02.035631 139882815751360 spec.py:363] Evaluating on the test split.
+I0614 20:15:02.036401 139882815751360 submission_runner.py:516] Time since start: 5782.08s, 	Step: 12267, 	{'train/loss': 3.364767074584961, 'train/ppl': 28.926758737004896, 'validation/loss': 3.354489065497123, 'validation/ppl': 28.63097190155883, 'validation/num_examples': 100000, 'test/loss': 0.0, 'test/ppl': 1.0, 'test/num_examples': 0, 'score': 5203.485951662064, 'total_duration': 5782.082525730133, 'accumulated_submission_time': 5203.485951662064, 'accumulated_eval_time': 571.2474553585052, 'accumulated_logging_time': 0.10944509506225586}
+I0614 20:15:02.061127 139847976220416 logging_writer.py:48] [12267] accumulated_eval_time=571.247, accumulated_logging_time=0.109445, accumulated_submission_time=5203.49, global_step=12267, preemption_count=0, score=5203.49, test/loss=0, test/num_examples=0, test/ppl=1, total_duration=5782.08, train/loss=3.36477, train/ppl=28.9268, validation/loss=3.35449, validation/num_examples=100000, validation/ppl=28.631
+I0614 20:57:53.842933 139882815751360 spec.py:333] Evaluating on the training split.
+I0614 20:58:11.132720 139882815751360 spec.py:346] Evaluating on the validation split.
+I0614 21:00:54.689170 139882815751360 spec.py:363] Evaluating on the test split.
+I0614 21:00:54.689943 139882815751360 submission_runner.py:516] Time since start: 8534.74s, 	Step: 18402, 	{'train/loss': 3.290039825439453, 'train/ppl': 26.843932706027392, 'validation/loss': 3.2795347716192453, 'validation/ppl': 26.563411771723732, 'validation/num_examples': 100000, 'test/loss': 0.0, 'test/ppl': 1.0, 'test/num_examples': 0, 'score': 7772.168460845947, 'total_duration': 8534.736054182053, 'accumulated_submission_time': 7772.168460845947, 'accumulated_eval_time': 752.0943691730499, 'accumulated_logging_time': 0.14261698722839355}
+I0614 21:00:54.714647 139847967827712 logging_writer.py:48] [18402] accumulated_eval_time=752.094, accumulated_logging_time=0.142617, accumulated_submission_time=7772.17, global_step=18402, preemption_count=0, score=7772.17, test/loss=0, test/num_examples=0, test/ppl=1, total_duration=8534.74, train/loss=3.29004, train/ppl=26.8439, validation/loss=3.27953, validation/num_examples=100000, validation/ppl=26.5634
+I0614 21:43:46.276546 139882815751360 spec.py:333] Evaluating on the training split.
+I0614 21:44:03.572726 139882815751360 spec.py:346] Evaluating on the validation split.
+I0614 21:46:47.162523 139882815751360 spec.py:363] Evaluating on the test split.
+I0614 21:46:47.163179 139882815751360 submission_runner.py:516] Time since start: 11287.21s, 	Step: 24537, 	{'train/loss': 3.236084747314453, 'train/ppl': 25.433946225354994, 'validation/loss': 3.2240855029171995, 'validation/ppl': 25.1305818004542, 'validation/num_examples': 100000, 'test/loss': 0.0, 'test/ppl': 1.0, 'test/num_examples': 0, 'score': 10340.67691731453, 'total_duration': 11287.209333896637, 'accumulated_submission_time': 10340.67691731453, 'accumulated_eval_time': 932.9809477329254, 'accumulated_logging_time': 0.1756734848022461}
+I0614 21:46:47.187851 139847976220416 logging_writer.py:48] [24537] accumulated_eval_time=932.981, accumulated_logging_time=0.175673, accumulated_submission_time=10340.7, global_step=24537, preemption_count=0, score=10340.7, test/loss=0, test/num_examples=0, test/ppl=1, total_duration=11287.2, train/loss=3.23608, train/ppl=25.4339, validation/loss=3.22409, validation/num_examples=100000, validation/ppl=25.1306
+I0614 22:29:39.098064 139882815751360 spec.py:333] Evaluating on the training split.
+I0614 22:29:56.383232 139882815751360 spec.py:346] Evaluating on the validation split.
+I0614 22:32:40.006337 139882815751360 spec.py:363] Evaluating on the test split.
+I0614 22:32:40.007026 139882815751360 submission_runner.py:516] Time since start: 14040.05s, 	Step: 30676, 	{'train/loss': 3.184682846069336, 'train/ppl': 24.15962487065808, 'validation/loss': 3.1736226972106776, 'validation/ppl': 23.89388807636117, 'validation/num_examples': 100000, 'test/loss': 0.0, 'test/ppl': 1.0, 'test/num_examples': 0, 'score': 12909.646122694016, 'total_duration': 14040.053198575974, 'accumulated_submission_time': 12909.646122694016, 'accumulated_eval_time': 1113.8898537158966, 'accumulated_logging_time': 0.20865797996520996}
+I0614 22:32:40.030047 139847967827712 logging_writer.py:48] [30676] accumulated_eval_time=1113.89, accumulated_logging_time=0.208658, accumulated_submission_time=12909.6, global_step=30676, preemption_count=0, score=12909.6, test/loss=0, test/num_examples=0, test/ppl=1, total_duration=14040.1, train/loss=3.18468, train/ppl=24.1596, validation/loss=3.17362, validation/num_examples=100000, validation/ppl=23.8939
+I0614 23:15:31.687195 139882815751360 spec.py:333] Evaluating on the training split.
+I0614 23:15:48.976455 139882815751360 spec.py:346] Evaluating on the validation split.
+I0614 23:18:32.518647 139882815751360 spec.py:363] Evaluating on the test split.
+I0614 23:18:32.519356 139882815751360 submission_runner.py:516] Time since start: 16792.57s, 	Step: 36815, 	{'train/loss': 3.1352207183837892, 'train/ppl': 22.993710416588726, 'validation/loss': 3.122435586836637, 'validation/ppl': 22.70160409200244, 'validation/num_examples': 100000, 'test/loss': 0.0, 'test/ppl': 1.0, 'test/num_examples': 0, 'score': 15478.397482395172, 'total_duration': 16792.565495491028, 'accumulated_submission_time': 15478.397482395172, 'accumulated_eval_time': 1294.7219517230988, 'accumulated_logging_time': 0.24009966850280762}
+I0614 23:18:32.542837 139847976220416 logging_writer.py:48] [36815] accumulated_eval_time=1294.72, accumulated_logging_time=0.2401, accumulated_submission_time=15478.4, global_step=36815, preemption_count=0, score=15478.4, test/loss=0, test/num_examples=0, test/ppl=1, total_duration=16792.6, train/loss=3.13522, train/ppl=22.9937, validation/loss=3.12244, validation/num_examples=100000, validation/ppl=22.7016
+I0615 00:01:24.260702 139882815751360 spec.py:333] Evaluating on the training split.
+I0615 00:01:41.244056 139882815751360 spec.py:346] Evaluating on the validation split.
+I0615 00:04:24.836729 139882815751360 spec.py:363] Evaluating on the test split.
+I0615 00:04:24.837488 139882815751360 submission_runner.py:516] Time since start: 19544.88s, 	Step: 42954, 	{'train/loss': 3.0847185134887694, 'train/ppl': 21.861312311373755, 'validation/loss': 3.0699675186820654, 'validation/ppl': 21.541202976976333, 'validation/num_examples': 100000, 'test/loss': 0.0, 'test/ppl': 1.0, 'test/num_examples': 0, 'score': 18047.212738990784, 'total_duration': 19544.883652448654, 'accumulated_submission_time': 18047.212738990784, 'accumulated_eval_time': 1475.2986781597137, 'accumulated_logging_time': 0.27175140380859375}
+I0615 00:04:24.861735 139847967827712 logging_writer.py:48] [42954] accumulated_eval_time=1475.3, accumulated_logging_time=0.271751, accumulated_submission_time=18047.2, global_step=42954, preemption_count=0, score=18047.2, test/loss=0, test/num_examples=0, test/ppl=1, total_duration=19544.9, train/loss=3.08472, train/ppl=21.8613, validation/loss=3.06997, validation/num_examples=100000, validation/ppl=21.5412
+I0615 00:04:25.418387 139847976220416 logging_writer.py:48] [42954] global_step=42954, preemption_count=0, score=18047.2
+I0615 00:04:25.426851 139882815751360 submission_runner.py:857] Final finewebedu_lm score: 18047.212738990784

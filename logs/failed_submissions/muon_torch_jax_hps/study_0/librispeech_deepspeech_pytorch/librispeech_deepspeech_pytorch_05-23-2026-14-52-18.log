@@ -1,0 +1,646 @@
+torchrun --redirects 1:0,2:0,3:0 --standalone --nnodes=1 --nproc_per_node=4 submission_runner.py --framework=pytorch --workload=librispeech_deepspeech --submission_path=submissions_algorithms/submissions/self_tuning/muon_torch_jax_hps/submission.py --data_dir=/data/librispeech --experiment_dir=/experiment_runs --experiment_name=submissions_a100/muon_torch_jax_hps/study_0 --overwrite=True --save_checkpoints=False --rng_seed=1314915485 --librispeech_tokenizer_vocab_path=/data/librispeech/spm_model.vocab --torch_compile=true --tuning_ruleset=self 2>&1 | tee -a /logs/librispeech_deepspeech_pytorch_05-23-2026-14-52-18.log
+W0523 14:52:19.905000 9 site-packages/torch/distributed/run.py:803] 
+W0523 14:52:19.905000 9 site-packages/torch/distributed/run.py:803] *****************************************
+W0523 14:52:19.905000 9 site-packages/torch/distributed/run.py:803] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0523 14:52:19.905000 9 site-packages/torch/distributed/run.py:803] *****************************************
+2026-05-23 14:52:21.478337: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-05-23 14:52:21.478341: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-05-23 14:52:21.478340: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-05-23 14:52:21.478341: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1779547941.501282      39 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1779547941.501282      41 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1779547941.501281      40 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1779547941.501281      38 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1779547941.508774      38 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1779547941.508776      41 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1779547941.508776      39 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1779547941.508959      40 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1779547941.531013      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531014      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531013      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531015      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531043      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531044      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531046      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531046      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531048      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531048      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531046      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531048      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531051      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531051      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531053      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547941.531054      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1779547947.378346      40 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1779547947.596665      38 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1779547947.619868      39 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1779547947.673106      41 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4876: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  warnings.warn(  # warn only once
+[rank0]:[W523 14:52:29.999853535 ProcessGroupNCCL.cpp:5068] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+I0523 14:52:30.394480 140526218892480 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps/study_0/librispeech_deepspeech_pytorch.
+I0523 14:52:30.394482 140333556745408 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps/study_0/librispeech_deepspeech_pytorch.
+I0523 14:52:30.394482 140495366489280 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps/study_0/librispeech_deepspeech_pytorch.
+I0523 14:52:30.394507 140209113633984 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps/study_0/librispeech_deepspeech_pytorch.
+I0523 14:52:33.098291 140333556745408 submission_runner.py:741] Creating directory at /experiment_runs/submissions_a100/muon_torch_jax_hps/study_0/librispeech_deepspeech_pytorch/trial_1.
+I0523 14:52:33.473422 140333556745408 submission_runner.py:242] Initializing dataset.
+I0523 14:52:33.473618 140333556745408 input_pipeline.py:19] Loading split = train-clean-100
+I0523 14:52:33.548917 140333556745408 input_pipeline.py:19] Loading split = train-clean-360
+I0523 14:52:33.761455 140333556745408 input_pipeline.py:19] Loading split = train-other-500
+I0523 14:52:34.408984 140333556745408 submission_runner.py:251] Initializing model.
+W0523 14:52:38.941321 140333556745408 submission_runner.py:273] These workloads cannot be fully compiled under current PyTorch version. Proceeding without `torch.compile`.
+W0523 14:52:38.942339 140495366489280 submission_runner.py:273] These workloads cannot be fully compiled under current PyTorch version. Proceeding without `torch.compile`.
+W0523 14:52:38.942772 140209113633984 submission_runner.py:273] These workloads cannot be fully compiled under current PyTorch version. Proceeding without `torch.compile`.
+W0523 14:52:38.942893 140526218892480 submission_runner.py:273] These workloads cannot be fully compiled under current PyTorch version. Proceeding without `torch.compile`.
+I0523 14:52:38.943522 140333556745408 submission_runner.py:294] Initializing optimizer.
+I0523 14:52:38.943951 140333556745408 muon.py:324] Muon params:
+	module.subsample.conv1.kernel (ndim=4)
+	module.subsample.conv2.kernel (ndim=4)
+	module.subsample.lin.weight (ndim=2)
+	module.lstms.0.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.0.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.0.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.0.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.1.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.1.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.1.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.1.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.2.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.2.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.2.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.2.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.3.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.3.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.3.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.3.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.4.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.4.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.4.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.4.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.5.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.5.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.5.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.5.lstm.weight_hh_l0_reverse (ndim=2)
+	module.ffns.0.lin.weight (ndim=2)
+	module.ffns.1.lin.weight (ndim=2)
+	module.ffns.2.lin.weight (ndim=2)
+	module.lin.weight (ndim=2)
+I0523 14:52:38.944022 140333556745408 muon.py:325] Adam params:
+	module.subsample.conv1.bias (ndim=1)
+	module.subsample.conv2.bias (ndim=1)
+	module.subsample.lin.bias (ndim=1)
+	module.lstms.0.bn_normalization_layer.weight (ndim=1)
+	module.lstms.0.bn_normalization_layer.bias (ndim=1)
+	module.lstms.0.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.0.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.0.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.0.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.1.bn_normalization_layer.weight (ndim=1)
+	module.lstms.1.bn_normalization_layer.bias (ndim=1)
+	module.lstms.1.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.1.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.1.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.1.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.2.bn_normalization_layer.weight (ndim=1)
+	module.lstms.2.bn_normalization_layer.bias (ndim=1)
+	module.lstms.2.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.2.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.2.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.2.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.3.bn_normalization_layer.weight (ndim=1)
+	module.lstms.3.bn_normalization_layer.bias (ndim=1)
+	module.lstms.3.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.3.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.3.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.3.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.4.bn_normalization_layer.weight (ndim=1)
+	module.lstms.4.bn_normalization_layer.bias (ndim=1)
+	module.lstms.4.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.4.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.4.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.4.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.5.bn_normalization_layer.weight (ndim=1)
+	module.lstms.5.bn_normalization_layer.bias (ndim=1)
+	module.lstms.5.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.5.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.5.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.5.lstm.bias_hh_l0_reverse (ndim=1)
+	module.ffns.0.bn_normalization_layer.weight (ndim=1)
+	module.ffns.0.bn_normalization_layer.bias (ndim=1)
+	module.ffns.0.lin.bias (ndim=1)
+	module.ffns.1.bn_normalization_layer.weight (ndim=1)
+	module.ffns.1.bn_normalization_layer.bias (ndim=1)
+	module.ffns.1.lin.bias (ndim=1)
+	module.ffns.2.bn_normalization_layer.weight (ndim=1)
+	module.ffns.2.bn_normalization_layer.bias (ndim=1)
+	module.ffns.2.lin.bias (ndim=1)
+	module.ln.scale (ndim=1)
+	module.ln.bias (ndim=1)
+	module.lin.bias (ndim=1)
+I0523 14:52:38.944792 140495366489280 muon.py:324] Muon params:
+	module.subsample.conv1.kernel (ndim=4)
+	module.subsample.conv2.kernel (ndim=4)
+	module.subsample.lin.weight (ndim=2)
+	module.lstms.0.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.0.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.0.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.0.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.1.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.1.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.1.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.1.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.2.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.2.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.2.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.2.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.3.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.3.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.3.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.3.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.4.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.4.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.4.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.4.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.5.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.5.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.5.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.5.lstm.weight_hh_l0_reverse (ndim=2)
+	module.ffns.0.lin.weight (ndim=2)
+	module.ffns.1.lin.weight (ndim=2)
+	module.ffns.2.lin.weight (ndim=2)
+	module.lin.weight (ndim=2)
+I0523 14:52:38.944941 140495366489280 muon.py:325] Adam params:
+	module.subsample.conv1.bias (ndim=1)
+	module.subsample.conv2.bias (ndim=1)
+	module.subsample.lin.bias (ndim=1)
+	module.lstms.0.bn_normalization_layer.weight (ndim=1)
+	module.lstms.0.bn_normalization_layer.bias (ndim=1)
+	module.lstms.0.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.0.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.0.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.0.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.1.bn_normalization_layer.weight (ndim=1)
+	module.lstms.1.bn_normalization_layer.bias (ndim=1)
+	module.lstms.1.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.1.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.1.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.1.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.2.bn_normalization_layer.weight (ndim=1)
+	module.lstms.2.bn_normalization_layer.bias (ndim=1)
+	module.lstms.2.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.2.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.2.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.2.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.3.bn_normalization_layer.weight (ndim=1)
+	module.lstms.3.bn_normalization_layer.bias (ndim=1)
+	module.lstms.3.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.3.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.3.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.3.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.4.bn_normalization_layer.weight (ndim=1)
+	module.lstms.4.bn_normalization_layer.bias (ndim=1)
+	module.lstms.4.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.4.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.4.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.4.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.5.bn_normalization_layer.weight (ndim=1)
+	module.lstms.5.bn_normalization_layer.bias (ndim=1)
+	module.lstms.5.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.5.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.5.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.5.lstm.bias_hh_l0_reverse (ndim=1)
+	module.ffns.0.bn_normalization_layer.weight (ndim=1)
+	module.ffns.0.bn_normalization_layer.bias (ndim=1)
+	module.ffns.0.lin.bias (ndim=1)
+	module.ffns.1.bn_normalization_layer.weight (ndim=1)
+	module.ffns.1.bn_normalization_layer.bias (ndim=1)
+	module.ffns.1.lin.bias (ndim=1)
+	module.ffns.2.bn_normalization_layer.weight (ndim=1)
+	module.ffns.2.bn_normalization_layer.bias (ndim=1)
+	module.ffns.2.lin.bias (ndim=1)
+	module.ln.scale (ndim=1)
+	module.ln.bias (ndim=1)
+	module.lin.bias (ndim=1)
+I0523 14:52:38.945199 140333556745408 submission_runner.py:299] Initializing metrics bundle.
+I0523 14:52:38.945189 140209113633984 muon.py:324] Muon params:
+	module.subsample.conv1.kernel (ndim=4)
+	module.subsample.conv2.kernel (ndim=4)
+	module.subsample.lin.weight (ndim=2)
+	module.lstms.0.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.0.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.0.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.0.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.1.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.1.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.1.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.1.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.2.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.2.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.2.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.2.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.3.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.3.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.3.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.3.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.4.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.4.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.4.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.4.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.5.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.5.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.5.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.5.lstm.weight_hh_l0_reverse (ndim=2)
+	module.ffns.0.lin.weight (ndim=2)
+	module.ffns.1.lin.weight (ndim=2)
+	module.ffns.2.lin.weight (ndim=2)
+	module.lin.weight (ndim=2)
+I0523 14:52:38.945303 140209113633984 muon.py:325] Adam params:
+	module.subsample.conv1.bias (ndim=1)
+	module.subsample.conv2.bias (ndim=1)
+	module.subsample.lin.bias (ndim=1)
+	module.lstms.0.bn_normalization_layer.weight (ndim=1)
+	module.lstms.0.bn_normalization_layer.bias (ndim=1)
+	module.lstms.0.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.0.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.0.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.0.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.1.bn_normalization_layer.weight (ndim=1)
+	module.lstms.1.bn_normalization_layer.bias (ndim=1)
+	module.lstms.1.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.1.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.1.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.1.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.2.bn_normalization_layer.weight (ndim=1)
+	module.lstms.2.bn_normalization_layer.bias (ndim=1)
+	module.lstms.2.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.2.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.2.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.2.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.3.bn_normalization_layer.weight (ndim=1)
+	module.lstms.3.bn_normalization_layer.bias (ndim=1)
+	module.lstms.3.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.3.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.3.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.3.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.4.bn_normalization_layer.weight (ndim=1)
+	module.lstms.4.bn_normalization_layer.bias (ndim=1)
+	module.lstms.4.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.4.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.4.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.4.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.5.bn_normalization_layer.weight (ndim=1)
+	module.lstms.5.bn_normalization_layer.bias (ndim=1)
+	module.lstms.5.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.5.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.5.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.5.lstm.bias_hh_l0_reverse (ndim=1)
+	module.ffns.0.bn_normalization_layer.weight (ndim=1)
+	module.ffns.0.bn_normalization_layer.bias (ndim=1)
+	module.ffns.0.lin.bias (ndim=1)
+	module.ffns.1.bn_normalization_layer.weight (ndim=1)
+	module.ffns.1.bn_normalization_layer.bias (ndim=1)
+	module.ffns.1.lin.bias (ndim=1)
+	module.ffns.2.bn_normalization_layer.weight (ndim=1)
+	module.ffns.2.bn_normalization_layer.bias (ndim=1)
+	module.ffns.2.lin.bias (ndim=1)
+	module.ln.scale (ndim=1)
+	module.ln.bias (ndim=1)
+	module.lin.bias (ndim=1)
+I0523 14:52:38.945376 140333556745408 submission_runner.py:321] Initializing checkpoint and logger.
+I0523 14:52:38.945314 140526218892480 muon.py:324] Muon params:
+	module.subsample.conv1.kernel (ndim=4)
+	module.subsample.conv2.kernel (ndim=4)
+	module.subsample.lin.weight (ndim=2)
+	module.lstms.0.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.0.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.0.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.0.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.1.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.1.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.1.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.1.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.2.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.2.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.2.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.2.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.3.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.3.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.3.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.3.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.4.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.4.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.4.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.4.lstm.weight_hh_l0_reverse (ndim=2)
+	module.lstms.5.lstm.weight_ih_l0 (ndim=2)
+	module.lstms.5.lstm.weight_hh_l0 (ndim=2)
+	module.lstms.5.lstm.weight_ih_l0_reverse (ndim=2)
+	module.lstms.5.lstm.weight_hh_l0_reverse (ndim=2)
+	module.ffns.0.lin.weight (ndim=2)
+	module.ffns.1.lin.weight (ndim=2)
+	module.ffns.2.lin.weight (ndim=2)
+	module.lin.weight (ndim=2)
+I0523 14:52:38.945441 140526218892480 muon.py:325] Adam params:
+	module.subsample.conv1.bias (ndim=1)
+	module.subsample.conv2.bias (ndim=1)
+	module.subsample.lin.bias (ndim=1)
+	module.lstms.0.bn_normalization_layer.weight (ndim=1)
+	module.lstms.0.bn_normalization_layer.bias (ndim=1)
+	module.lstms.0.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.0.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.0.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.0.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.1.bn_normalization_layer.weight (ndim=1)
+	module.lstms.1.bn_normalization_layer.bias (ndim=1)
+	module.lstms.1.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.1.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.1.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.1.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.2.bn_normalization_layer.weight (ndim=1)
+	module.lstms.2.bn_normalization_layer.bias (ndim=1)
+	module.lstms.2.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.2.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.2.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.2.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.3.bn_normalization_layer.weight (ndim=1)
+	module.lstms.3.bn_normalization_layer.bias (ndim=1)
+	module.lstms.3.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.3.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.3.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.3.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.4.bn_normalization_layer.weight (ndim=1)
+	module.lstms.4.bn_normalization_layer.bias (ndim=1)
+	module.lstms.4.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.4.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.4.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.4.lstm.bias_hh_l0_reverse (ndim=1)
+	module.lstms.5.bn_normalization_layer.weight (ndim=1)
+	module.lstms.5.bn_normalization_layer.bias (ndim=1)
+	module.lstms.5.lstm.bias_ih_l0 (ndim=1)
+	module.lstms.5.lstm.bias_hh_l0 (ndim=1)
+	module.lstms.5.lstm.bias_ih_l0_reverse (ndim=1)
+	module.lstms.5.lstm.bias_hh_l0_reverse (ndim=1)
+	module.ffns.0.bn_normalization_layer.weight (ndim=1)
+	module.ffns.0.bn_normalization_layer.bias (ndim=1)
+	module.ffns.0.lin.bias (ndim=1)
+	module.ffns.1.bn_normalization_layer.weight (ndim=1)
+	module.ffns.1.bn_normalization_layer.bias (ndim=1)
+	module.ffns.1.lin.bias (ndim=1)
+	module.ffns.2.bn_normalization_layer.weight (ndim=1)
+	module.ffns.2.bn_normalization_layer.bias (ndim=1)
+	module.ffns.2.lin.bias (ndim=1)
+	module.ln.scale (ndim=1)
+	module.ln.bias (ndim=1)
+	module.lin.bias (ndim=1)
+I0523 14:52:38.946867 140333556745408 submission_runner.py:344] Saving meta data to /experiment_runs/submissions_a100/muon_torch_jax_hps/study_0/librispeech_deepspeech_pytorch/trial_1/meta_data_0.json.
+I0523 14:52:38.947002 140495366489280 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0523 14:52:38.947087 140333556745408 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0523 14:52:38.947113 140495366489280 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0523 14:52:38.947077 140209113633984 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0523 14:52:38.947146 140333556745408 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0523 14:52:38.947185 140209113633984 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0523 14:52:38.947203 140526218892480 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0523 14:52:38.947321 140526218892480 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0523 14:52:39.222248 140333556745408 submission_runner.py:348] Saving flags to /experiment_runs/submissions_a100/muon_torch_jax_hps/study_0/librispeech_deepspeech_pytorch/trial_1/flags_0.json.
+I0523 14:52:39.237051 140333556745408 submission_runner.py:359] Starting training loop.
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+/algorithmic-efficiency/algoperf/workloads/librispeech_conformer/librispeech_pytorch/preprocessor.py:516: UserWarning: Specified kernel cache directory could not be created! This disables kernel caching. Specified directory is /root/.cache/torch/kernels. This warning will appear only once per process. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/jit_utils.cpp:1487.)
+  spectrum = torch.abs(spectrum)
+/algorithmic-efficiency/algoperf/workloads/librispeech_conformer/librispeech_pytorch/preprocessor.py:516: UserWarning: Specified kernel cache directory could not be created! This disables kernel caching. Specified directory is /root/.cache/torch/kernels. This warning will appear only once per process. (Triggered internally at /pytorch/aten/src/ATen/native/cuda/jit_utils.cpp:1487.)
+  spectrum = torch.abs(spectrum)
+I0523 14:53:25.861016 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 14:53:25.862294 140333556745408 input_pipeline.py:19] Loading split = train-clean-100
+I0523 14:53:25.887633 140333556745408 input_pipeline.py:19] Loading split = train-clean-360
+I0523 14:53:25.976263 140333556745408 input_pipeline.py:19] Loading split = train-other-500
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 14:54:01.656484 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 14:54:01.657539 140333556745408 input_pipeline.py:19] Loading split = dev-clean
+I0523 14:54:01.699989 140333556745408 input_pipeline.py:19] Loading split = dev-other
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 14:54:27.834822 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 14:54:27.835955 140333556745408 input_pipeline.py:19] Loading split = test-clean
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 14:54:40.333878 140333556745408 submission_runner.py:516] Time since start: 121.10s, 	Step: 1, 	{'train/ctc_loss': 31.71892244218228, 'train/wer': 3.338780418788908, 'validation/ctc_loss': 30.614175205947358, 'validation/wer': 3.19612803553324, 'validation/num_examples': 5348, 'test/ctc_loss': 30.780095490031616, 'test/wer': 3.2484918652123578, 'test/num_examples': 2472, 'score': 45.97836399078369, 'total_duration': 121.09665989875793, 'accumulated_submission_time': 45.97836399078369, 'accumulated_eval_time': 74.4727041721344, 'accumulated_logging_time': 0}
+I0523 14:54:40.364643 140314215962368 logging_writer.py:48] [1] accumulated_eval_time=74.4727, accumulated_logging_time=0, accumulated_submission_time=45.9784, global_step=1, preemption_count=0, score=45.9784, test/ctc_loss=30.7801, test/num_examples=2472, test/wer=3.24849, total_duration=121.097, train/ctc_loss=31.7189, train/wer=3.33878, validation/ctc_loss=30.6142, validation/num_examples=5348, validation/wer=3.19613
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 15:18:48.241738 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 15:19:12.596427 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 15:19:33.009852 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 15:19:44.140593 140333556745408 submission_runner.py:516] Time since start: 1624.86s, 	Step: 1075, 	{'train/ctc_loss': 31.927769227356645, 'train/wer': 3.14861673414305, 'validation/ctc_loss': 30.66696177416114, 'validation/wer': 2.7552648095399026, 'validation/num_examples': 5348, 'test/ctc_loss': 30.711326537195948, 'test/wer': 3.1688704730566895, 'test/num_examples': 2472, 'score': 1491.698585987091, 'total_duration': 1624.8583693504333, 'accumulated_submission_time': 1491.698585987091, 'accumulated_eval_time': 130.32644844055176, 'accumulated_logging_time': 0.07853126525878906}
+I0523 15:19:44.177059 140314215962368 logging_writer.py:48] [1075] accumulated_eval_time=130.326, accumulated_logging_time=0.0785313, accumulated_submission_time=1491.7, global_step=1075, preemption_count=0, score=1491.7, test/ctc_loss=30.7113, test/num_examples=2472, test/wer=3.16887, total_duration=1624.86, train/ctc_loss=31.9278, train/wer=3.14862, validation/ctc_loss=30.667, validation/num_examples=5348, validation/wer=2.75526
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 15:43:53.209214 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 15:44:15.003366 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 15:44:35.061188 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 15:44:46.064846 140333556745408 submission_runner.py:516] Time since start: 3126.83s, 	Step: 2502, 	{'train/ctc_loss': 32.49730576419721, 'train/wer': 3.128569718340516, 'validation/ctc_loss': 31.130117289531846, 'validation/wer': 2.7924395307294936, 'validation/num_examples': 5348, 'test/ctc_loss': 31.2598103103426, 'test/wer': 3.0661141917006884, 'test/num_examples': 2472, 'score': 2938.2983725070953, 'total_duration': 3126.8276133537292, 'accumulated_submission_time': 2938.2983725070953, 'accumulated_eval_time': 183.18199968338013, 'accumulated_logging_time': 0.12577462196350098}
+I0523 15:44:46.100751 140314215962368 logging_writer.py:48] [2502] accumulated_eval_time=183.182, accumulated_logging_time=0.125775, accumulated_submission_time=2938.3, global_step=2502, preemption_count=0, score=2938.3, test/ctc_loss=31.2598, test/num_examples=2472, test/wer=3.06611, total_duration=3126.83, train/ctc_loss=32.4973, train/wer=3.12857, validation/ctc_loss=31.1301, validation/num_examples=5348, validation/wer=2.79244
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 16:08:54.537039 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 16:09:17.908166 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 16:09:38.199626 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 16:09:49.284696 140333556745408 submission_runner.py:516] Time since start: 4630.02s, 	Step: 4031, 	{'train/ctc_loss': 32.85812519409077, 'train/wer': 3.6424785599233815, 'validation/ctc_loss': 31.315024110910187, 'validation/wer': 3.409636460194081, 'validation/num_examples': 5348, 'test/ctc_loss': 31.573991870443255, 'test/wer': 3.6056100582942334, 'test/num_examples': 2472, 'score': 4384.234812736511, 'total_duration': 4630.023916006088, 'accumulated_submission_time': 4384.234812736511, 'accumulated_eval_time': 237.9060835838318, 'accumulated_logging_time': 0.17264246940612793}
+I0523 16:09:49.323310 140314215962368 logging_writer.py:48] [4031] accumulated_eval_time=237.906, accumulated_logging_time=0.172642, accumulated_submission_time=4384.23, global_step=4031, preemption_count=0, score=4384.23, test/ctc_loss=31.574, test/num_examples=2472, test/wer=3.60561, total_duration=4630.02, train/ctc_loss=32.8581, train/wer=3.64248, validation/ctc_loss=31.315, validation/num_examples=5348, validation/wer=3.40964
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 16:33:58.035166 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 16:34:21.993488 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 16:34:44.444175 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 16:34:55.859174 140333556745408 submission_runner.py:516] Time since start: 6136.62s, 	Step: 5907, 	{'train/ctc_loss': 33.10571505598345, 'train/wer': 3.903040790562013, 'validation/ctc_loss': 31.549012959614224, 'validation/wer': 3.601544923478009, 'validation/num_examples': 5348, 'test/ctc_loss': 31.75429059939351, 'test/wer': 3.785794081205695, 'test/num_examples': 2472, 'score': 5830.212316274643, 'total_duration': 6136.62195110321, 'accumulated_submission_time': 5830.212316274643, 'accumulated_eval_time': 295.7299587726593, 'accumulated_logging_time': 0.22232437133789062}
+I0523 16:34:55.893466 140314215962368 logging_writer.py:48] [5907] accumulated_eval_time=295.73, accumulated_logging_time=0.222324, accumulated_submission_time=5830.21, global_step=5907, preemption_count=0, score=5830.21, test/ctc_loss=31.7543, test/num_examples=2472, test/wer=3.78579, total_duration=6136.62, train/ctc_loss=33.1057, train/wer=3.90304, validation/ctc_loss=31.549, validation/num_examples=5348, validation/wer=3.60154
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 16:59:04.196408 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 16:59:31.243520 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 16:59:51.910871 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 17:00:03.343540 140333556745408 submission_runner.py:516] Time since start: 7644.11s, 	Step: 7773, 	{'train/ctc_loss': 33.21765807946545, 'train/wer': 4.1344956684515255, 'validation/ctc_loss': 31.692504269640345, 'validation/wer': 3.824052527398252, 'validation/num_examples': 5348, 'test/ctc_loss': 31.872082069810954, 'test/wer': 4.010440151930616, 'test/num_examples': 2472, 'score': 7275.739889383316, 'total_duration': 7644.106353759766, 'accumulated_submission_time': 7275.739889383316, 'accumulated_eval_time': 354.87699937820435, 'accumulated_logging_time': 0.267575740814209}
+I0523 17:00:03.454772 140314215962368 logging_writer.py:48] [7773] accumulated_eval_time=354.877, accumulated_logging_time=0.267576, accumulated_submission_time=7275.74, global_step=7773, preemption_count=0, score=7275.74, test/ctc_loss=31.8721, test/num_examples=2472, test/wer=4.01044, total_duration=7644.11, train/ctc_loss=33.2177, train/wer=4.1345, validation/ctc_loss=31.6925, validation/num_examples=5348, validation/wer=3.82405
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 17:24:11.507233 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 17:24:36.557945 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 17:24:57.093389 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 17:25:08.604170 140333556745408 submission_runner.py:516] Time since start: 9149.37s, 	Step: 9521, 	{'train/ctc_loss': 33.241355069224284, 'train/wer': 4.197803752557572, 'validation/ctc_loss': 31.726705344585092, 'validation/wer': 3.887230241877082, 'validation/num_examples': 5348, 'test/ctc_loss': 31.904251887218532, 'test/wer': 4.07860581317409, 'test/num_examples': 2472, 'score': 8721.095255374908, 'total_duration': 9149.366946697235, 'accumulated_submission_time': 8721.095255374908, 'accumulated_eval_time': 411.97394728660583, 'accumulated_logging_time': 0.38954591751098633}
+I0523 17:25:08.639217 140314215962368 logging_writer.py:48] [9521] accumulated_eval_time=411.974, accumulated_logging_time=0.389546, accumulated_submission_time=8721.1, global_step=9521, preemption_count=0, score=8721.1, test/ctc_loss=31.9043, test/num_examples=2472, test/wer=4.07861, total_duration=9149.37, train/ctc_loss=33.2414, train/wer=4.1978, validation/ctc_loss=31.7267, validation/num_examples=5348, validation/wer=3.88723
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 17:49:19.477355 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 17:49:44.785729 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 17:50:05.292876 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 17:50:16.583665 140333556745408 submission_runner.py:516] Time since start: 10657.35s, 	Step: 11284, 	{'train/ctc_loss': 33.24499629734535, 'train/wer': 4.21134800400505, 'validation/ctc_loss': 31.732136578259997, 'validation/wer': 3.9011828320378505, 'validation/num_examples': 5348, 'test/ctc_loss': 31.90966513968643, 'test/wer': 4.092336441005017, 'test/num_examples': 2472, 'score': 10166.823481321335, 'total_duration': 10657.346492767334, 'accumulated_submission_time': 10166.823481321335, 'accumulated_eval_time': 469.0802352428436, 'accumulated_logging_time': 0.4354054927825928}
+I0523 17:50:18.017734 140314215962368 logging_writer.py:48] [11284] accumulated_eval_time=469.08, accumulated_logging_time=0.435405, accumulated_submission_time=10166.8, global_step=11284, preemption_count=0, score=10166.8, test/ctc_loss=31.9097, test/num_examples=2472, test/wer=4.09234, total_duration=10657.3, train/ctc_loss=33.245, train/wer=4.21135, validation/ctc_loss=31.7321, validation/num_examples=5348, validation/wer=3.90118
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 18:14:26.376693 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 18:14:52.551446 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 18:15:12.958694 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 18:15:24.445082 140333556745408 submission_runner.py:516] Time since start: 12165.21s, 	Step: 13147, 	{'train/ctc_loss': 33.2456685765767, 'train/wer': 4.21394366810326, 'validation/ctc_loss': 31.73302817962628, 'validation/wer': 3.9027567228310724, 'validation/num_examples': 5348, 'test/ctc_loss': 31.91025227434028, 'test/wer': 4.094773830560802, 'test/num_examples': 2472, 'score': 11611.782832860947, 'total_duration': 12165.207851409912, 'accumulated_submission_time': 11611.782832860947, 'accumulated_eval_time': 527.1485252380371, 'accumulated_logging_time': 2.386033058166504}
+I0523 18:15:24.942353 140314215962368 logging_writer.py:48] [13147] accumulated_eval_time=527.149, accumulated_logging_time=2.38603, accumulated_submission_time=11611.8, global_step=13147, preemption_count=0, score=11611.8, test/ctc_loss=31.9103, test/num_examples=2472, test/wer=4.09477, total_duration=12165.2, train/ctc_loss=33.2457, train/wer=4.21394, validation/ctc_loss=31.733, validation/num_examples=5348, validation/wer=3.90276
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 18:39:32.768180 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 18:39:59.432518 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 18:40:20.066727 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 18:40:31.556808 140333556745408 submission_runner.py:516] Time since start: 13672.32s, 	Step: 15002, 	{'train/ctc_loss': 33.24551501025482, 'train/wer': 4.213954551390884, 'validation/ctc_loss': 31.733323287120754, 'validation/wer': 3.9026022304832715, 'validation/num_examples': 5348, 'test/ctc_loss': 31.91083940899413, 'test/wer': 4.095301931631223, 'test/num_examples': 2472, 'score': 13056.387825965881, 'total_duration': 13672.319598913193, 'accumulated_submission_time': 13056.387825965881, 'accumulated_eval_time': 585.9370753765106, 'accumulated_logging_time': 3.24592661857605}
+I0523 18:40:32.034224 140314215962368 logging_writer.py:48] [15002] accumulated_eval_time=585.937, accumulated_logging_time=3.24593, accumulated_submission_time=13056.4, global_step=15002, preemption_count=0, score=13056.4, test/ctc_loss=31.9108, test/num_examples=2472, test/wer=4.0953, total_duration=13672.3, train/ctc_loss=33.2455, train/wer=4.21395, validation/ctc_loss=31.7333, validation/num_examples=5348, validation/wer=3.9026
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 19:04:39.349512 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 19:05:04.723478 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 19:05:24.943973 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 19:05:36.314927 140333556745408 submission_runner.py:516] Time since start: 15177.01s, 	Step: 16746, 	{'train/ctc_loss': 33.24556619902878, 'train/wer': 4.215282312480954, 'validation/ctc_loss': 31.732893183644766, 'validation/wer': 3.904137498189543, 'validation/num_examples': 5348, 'test/ctc_loss': 31.910103877669528, 'test/wer': 4.094794142140434, 'test/num_examples': 2472, 'score': 14500.628165006638, 'total_duration': 15177.013236045837, 'accumulated_submission_time': 14500.628165006638, 'accumulated_eval_time': 642.8379220962524, 'accumulated_logging_time': 4.01310133934021}
+I0523 19:05:36.776103 140314215962368 logging_writer.py:48] [16746] accumulated_eval_time=642.838, accumulated_logging_time=4.0131, accumulated_submission_time=14500.6, global_step=16746, preemption_count=0, score=14500.6, test/ctc_loss=31.9101, test/num_examples=2472, test/wer=4.09479, total_duration=15177, train/ctc_loss=33.2456, train/wer=4.21528, validation/ctc_loss=31.7329, validation/num_examples=5348, validation/wer=3.90414
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 19:29:44.237184 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 19:30:08.771738 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 19:30:29.802008 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 19:30:41.227493 140333556745408 submission_runner.py:516] Time since start: 16681.99s, 	Step: 18490, 	{'train/ctc_loss': 33.24546040889592, 'train/wer': 4.216414174393801, 'validation/ctc_loss': 31.732670283303193, 'validation/wer': 3.904794090667697, 'validation/num_examples': 5348, 'test/ctc_loss': 31.91002645331957, 'test/wer': 4.0974955822314305, 'test/num_examples': 2472, 'score': 15945.029656648636, 'total_duration': 16681.990269184113, 'accumulated_submission_time': 15945.029656648636, 'accumulated_eval_time': 699.8281855583191, 'accumulated_logging_time': 4.733122110366821}
+I0523 19:30:41.617662 140314215962368 logging_writer.py:48] [18490] accumulated_eval_time=699.828, accumulated_logging_time=4.73312, accumulated_submission_time=15945, global_step=18490, preemption_count=0, score=15945, test/ctc_loss=31.91, test/num_examples=2472, test/wer=4.0975, total_duration=16682, train/ctc_loss=33.2455, train/wer=4.21641, validation/ctc_loss=31.7327, validation/num_examples=5348, validation/wer=3.90479
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 19:54:51.804870 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 19:55:19.713067 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 19:55:40.084029 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 19:55:51.646512 140333556745408 submission_runner.py:516] Time since start: 18192.39s, 	Step: 20362, 	{'train/ctc_loss': 33.2448802694577, 'train/wer': 4.214917722345566, 'validation/ctc_loss': 31.732786442636126, 'validation/wer': 3.9026408535702215, 'validation/num_examples': 5348, 'test/ctc_loss': 31.909994193173752, 'test/wer': 4.094651961083013, 'test/num_examples': 2472, 'score': 17390.53731894493, 'total_duration': 18192.390962600708, 'accumulated_submission_time': 17390.53731894493, 'accumulated_eval_time': 759.6532945632935, 'accumulated_logging_time': 5.421950340270996}
+I0523 19:55:53.045174 140314215962368 logging_writer.py:48] [20362] accumulated_eval_time=759.653, accumulated_logging_time=5.42195, accumulated_submission_time=17390.5, global_step=20362, preemption_count=0, score=17390.5, test/ctc_loss=31.91, test/num_examples=2472, test/wer=4.09465, total_duration=18192.4, train/ctc_loss=33.2449, train/wer=4.21492, validation/ctc_loss=31.7328, validation/num_examples=5348, validation/wer=3.90264
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 20:19:59.848229 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 20:20:26.802205 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 20:20:47.382027 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 20:20:58.690446 140333556745408 submission_runner.py:516] Time since start: 19699.45s, 	Step: 22201, 	{'train/ctc_loss': 33.246183876901235, 'train/wer': 4.215271429193331, 'validation/ctc_loss': 31.73349909584087, 'validation/wer': 3.903847825037416, 'validation/num_examples': 5348, 'test/ctc_loss': 31.910710368410864, 'test/wer': 4.096256575873905, 'test/num_examples': 2472, 'score': 18834.07578110695, 'total_duration': 19699.45319223404, 'accumulated_submission_time': 18834.07578110695, 'accumulated_eval_time': 818.4954519271851, 'accumulated_logging_time': 7.244466543197632}
+I0523 20:20:59.098569 140314215962368 logging_writer.py:48] [22201] accumulated_eval_time=818.495, accumulated_logging_time=7.24447, accumulated_submission_time=18834.1, global_step=22201, preemption_count=0, score=18834.1, test/ctc_loss=31.9107, test/num_examples=2472, test/wer=4.09626, total_duration=19699.5, train/ctc_loss=33.2462, train/wer=4.21527, validation/ctc_loss=31.7335, validation/num_examples=5348, validation/wer=3.90385
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 20:45:06.915121 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 20:45:32.215654 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 20:45:54.252656 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 20:46:05.557644 140333556745408 submission_runner.py:516] Time since start: 21206.32s, 	Step: 23925, 	{'train/ctc_loss': 33.24571976535066, 'train/wer': 4.214612990292108, 'validation/ctc_loss': 31.73312864175206, 'validation/wer': 3.9034519383961763, 'validation/num_examples': 5348, 'test/ctc_loss': 31.910268404413188, 'test/wer': 4.096276887453537, 'test/num_examples': 2472, 'score': 20278.87824487686, 'total_duration': 21206.320464372635, 'accumulated_submission_time': 20278.87824487686, 'accumulated_eval_time': 877.1379430294037, 'accumulated_logging_time': 7.944636106491089}
+I0523 20:46:06.064863 140314215962368 logging_writer.py:48] [23925] accumulated_eval_time=877.138, accumulated_logging_time=7.94464, accumulated_submission_time=20278.9, global_step=23925, preemption_count=0, score=20278.9, test/ctc_loss=31.9103, test/num_examples=2472, test/wer=4.09628, total_duration=21206.3, train/ctc_loss=33.2457, train/wer=4.21461, validation/ctc_loss=31.7331, validation/num_examples=5348, validation/wer=3.90345
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 21:10:13.624857 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 21:10:37.550265 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 21:10:58.250306 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 21:11:09.728811 140333556745408 submission_runner.py:516] Time since start: 22710.47s, 	Step: 25697, 	{'train/ctc_loss': 33.246026897994426, 'train/wer': 4.214928605633189, 'validation/ctc_loss': 31.733580721318063, 'validation/wer': 3.9037512673200405, 'validation/num_examples': 5348, 'test/ctc_loss': 31.910800696819148, 'test/wer': 4.095119127414539, 'test/num_examples': 2472, 'score': 21723.361532449722, 'total_duration': 22710.474282741547, 'accumulated_submission_time': 21723.361532449722, 'accumulated_eval_time': 933.2244145870209, 'accumulated_logging_time': 8.705627918243408}
+I0523 21:11:10.273248 140314215962368 logging_writer.py:48] [25697] accumulated_eval_time=933.224, accumulated_logging_time=8.70563, accumulated_submission_time=21723.4, global_step=25697, preemption_count=0, score=21723.4, test/ctc_loss=31.9108, test/num_examples=2472, test/wer=4.09512, total_duration=22710.5, train/ctc_loss=33.246, train/wer=4.21493, validation/ctc_loss=31.7336, validation/num_examples=5348, validation/wer=3.90375
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 21:35:18.779011 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 21:35:43.151846 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 21:36:03.742561 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 21:36:15.295740 140333556745408 submission_runner.py:516] Time since start: 24216.06s, 	Step: 27566, 	{'train/ctc_loss': 33.24477447932485, 'train/wer': 4.215565277959166, 'validation/ctc_loss': 31.732406570223027, 'validation/wer': 3.904456138656882, 'validation/num_examples': 5348, 'test/ctc_loss': 31.90951674301568, 'test/wer': 4.096926858001747, 'test/num_examples': 2472, 'score': 23168.780329227448, 'total_duration': 24216.058574676514, 'accumulated_submission_time': 23168.780329227448, 'accumulated_eval_time': 989.7412159442902, 'accumulated_logging_time': 9.512460947036743}
+I0523 21:36:15.814693 140314215962368 logging_writer.py:48] [27566] accumulated_eval_time=989.741, accumulated_logging_time=9.51246, accumulated_submission_time=23168.8, global_step=27566, preemption_count=0, score=23168.8, test/ctc_loss=31.9095, test/num_examples=2472, test/wer=4.09693, total_duration=24216.1, train/ctc_loss=33.2448, train/wer=4.21557, validation/ctc_loss=31.7324, validation/num_examples=5348, validation/wer=3.90446
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 22:00:23.800480 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 22:00:49.401397 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 22:01:12.305395 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 22:01:23.591395 140333556745408 submission_runner.py:516] Time since start: 25724.35s, 	Step: 29395, 	{'train/ctc_loss': 33.24744312074067, 'train/wer': 4.214607548648296, 'validation/ctc_loss': 31.734798824593128, 'validation/wer': 3.903287790276638, 'validation/num_examples': 5348, 'test/ctc_loss': 31.912033034389314, 'test/wer': 4.0961550179757475, 'test/num_examples': 2472, 'score': 24613.12115263939, 'total_duration': 25724.35418152809, 'accumulated_submission_time': 24613.12115263939, 'accumulated_eval_time': 1049.5320854187012, 'accumulated_logging_time': 10.683130979537964}
+I0523 22:01:24.913047 140314215962368 logging_writer.py:48] [29395] accumulated_eval_time=1049.53, accumulated_logging_time=10.6831, accumulated_submission_time=24613.1, global_step=29395, preemption_count=0, score=24613.1, test/ctc_loss=31.912, test/num_examples=2472, test/wer=4.09616, total_duration=25724.4, train/ctc_loss=33.2474, train/wer=4.21461, validation/ctc_loss=31.7348, validation/num_examples=5348, validation/wer=3.90329
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 22:25:31.384746 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 22:25:53.880831 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 22:26:13.940285 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 22:26:25.295526 140333556745408 submission_runner.py:516] Time since start: 27226.06s, 	Step: 31114, 	{'train/ctc_loss': 33.246357918732706, 'train/wer': 4.214857864263637, 'validation/ctc_loss': 31.73377222724533, 'validation/wer': 3.902833969004973, 'validation/num_examples': 5348, 'test/ctc_loss': 31.91116846248145, 'test/wer': 4.095342554790486, 'test/num_examples': 2472, 'score': 26056.388244628906, 'total_duration': 27226.058317899704, 'accumulated_submission_time': 26056.388244628906, 'accumulated_eval_time': 1103.4427502155304, 'accumulated_logging_time': 12.502784490585327}
+I0523 22:26:25.744258 140314215962368 logging_writer.py:48] [31114] accumulated_eval_time=1103.44, accumulated_logging_time=12.5028, accumulated_submission_time=26056.4, global_step=31114, preemption_count=0, score=26056.4, test/ctc_loss=31.9112, test/num_examples=2472, test/wer=4.09534, total_duration=27226.1, train/ctc_loss=33.2464, train/wer=4.21486, validation/ctc_loss=31.7338, validation/num_examples=5348, validation/wer=3.90283
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 22:50:37.603180 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 22:51:01.697976 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 22:51:21.998756 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 22:51:33.414235 140333556745408 submission_runner.py:516] Time since start: 28734.16s, 	Step: 32886, 	{'train/ctc_loss': 33.24460043749339, 'train/wer': 4.216191066997519, 'validation/ctc_loss': 31.732017279485635, 'validation/wer': 3.903461594167914, 'validation/num_examples': 5348, 'test/ctc_loss': 31.909329634169946, 'test/wer': 4.094956634777486, 'test/num_examples': 2472, 'score': 27503.81908583641, 'total_duration': 28734.162102222443, 'accumulated_submission_time': 27503.81908583641, 'accumulated_eval_time': 1159.2390503883362, 'accumulated_logging_time': 13.280624866485596}
+I0523 22:51:33.843648 140314215962368 logging_writer.py:48] [32886] accumulated_eval_time=1159.24, accumulated_logging_time=13.2806, accumulated_submission_time=27503.8, global_step=32886, preemption_count=0, score=27503.8, test/ctc_loss=31.9093, test/num_examples=2472, test/wer=4.09496, total_duration=28734.2, train/ctc_loss=33.2446, train/wer=4.21619, validation/ctc_loss=31.732, validation/num_examples=5348, validation/wer=3.90346
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 23:15:42.023386 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 23:16:06.977140 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 23:16:27.444337 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 23:16:38.866382 140333556745408 submission_runner.py:516] Time since start: 30239.63s, 	Step: 34749, 	{'train/ctc_loss': 33.245586674538366, 'train/wer': 4.21520612946759, 'validation/ctc_loss': 31.732933996383363, 'validation/wer': 3.9037609230917782, 'validation/num_examples': 5348, 'test/ctc_loss': 31.910407123040198, 'test/wer': 4.095972213759064, 'test/num_examples': 2472, 'score': 28948.850467205048, 'total_duration': 30239.629150867462, 'accumulated_submission_time': 28948.850467205048, 'accumulated_eval_time': 1216.0818362236023, 'accumulated_logging_time': 13.962002277374268}
+I0523 23:16:40.080505 140314215962368 logging_writer.py:48] [34749] accumulated_eval_time=1216.08, accumulated_logging_time=13.962, accumulated_submission_time=28948.9, global_step=34749, preemption_count=0, score=28948.9, test/ctc_loss=31.9104, test/num_examples=2472, test/wer=4.09597, total_duration=30239.6, train/ctc_loss=33.2456, train/wer=4.21521, validation/ctc_loss=31.7329, validation/num_examples=5348, validation/wer=3.90376
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0523 23:40:46.641267 140333556745408 spec.py:333] Evaluating on the training split.
+I0523 23:41:14.140557 140333556745408 spec.py:346] Evaluating on the validation split.
+I0523 23:41:34.678144 140333556745408 spec.py:363] Evaluating on the test split.
+I0523 23:41:46.209374 140333556745408 submission_runner.py:516] Time since start: 31746.97s, 	Step: 36573, 	{'train/ctc_loss': 33.24491439530701, 'train/wer': 4.213279787558226, 'validation/ctc_loss': 31.73284609202331, 'validation/wer': 3.902911215178873, 'validation/num_examples': 5348, 'test/ctc_loss': 31.910181302019485, 'test/wer': 4.095626916905328, 'test/num_examples': 2472, 'score': 30392.150143146515, 'total_duration': 31746.972121953964, 'accumulated_submission_time': 30392.150143146515, 'accumulated_eval_time': 1275.649923324585, 'accumulated_logging_time': 15.633259773254395}
+I0523 23:41:46.638253 140314215962368 logging_writer.py:48] [36573] accumulated_eval_time=1275.65, accumulated_logging_time=15.6333, accumulated_submission_time=30392.2, global_step=36573, preemption_count=0, score=30392.2, test/ctc_loss=31.9102, test/num_examples=2472, test/wer=4.09563, total_duration=31747, train/ctc_loss=33.2449, train/wer=4.21328, validation/ctc_loss=31.7328, validation/num_examples=5348, validation/wer=3.90291
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0524 00:05:54.490058 140333556745408 spec.py:333] Evaluating on the training split.
+I0524 00:06:19.385422 140333556745408 spec.py:346] Evaluating on the validation split.
+I0524 00:06:39.628825 140333556745408 spec.py:363] Evaluating on the test split.
+I0524 00:06:51.007863 140333556745408 submission_runner.py:516] Time since start: 33251.75s, 	Step: 38262, 	{'train/ctc_loss': 33.24622824050534, 'train/wer': 4.214580340429237, 'validation/ctc_loss': 31.733703159533857, 'validation/wer': 3.902698788200647, 'validation/num_examples': 5348, 'test/ctc_loss': 31.91141686560423, 'test/wer': 4.0943472873885405, 'test/num_examples': 2472, 'score': 31836.986337661743, 'total_duration': 33251.745205402374, 'accumulated_submission_time': 31836.986337661743, 'accumulated_eval_time': 1332.1422209739685, 'accumulated_logging_time': 16.345447063446045}
+I0524 00:06:51.475235 140314215962368 logging_writer.py:48] [38262] accumulated_eval_time=1332.14, accumulated_logging_time=16.3454, accumulated_submission_time=31837, global_step=38262, preemption_count=0, score=31837, test/ctc_loss=31.9114, test/num_examples=2472, test/wer=4.09435, total_duration=33251.7, train/ctc_loss=33.2462, train/wer=4.21458, validation/ctc_loss=31.7337, validation/num_examples=5348, validation/wer=3.9027
+I0524 00:08:12.507536 140333556745408 spec.py:333] Evaluating on the training split.
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+I0524 00:08:37.822334 140333556745408 spec.py:346] Evaluating on the validation split.
+I0524 00:08:53.095742 140333556745408 spec.py:363] Evaluating on the test split.
+I0524 00:09:01.009174 140333556745408 submission_runner.py:516] Time since start: 33381.77s, 	Step: 38401, 	{'train/ctc_loss': 33.24668552688605, 'train/wer': 4.214585782073049, 'validation/ctc_loss': 31.7340673347398, 'validation/wer': 3.903461594167914, 'validation/num_examples': 5348, 'test/ctc_loss': 31.911807213368604, 'test/wer': 4.094408222127435, 'test/num_examples': 2472, 'score': 31916.481150388718, 'total_duration': 33381.77193522453, 'accumulated_submission_time': 31916.481150388718, 'accumulated_eval_time': 1380.6436233520508, 'accumulated_logging_time': 17.028157234191895}
+I0524 00:09:01.058539 140314215962368 logging_writer.py:48] [38401] accumulated_eval_time=1380.64, accumulated_logging_time=17.0282, accumulated_submission_time=31916.5, global_step=38401, preemption_count=0, score=31916.5, test/ctc_loss=31.9118, test/num_examples=2472, test/wer=4.09441, total_duration=33381.8, train/ctc_loss=33.2467, train/wer=4.21459, validation/ctc_loss=31.7341, validation/num_examples=5348, validation/wer=3.90346
+I0524 00:09:01.823008 140314207569664 logging_writer.py:48] [38401] global_step=38401, preemption_count=0, score=31916.5
+I0524 00:09:02.004898 140333556745408 submission_runner.py:857] Final librispeech_deepspeech score: 31916.481150388718
