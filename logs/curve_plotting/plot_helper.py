@@ -9,8 +9,8 @@ import traceback
 import argparse
 
 # Configure styling params
-def configure_styling():
-    plt.rcParams.update({
+def configure_styling(custom_params=None):
+    params = {
         'font.family': 'sans-serif',
         'font.sans-serif': ['Helvetica', 'Arial', 'DejaVu Sans'],
         'font.size': 12,
@@ -22,7 +22,10 @@ def configure_styling():
         'figure.titlesize': 16,
         'pdf.fonttype': 42,
         'ps.fonttype': 42
-    })
+    }
+    if custom_params:
+        params.update(custom_params)
+    plt.rcParams.update(params)
 
 # Define registry of algorithms and their configuration mapping
 ALGO_CONFIGS = {
@@ -320,7 +323,7 @@ def setup_axes(ax, ymin, ymax, zoom, higher_is_better, target_value, xlabel, yla
     ax.set_xlabel(xlabel, color='#333333', fontweight='semibold')
     ax.set_ylabel(ylabel, color='#333333', fontweight='semibold')
 
-def plot_workload(workload, algo_name, submissions, base_log_dir, base_save_dir, zoom):
+def plot_workload(workload, algo_name, submissions, base_log_dir, base_save_dir, zoom, show_plot=False):
     """Orchestrates loading, interpolating, and plotting for a single workload."""
     target_metric, target_value = get_target_metric_and_value(base_log_dir, workload, submissions)
     if not target_metric:
@@ -339,7 +342,7 @@ def plot_workload(workload, algo_name, submissions, base_log_dir, base_save_dir,
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5.5))
     title_suffix = " (Log Scale)" if (zoom == 'log' and not higher_is_better) else ""
-    fig.suptitle(f"Workload: {workload} (Metric: {target_metric}){title_suffix}", fontweight='bold', y=0.98)
+    fig.suptitle(f"{algo_name} on {workload} (Metric: {target_metric}){title_suffix}", fontweight='bold', y=0.98)
 
     for sub, (dfs, style) in workload_curves.items():
         # Time-based Interpolation
@@ -359,7 +362,11 @@ def plot_workload(workload, algo_name, submissions, base_log_dir, base_save_dir,
     save_dir.mkdir(exist_ok=True, parents=True)
     png_path = save_dir / f'{workload}_curves.png'
     plt.savefig(png_path, dpi=300, bbox_inches='tight')
-    plt.close(fig)
+    
+    if show_plot:
+        plt.show()
+    else:
+        plt.close(fig)
     print(f"Saved PNG to {png_path}")
 
 def main():
@@ -390,7 +397,7 @@ def main():
             
             for workload in workloads:
                 print(f"\nProcessing workload: {workload}")
-                plot_workload(workload, algo_name, submissions, base_log_dir, base_save_dir, args.zoom)
+                plot_workload(workload, algo_name, submissions, base_log_dir, base_save_dir, args.zoom, show_plot=False)
                 
         except Exception as e:
             print(f"ERROR: Failed to plot algorithm '{algo_name}': {e}")
