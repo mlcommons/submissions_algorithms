@@ -16,7 +16,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from algoperf import spec
 from algoperf.pytorch_utils import pytorch_setup
 
-from submissions.self_tuning.muon_torch_replicated_jax_hps.muon import MuonSingleDevice, split_params_muon_adam
+from submissions_algorithms.submissions.self_tuning.muon_torch_replicated_jax_hps.muon import MuonSingleDevice, split_params_muon_adam
 
 USE_PYTORCH_DDP = pytorch_setup()[0]
 
@@ -45,16 +45,20 @@ HPARAMS = SimpleNamespace(**HPARAMS)
 
 def _pytorch_cosine_warmup(step_hint: int, hyperparameters, optimizer):
   warmup_steps = int(hyperparameters.warmup_factor * step_hint)
+  total_steps = int(step_hint * getattr(hyperparameters, "step_reduce", 1.0))
+
+  # If warmup is 0, return CosineAnnealingLR directly to bypass the SequentialLR milestone-0 collapse
+  if warmup_steps == 0:
+    return CosineAnnealingLR(optimizer, T_max=total_steps)
+
   warmup = LinearLR(
     optimizer, start_factor=1e-10, end_factor=1.0, total_iters=warmup_steps
   )
-  total_steps = int(step_hint * getattr(hyperparameters, "step_reduce", 1.0))
   decay_steps = max(1, total_steps - warmup_steps)
   cosine_decay = CosineAnnealingLR(optimizer, T_max=decay_steps)
   return SequentialLR(
     optimizer, schedulers=[warmup, cosine_decay], milestones=[warmup_steps]
   )
-
 
 def init_optimizer_state(
   workload: spec.Workload,

@@ -1,0 +1,940 @@
+torchrun --redirects 1:0,2:0,3:0 --standalone --nnodes=1 --nproc_per_node=4 submission_runner.py --framework=pytorch --workload=wmt --submission_path=submissions_algorithms/submissions/self_tuning/muon_torch_jax_hps_achandr/submission.py --data_dir=/data/wmt --experiment_dir=/experiment_runs --experiment_name=submissions_a100/muon_torch_jax_hps_achandr/study_2 --overwrite=True --save_checkpoints=False --rng_seed=-174226999 --torch_compile=true --tuning_ruleset=self 2>&1 | tee -a /logs/wmt_pytorch_06-04-2026-03-31-49.log
+W0604 03:31:51.124000 9 site-packages/torch/distributed/run.py:803] 
+W0604 03:31:51.124000 9 site-packages/torch/distributed/run.py:803] *****************************************
+W0604 03:31:51.124000 9 site-packages/torch/distributed/run.py:803] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0604 03:31:51.124000 9 site-packages/torch/distributed/run.py:803] *****************************************
+2026-06-04 03:31:52.600579: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-06-04 03:31:52.600580: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-06-04 03:31:52.600580: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-06-04 03:31:52.600622: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780543912.625329      40 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780543912.625305      39 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780543912.625304      41 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780543912.625304      38 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780543912.633374      38 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780543912.633377      41 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780543912.633375      40 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780543912.633418      39 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1780543912.660097      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660097      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660097      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660130      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660130      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660132      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660132      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660134      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660134      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660134      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660115      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660137      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660140      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660141      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660144      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543912.660146      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780543918.436287      41 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1780543918.637053      40 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1780543918.770632      39 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1780543918.934706      38 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+I0604 03:32:01.281280 140138977764544 logger_utils.py:59] Removing existing experiment directory /experiment_runs/submissions_a100/muon_torch_jax_hps_achandr/study_2/wmt_pytorch because --overwrite was set.
+I0604 03:32:01.348360 139732539806912 logger_utils.py:59] Removing existing experiment directory /experiment_runs/submissions_a100/muon_torch_jax_hps_achandr/study_2/wmt_pytorch because --overwrite was set.
+I0604 03:32:01.559094 139970556347584 logger_utils.py:59] Removing existing experiment directory /experiment_runs/submissions_a100/muon_torch_jax_hps_achandr/study_2/wmt_pytorch because --overwrite was set.
+I0604 03:32:01.631056 140200356082880 logger_utils.py:59] Removing existing experiment directory /experiment_runs/submissions_a100/muon_torch_jax_hps_achandr/study_2/wmt_pytorch because --overwrite was set.
+/usr/local/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4876: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  warnings.warn(  # warn only once
+[rank0]:[W604 03:32:01.981091698 ProcessGroupNCCL.cpp:5068] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+I0604 03:32:02.371731 140138977764544 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_achandr/study_2/wmt_pytorch.
+I0604 03:32:02.371735 140200356082880 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_achandr/study_2/wmt_pytorch.
+I0604 03:32:02.371755 139732539806912 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_achandr/study_2/wmt_pytorch.
+I0604 03:32:02.371767 139970556347584 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_achandr/study_2/wmt_pytorch.
+I0604 03:32:04.792993 140200356082880 submission_runner.py:741] Creating directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_achandr/study_2/wmt_pytorch/trial_1.
+I0604 03:32:05.169112 140200356082880 submission_runner.py:242] Initializing dataset.
+I0604 03:32:05.169314 140200356082880 submission_runner.py:251] Initializing model.
+I0604 03:32:07.256912 140200356082880 submission_runner.py:290] Performing `torch.compile`.
+I0604 03:32:07.260733 140200356082880 submission_runner.py:294] Initializing optimizer.
+I0604 03:32:07.261155 139970556347584 muon.py:324] Muon params:
+	_orig_mod.module.encoder.encoder.layers.0.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.linear2.weight (ndim=2)
+I0604 03:32:07.261348 139970556347584 muon.py:325] Adam params:
+	_orig_mod.module.shared_embedding.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.norm.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.norm.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.norm.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.norm.bias (ndim=1)
+I0604 03:32:07.261317 139732539806912 muon.py:324] Muon params:
+	_orig_mod.module.encoder.encoder.layers.0.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.linear2.weight (ndim=2)
+I0604 03:32:07.261424 140200356082880 muon.py:324] Muon params:
+	_orig_mod.module.encoder.encoder.layers.0.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.linear2.weight (ndim=2)
+I0604 03:32:07.261490 139732539806912 muon.py:325] Adam params:
+	_orig_mod.module.shared_embedding.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.norm.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.norm.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.norm.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.norm.bias (ndim=1)
+I0604 03:32:07.261521 140200356082880 muon.py:325] Adam params:
+	_orig_mod.module.shared_embedding.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.norm.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.norm.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.norm.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.norm.bias (ndim=1)
+I0604 03:32:07.261651 140138977764544 muon.py:324] Muon params:
+	_orig_mod.module.encoder.encoder.layers.0.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.1.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.2.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.3.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.4.linear2.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.linear1.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.5.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.0.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.1.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.2.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.3.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.4.linear2.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.self_attn.in_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.self_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.multihead_attn.q_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.multihead_attn.kv_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.multihead_attn.out_proj.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.linear1.weight (ndim=2)
+	_orig_mod.module.decoder.decoder.layers.5.linear2.weight (ndim=2)
+I0604 03:32:07.261855 140138977764544 muon.py:325] Adam params:
+	_orig_mod.module.shared_embedding.weight (ndim=2)
+	_orig_mod.module.encoder.encoder.layers.0.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.0.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.1.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.2.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.3.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.4.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.linear1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.linear2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm1.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm1.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm2.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.layers.5.norm2.bias (ndim=1)
+	_orig_mod.module.encoder.encoder.norm.weight (ndim=1)
+	_orig_mod.module.encoder.encoder.norm.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.0.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.1.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.2.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.3.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.4.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.linear1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.linear2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm1.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm1.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm2.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm2.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm3.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.layers.5.norm3.bias (ndim=1)
+	_orig_mod.module.decoder.decoder.norm.weight (ndim=1)
+	_orig_mod.module.decoder.decoder.norm.bias (ndim=1)
+I0604 03:32:07.263085 140200356082880 submission_runner.py:299] Initializing metrics bundle.
+I0604 03:32:07.263257 140200356082880 submission_runner.py:321] Initializing checkpoint and logger.
+I0604 03:32:07.265123 140200356082880 submission_runner.py:344] Saving meta data to /experiment_runs/submissions_a100/muon_torch_jax_hps_achandr/study_2/wmt_pytorch/trial_1/meta_data_0.json.
+I0604 03:32:07.265253 139732539806912 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0604 03:32:07.265255 139970556347584 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0604 03:32:07.265262 140138977764544 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0604 03:32:07.265319 140200356082880 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0604 03:32:07.265371 140200356082880 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0604 03:32:07.265368 139970556347584 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0604 03:32:07.265367 139732539806912 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0604 03:32:07.265369 140138977764544 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0604 03:32:07.517540 140200356082880 submission_runner.py:348] Saving flags to /experiment_runs/submissions_a100/muon_torch_jax_hps_achandr/study_2/wmt_pytorch/trial_1/flags_0.json.
+I0604 03:32:07.562198 140200356082880 submission_runner.py:359] Starting training loop.
+I0604 03:32:07.721578 140200356082880 dataset_info.py:707] Load dataset info from /data/wmt/wmt17_translate/de-en/1.0.0
+I0604 03:32:07.724547 140200356082880 dataset_info.py:793] For 'wmt17_translate/de-en/1.0.0': fields info.[splits, supervised_keys] differ on disk and in the code. Keeping the one from code.
+I0604 03:32:07.726813 140200356082880 reader.py:262] Creating a tf.data.Dataset reading 16 files located in folders: /data/wmt/wmt17_translate/de-en/1.0.0.
+I0604 03:32:07.788008 140200356082880 logging_logger.py:49] Constructing tf.data.Dataset wmt17_translate for split train, from /data/wmt/wmt17_translate/de-en/1.0.0
+[rank2]:W0604 03:32:09.069000 40 site-packages/torch/_logging/_internal.py:1199] [0/0] Profiler function <class 'torch.autograd.profiler.record_function'> will be ignored
+[rank3]:W0604 03:32:09.069000 41 site-packages/torch/_logging/_internal.py:1199] [0/0] Profiler function <class 'torch.autograd.profiler.record_function'> will be ignored
+[rank1]:W0604 03:32:09.081000 39 site-packages/torch/_logging/_internal.py:1199] [0/0] Profiler function <class 'torch.autograd.profiler.record_function'> will be ignored
+[rank0]:W0604 03:32:09.256000 38 site-packages/torch/_logging/_internal.py:1199] [0/0] Profiler function <class 'torch.autograd.profiler.record_function'> will be ignored
+I0604 03:32:59.741590 140200356082880 submission.py:197] 
+=== DIAGNOSTICS [Step 0] ===
+  • Muon LR:      0.003883970586  |  Grad Norm: 11.078327 (from 66 gradients)
+  • NAdamW LR:    0.000135749518  |  Grad Norm: 0.594024 (from 89 gradients)
+  • Muon Params:  66 total tensors
+  • NAdamW Params:89 total tensors
+========================================
+
+I0604 03:33:19.225417 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 03:33:19.227562 140200356082880 dataset_info.py:707] Load dataset info from /data/wmt/wmt17_translate/de-en/1.0.0
+I0604 03:33:19.229824 140200356082880 dataset_info.py:793] For 'wmt17_translate/de-en/1.0.0': fields info.[splits, supervised_keys] differ on disk and in the code. Keeping the one from code.
+I0604 03:33:19.230820 140200356082880 reader.py:262] Creating a tf.data.Dataset reading 16 files located in folders: /data/wmt/wmt17_translate/de-en/1.0.0.
+I0604 03:33:19.270397 140200356082880 logging_logger.py:49] Constructing tf.data.Dataset wmt17_translate for split train, from /data/wmt/wmt17_translate/de-en/1.0.0
+I0604 03:33:45.460484 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 03:35:58.052693 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 03:35:58.055029 140200356082880 dataset_info.py:707] Load dataset info from /data/wmt/wmt14_translate/de-en/1.0.0
+I0604 03:35:58.057471 140200356082880 dataset_info.py:793] For 'wmt14_translate/de-en/1.0.0': fields info.[splits, supervised_keys] differ on disk and in the code. Keeping the one from code.
+I0604 03:35:58.058318 140200356082880 reader.py:262] Creating a tf.data.Dataset reading 1 files located in folders: /data/wmt/wmt14_translate/de-en/1.0.0.
+I0604 03:35:58.095669 140200356082880 logging_logger.py:49] Constructing tf.data.Dataset wmt14_translate for split validation, from /data/wmt/wmt14_translate/de-en/1.0.0
+I0604 03:36:00.413964 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 03:38:12.710773 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 03:38:12.712744 140200356082880 dataset_info.py:707] Load dataset info from /data/wmt/wmt14_translate/de-en/1.0.0
+I0604 03:38:12.715080 140200356082880 dataset_info.py:793] For 'wmt14_translate/de-en/1.0.0': fields info.[splits, supervised_keys] differ on disk and in the code. Keeping the one from code.
+I0604 03:38:12.715834 140200356082880 reader.py:262] Creating a tf.data.Dataset reading 1 files located in folders: /data/wmt/wmt14_translate/de-en/1.0.0.
+I0604 03:38:12.751456 140200356082880 logging_logger.py:49] Constructing tf.data.Dataset wmt14_translate for split test, from /data/wmt/wmt14_translate/de-en/1.0.0
+I0604 03:38:15.064258 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 03:40:27.498046 140200356082880 submission_runner.py:516] Time since start: 499.94s, 	Step: 1, 	{'train/accuracy': 0.0005022200408624488, 'train/loss': 11.333394208489802, 'train/bleu': 0.0007969293991810371, 'validation/accuracy': 0.00048356498989473163, 'validation/loss': 11.375401420937123, 'validation/bleu': 0.0006922275244014986, 'validation/num_examples': 3000, 'test/accuracy': 0.0007088489919237697, 'test/loss': 11.37504938701993, 'test/bleu': 7.904587221464282e-05, 'test/num_examples': 3003, 'score': 70.99885034561157, 'total_duration': 499.93598437309265, 'accumulated_submission_time': 70.99885034561157, 'accumulated_eval_time': 428.2725965976715, 'accumulated_logging_time': 0}
+I0604 03:40:27.522213 140168296113920 logging_writer.py:48] [1] accumulated_eval_time=428.273, accumulated_logging_time=0, accumulated_submission_time=70.9989, global_step=1, preemption_count=0, score=70.9989, test/accuracy=0.000708849, test/bleu=7.90459e-05, test/loss=11.375, test/num_examples=3003, total_duration=499.936, train/accuracy=0.00050222, train/bleu=0.000796929, train/loss=11.3334, validation/accuracy=0.000483565, validation/bleu=0.000692228, validation/loss=11.3754, validation/num_examples=3000
+I0604 03:40:28.498950 140200356082880 submission.py:197] 
+=== DIAGNOSTICS [Step 1] ===
+  • Muon LR:      0.003883970585  |  Grad Norm: 7.741242 (from 66 gradients)
+  • NAdamW LR:    0.000135749518  |  Grad Norm: 0.420315 (from 89 gradients)
+  • Muon Params:  66 total tensors
+  • NAdamW Params:89 total tensors
+========================================
+
+I0604 03:40:28.608185 140200356082880 submission.py:197] 
+=== DIAGNOSTICS [Step 2] ===
+  • Muon LR:      0.003883970583  |  Grad Norm: 6.181655 (from 66 gradients)
+  • NAdamW LR:    0.000135749518  |  Grad Norm: 0.339691 (from 89 gradients)
+  • Muon Params:  66 total tensors
+  • NAdamW Params:89 total tensors
+========================================
+
+I0604 03:40:28.717700 140200356082880 submission.py:197] 
+=== DIAGNOSTICS [Step 3] ===
+  • Muon LR:      0.003883970580  |  Grad Norm: 4.996459 (from 66 gradients)
+  • NAdamW LR:    0.000135749518  |  Grad Norm: 0.280503 (from 89 gradients)
+  • Muon Params:  66 total tensors
+  • NAdamW Params:89 total tensors
+========================================
+
+I0604 03:40:28.826563 140200356082880 submission.py:197] 
+=== DIAGNOSTICS [Step 4] ===
+  • Muon LR:      0.003883970575  |  Grad Norm: 4.171502 (from 66 gradients)
+  • NAdamW LR:    0.000135749518  |  Grad Norm: 0.237741 (from 89 gradients)
+  • Muon Params:  66 total tensors
+  • NAdamW Params:89 total tensors
+========================================
+
+I0604 03:40:28.944032 140200356082880 submission.py:197] 
+=== DIAGNOSTICS [Step 5] ===
+  • Muon LR:      0.003883970569  |  Grad Norm: 4.092194 (from 66 gradients)
+  • NAdamW LR:    0.000135749517  |  Grad Norm: 0.236545 (from 89 gradients)
+  • Muon Params:  66 total tensors
+  • NAdamW Params:89 total tensors
+========================================
+
+I0604 03:51:12.169114 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 03:51:14.380026 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 03:52:20.818000 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 03:52:23.014904 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 03:53:27.433761 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 03:53:29.628259 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 03:54:29.597840 140200356082880 submission_runner.py:516] Time since start: 1342.04s, 	Step: 7175, 	{'train/accuracy': 0.6141841531934411, 'train/loss': 2.0591965514275885, 'train/bleu': 29.10813357557964, 'validation/accuracy': 0.6142391290870541, 'validation/loss': 2.0406120971841637, 'validation/bleu': 24.90792314802723, 'validation/num_examples': 3000, 'test/accuracy': 0.6191040613561095, 'test/loss': 2.0207349224333275, 'test/bleu': 23.861819337904386, 'test/num_examples': 3003, 'score': 711.8513581752777, 'total_duration': 1342.035845041275, 'accumulated_submission_time': 711.8513581752777, 'accumulated_eval_time': 625.7013275623322, 'accumulated_logging_time': 0.06347155570983887}
+I0604 03:54:29.632763 140168287721216 logging_writer.py:48] [7175] accumulated_eval_time=625.701, accumulated_logging_time=0.0634716, accumulated_submission_time=711.851, global_step=7175, preemption_count=0, score=711.851, test/accuracy=0.619104, test/bleu=23.8618, test/loss=2.02073, test/num_examples=3003, total_duration=1342.04, train/accuracy=0.614184, train/bleu=29.1081, train/loss=2.0592, validation/accuracy=0.614239, validation/bleu=24.9079, validation/loss=2.04061, validation/num_examples=3000
+I0604 04:05:14.301554 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 04:05:16.510961 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 04:06:33.106909 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 04:06:35.296384 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 04:07:37.756069 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 04:07:39.951786 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 04:08:39.588673 140200356082880 submission_runner.py:516] Time since start: 2192.03s, 	Step: 14356, 	{'train/accuracy': 0.6240549670243812, 'train/loss': 1.9167765973642485, 'train/bleu': 30.26823401828823, 'validation/accuracy': 0.6336685223989783, 'validation/loss': 1.8489698283344287, 'validation/bleu': 26.281870465834487, 'validation/num_examples': 3000, 'test/accuracy': 0.6418569519493347, 'test/loss': 1.8012920515949102, 'test/bleu': 25.449411589684388, 'test/num_examples': 3003, 'score': 1352.933837890625, 'total_duration': 2192.026697397232, 'accumulated_submission_time': 1352.933837890625, 'accumulated_eval_time': 830.988466501236, 'accumulated_logging_time': 0.10880684852600098}
+I0604 04:08:39.614434 140168296113920 logging_writer.py:48] [14356] accumulated_eval_time=830.988, accumulated_logging_time=0.108807, accumulated_submission_time=1352.93, global_step=14356, preemption_count=0, score=1352.93, test/accuracy=0.641857, test/bleu=25.4494, test/loss=1.80129, test/num_examples=3003, total_duration=2192.03, train/accuracy=0.624055, train/bleu=30.2682, train/loss=1.91678, validation/accuracy=0.633669, validation/bleu=26.2819, validation/loss=1.84897, validation/num_examples=3000
+I0604 04:19:24.237488 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 04:19:26.445261 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 04:21:15.237963 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 04:21:17.432064 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 04:22:18.294732 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 04:22:20.489799 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 04:23:20.651914 140200356082880 submission_runner.py:516] Time since start: 3073.09s, 	Step: 21541, 	{'train/accuracy': 0.6347588549916213, 'train/loss': 1.8421668043982278, 'train/bleu': 31.500106169825187, 'validation/accuracy': 0.6446169297342872, 'validation/loss': 1.7583992293957917, 'validation/bleu': 27.23843310201941, 'validation/num_examples': 3000, 'test/accuracy': 0.6533263610481669, 'test/loss': 1.7020568241241067, 'test/bleu': 26.030968696128426, 'test/num_examples': 3003, 'score': 1993.9773769378662, 'total_duration': 3073.0899181365967, 'accumulated_submission_time': 1993.9773769378662, 'accumulated_eval_time': 1067.4028964042664, 'accumulated_logging_time': 0.14471960067749023}
+I0604 04:23:20.676653 140168287721216 logging_writer.py:48] [21541] accumulated_eval_time=1067.4, accumulated_logging_time=0.14472, accumulated_submission_time=1993.98, global_step=21541, preemption_count=0, score=1993.98, test/accuracy=0.653326, test/bleu=26.031, test/loss=1.70206, test/num_examples=3003, total_duration=3073.09, train/accuracy=0.634759, train/bleu=31.5001, train/loss=1.84217, validation/accuracy=0.644617, validation/bleu=27.2384, validation/loss=1.7584, validation/num_examples=3000
+I0604 04:34:05.304005 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 04:34:07.514095 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 04:35:17.277053 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 04:35:19.472092 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 04:36:20.373332 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 04:36:22.570343 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 04:37:21.092433 140200356082880 submission_runner.py:516] Time since start: 3913.53s, 	Step: 28722, 	{'train/accuracy': 0.6390000798293932, 'train/loss': 1.7914501650757808, 'train/bleu': 31.169269274391446, 'validation/accuracy': 0.6507668844775638, 'validation/loss': 1.7059835742892215, 'validation/bleu': 27.448893619110027, 'validation/num_examples': 3000, 'test/accuracy': 0.6607402242751729, 'test/loss': 1.6422952617512057, 'test/bleu': 26.577627158745365, 'test/num_examples': 3003, 'score': 2635.042712211609, 'total_duration': 3913.5304243564606, 'accumulated_submission_time': 2635.042712211609, 'accumulated_eval_time': 1263.1913723945618, 'accumulated_logging_time': 0.18067359924316406}
+I0604 04:37:21.118972 140168296113920 logging_writer.py:48] [28722] accumulated_eval_time=1263.19, accumulated_logging_time=0.180674, accumulated_submission_time=2635.04, global_step=28722, preemption_count=0, score=2635.04, test/accuracy=0.66074, test/bleu=26.5776, test/loss=1.6423, test/num_examples=3003, total_duration=3913.53, train/accuracy=0.639, train/bleu=31.1693, train/loss=1.79145, validation/accuracy=0.650767, validation/bleu=27.4489, validation/loss=1.70598, validation/num_examples=3000
+I0604 04:48:05.724218 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 04:48:07.936643 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 04:49:26.948328 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 04:49:29.142834 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 04:50:33.031707 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 04:50:35.225715 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 04:51:35.749510 140200356082880 submission_runner.py:516] Time since start: 4768.19s, 	Step: 35899, 	{'train/accuracy': 0.6426851087255712, 'train/loss': 1.7545581876777685, 'train/bleu': 31.331958136377928, 'validation/accuracy': 0.6544246196575368, 'validation/loss': 1.6763830423677326, 'validation/bleu': 27.649082034081218, 'validation/num_examples': 3000, 'test/accuracy': 0.6659926791005752, 'test/loss': 1.6047126474347801, 'test/bleu': 26.961359655364138, 'test/num_examples': 3003, 'score': 3276.0266568660736, 'total_duration': 4768.187529087067, 'accumulated_submission_time': 3276.0266568660736, 'accumulated_eval_time': 1473.2166802883148, 'accumulated_logging_time': 0.2175617218017578}
+I0604 04:51:35.775831 140168287721216 logging_writer.py:48] [35899] accumulated_eval_time=1473.22, accumulated_logging_time=0.217562, accumulated_submission_time=3276.03, global_step=35899, preemption_count=0, score=3276.03, test/accuracy=0.665993, test/bleu=26.9614, test/loss=1.60471, test/num_examples=3003, total_duration=4768.19, train/accuracy=0.642685, train/bleu=31.332, train/loss=1.75456, validation/accuracy=0.654425, validation/bleu=27.6491, validation/loss=1.67638, validation/num_examples=3000
+I0604 05:02:20.429002 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 05:02:22.636591 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 05:03:45.363650 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 05:03:47.564690 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 05:04:58.071238 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 05:05:00.262432 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 05:06:05.878950 140200356082880 submission_runner.py:516] Time since start: 5638.32s, 	Step: 43083, 	{'train/accuracy': 0.6460044382420901, 'train/loss': 1.7248836820251194, 'train/bleu': 31.86095999703491, 'validation/accuracy': 0.6597066372394639, 'validation/loss': 1.6447199972721975, 'validation/bleu': 27.76843453909502, 'validation/num_examples': 3000, 'test/accuracy': 0.6675730637383069, 'test/loss': 1.582926798268549, 'test/bleu': 26.994038288297784, 'test/num_examples': 3003, 'score': 3917.0937836170197, 'total_duration': 5638.316956281662, 'accumulated_submission_time': 3917.0937836170197, 'accumulated_eval_time': 1698.6666429042816, 'accumulated_logging_time': 0.25399208068847656}
+I0604 05:06:05.905501 140168296113920 logging_writer.py:48] [43083] accumulated_eval_time=1698.67, accumulated_logging_time=0.253992, accumulated_submission_time=3917.09, global_step=43083, preemption_count=0, score=3917.09, test/accuracy=0.667573, test/bleu=26.994, test/loss=1.58293, test/num_examples=3003, total_duration=5638.32, train/accuracy=0.646004, train/bleu=31.861, train/loss=1.72488, validation/accuracy=0.659707, validation/bleu=27.7684, validation/loss=1.64472, validation/num_examples=3000
+I0604 05:16:50.587406 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 05:16:52.794314 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 05:18:13.532465 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 05:18:15.717525 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 05:19:16.757781 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 05:19:18.948671 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 05:20:20.824623 140200356082880 submission_runner.py:516] Time since start: 6493.26s, 	Step: 50270, 	{'train/accuracy': 0.7046859671936668, 'train/loss': 1.37128080584263, 'train/bleu': 36.55321119455813, 'validation/accuracy': 0.6610705384930131, 'validation/loss': 1.6259636427322661, 'validation/bleu': 28.075001226386505, 'validation/num_examples': 3000, 'test/accuracy': 0.6698622973679623, 'test/loss': 1.5612934678403347, 'test/bleu': 27.519045346615883, 'test/num_examples': 3003, 'score': 4558.215079307556, 'total_duration': 6493.262627363205, 'accumulated_submission_time': 4558.215079307556, 'accumulated_eval_time': 1908.9038605690002, 'accumulated_logging_time': 0.29076123237609863}
+I0604 05:20:20.861266 140168287721216 logging_writer.py:48] [50270] accumulated_eval_time=1908.9, accumulated_logging_time=0.290761, accumulated_submission_time=4558.22, global_step=50270, preemption_count=0, score=4558.22, test/accuracy=0.669862, test/bleu=27.519, test/loss=1.56129, test/num_examples=3003, total_duration=6493.26, train/accuracy=0.704686, train/bleu=36.5532, train/loss=1.37128, validation/accuracy=0.661071, validation/bleu=28.075, validation/loss=1.62596, validation/num_examples=3000
+I0604 05:31:05.540180 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 05:31:07.747002 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 05:32:14.159497 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 05:32:16.350277 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 05:33:19.194461 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 05:33:21.384767 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 05:34:17.271880 140200356082880 submission_runner.py:516] Time since start: 7329.71s, 	Step: 57464, 	{'train/accuracy': 0.679398161431375, 'train/loss': 1.49668511427932, 'train/bleu': 33.65708563500334, 'validation/accuracy': 0.664715874570681, 'validation/loss': 1.6057639551896443, 'validation/bleu': 28.485749000350427, 'validation/num_examples': 3000, 'test/accuracy': 0.6758236011852885, 'test/loss': 1.5297531375283249, 'test/bleu': 27.821594822622913, 'test/num_examples': 3003, 'score': 5199.349319458008, 'total_duration': 7329.709890127182, 'accumulated_submission_time': 5199.349319458008, 'accumulated_eval_time': 2100.6355726718903, 'accumulated_logging_time': 0.33765292167663574}
+I0604 05:34:17.298131 140168296113920 logging_writer.py:48] [57464] accumulated_eval_time=2100.64, accumulated_logging_time=0.337653, accumulated_submission_time=5199.35, global_step=57464, preemption_count=0, score=5199.35, test/accuracy=0.675824, test/bleu=27.8216, test/loss=1.52975, test/num_examples=3003, total_duration=7329.71, train/accuracy=0.679398, train/bleu=33.6571, train/loss=1.49669, validation/accuracy=0.664716, validation/bleu=28.4857, validation/loss=1.60576, validation/num_examples=3000
+I0604 05:45:01.977614 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 05:45:04.184260 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 05:46:31.476487 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 05:46:33.667905 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 05:47:43.141671 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 05:47:45.331244 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 05:48:47.493422 140200356082880 submission_runner.py:516] Time since start: 8199.93s, 	Step: 64656, 	{'train/accuracy': 0.674571654210207, 'train/loss': 1.5211794388298177, 'train/bleu': 33.85947589827535, 'validation/accuracy': 0.6630171975548971, 'validation/loss': 1.5990411231726822, 'validation/bleu': 28.163550884558756, 'validation/num_examples': 3000, 'test/accuracy': 0.6767881006333158, 'test/loss': 1.52214136308175, 'test/bleu': 27.91145777173042, 'test/num_examples': 3003, 'score': 5840.473793745041, 'total_duration': 8199.931403398514, 'accumulated_submission_time': 5840.473793745041, 'accumulated_eval_time': 2326.1513476371765, 'accumulated_logging_time': 0.37410616874694824}
+I0604 05:48:47.519205 140168287721216 logging_writer.py:48] [64656] accumulated_eval_time=2326.15, accumulated_logging_time=0.374106, accumulated_submission_time=5840.47, global_step=64656, preemption_count=0, score=5840.47, test/accuracy=0.676788, test/bleu=27.9115, test/loss=1.52214, test/num_examples=3003, total_duration=8199.93, train/accuracy=0.674572, train/bleu=33.8595, train/loss=1.52118, validation/accuracy=0.663017, validation/bleu=28.1636, validation/loss=1.59904, validation/num_examples=3000
+I0604 05:59:32.149693 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 05:59:34.357564 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:01:05.796188 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 06:01:07.983606 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:02:07.717470 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 06:02:09.905907 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:03:05.511330 140200356082880 submission_runner.py:516] Time since start: 9057.95s, 	Step: 71846, 	{'train/accuracy': 0.6790369504959568, 'train/loss': 1.500189527352072, 'train/bleu': 34.09078929666418, 'validation/accuracy': 0.6640587221485165, 'validation/loss': 1.5998079301558568, 'validation/bleu': 28.488390402571557, 'validation/num_examples': 3000, 'test/accuracy': 0.6763116611469409, 'test/loss': 1.5220545726570216, 'test/bleu': 27.924024889744487, 'test/num_examples': 3003, 'score': 6481.575395107269, 'total_duration': 9057.949340343475, 'accumulated_submission_time': 6481.575395107269, 'accumulated_eval_time': 2539.513028383255, 'accumulated_logging_time': 0.4103569984436035}
+I0604 06:03:05.537486 140168296113920 logging_writer.py:48] [71846] accumulated_eval_time=2539.51, accumulated_logging_time=0.410357, accumulated_submission_time=6481.58, global_step=71846, preemption_count=0, score=6481.58, test/accuracy=0.676312, test/bleu=27.924, test/loss=1.52205, test/num_examples=3003, total_duration=9057.95, train/accuracy=0.679037, train/bleu=34.0908, train/loss=1.50019, validation/accuracy=0.664059, validation/bleu=28.4884, validation/loss=1.59981, validation/num_examples=3000
+I0604 06:13:50.184338 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 06:13:52.398216 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:15:35.618861 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 06:15:37.806904 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:16:52.319672 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 06:16:54.508267 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:17:58.766280 140200356082880 submission_runner.py:516] Time since start: 9951.20s, 	Step: 79039, 	{'train/accuracy': 0.6863783026559037, 'train/loss': 1.4539800878985865, 'train/bleu': 33.8859260873017, 'validation/accuracy': 0.6640711212508215, 'validation/loss': 1.6085855259079243, 'validation/bleu': 28.200024181916614, 'validation/num_examples': 3000, 'test/accuracy': 0.6787635814304805, 'test/loss': 1.5253551507756666, 'test/bleu': 27.95344927190981, 'test/num_examples': 3003, 'score': 7122.674792051315, 'total_duration': 9951.204293251038, 'accumulated_submission_time': 7122.674792051315, 'accumulated_eval_time': 2788.095028400421, 'accumulated_logging_time': 0.4468872547149658}
+I0604 06:17:58.793828 140168287721216 logging_writer.py:48] [79039] accumulated_eval_time=2788.1, accumulated_logging_time=0.446887, accumulated_submission_time=7122.67, global_step=79039, preemption_count=0, score=7122.67, test/accuracy=0.678764, test/bleu=27.9534, test/loss=1.52536, test/num_examples=3003, total_duration=9951.2, train/accuracy=0.686378, train/bleu=33.8859, train/loss=1.45398, validation/accuracy=0.664071, validation/bleu=28.2, validation/loss=1.60859, validation/num_examples=3000
+I0604 06:28:43.439649 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 06:28:45.649009 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:30:14.336023 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 06:30:16.526794 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:31:16.932747 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 06:31:19.123344 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:32:14.663814 140200356082880 submission_runner.py:516] Time since start: 10807.10s, 	Step: 86228, 	{'train/accuracy': 0.6946041270641046, 'train/loss': 1.4126098792169572, 'train/bleu': 35.1643802474177, 'validation/accuracy': 0.6629800002479821, 'validation/loss': 1.6234150460006695, 'validation/bleu': 28.271897199902174, 'validation/num_examples': 3000, 'test/accuracy': 0.6757771192841787, 'test/loss': 1.5410240906978094, 'test/bleu': 27.318537284399838, 'test/num_examples': 3003, 'score': 7763.79509139061, 'total_duration': 10807.10183095932, 'accumulated_submission_time': 7763.79509139061, 'accumulated_eval_time': 2999.3192439079285, 'accumulated_logging_time': 0.4847872257232666}
+I0604 06:32:14.689671 140168296113920 logging_writer.py:48] [86228] accumulated_eval_time=2999.32, accumulated_logging_time=0.484787, accumulated_submission_time=7763.8, global_step=86228, preemption_count=0, score=7763.8, test/accuracy=0.675777, test/bleu=27.3185, test/loss=1.54102, test/num_examples=3003, total_duration=10807.1, train/accuracy=0.694604, train/bleu=35.1644, train/loss=1.41261, validation/accuracy=0.66298, validation/bleu=28.2719, validation/loss=1.62342, validation/num_examples=3000
+I0604 06:42:59.354979 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 06:43:01.561934 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:44:08.792253 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 06:44:10.981695 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:45:10.012017 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 06:45:12.204763 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:46:05.227213 140200356082880 submission_runner.py:516] Time since start: 11637.67s, 	Step: 93419, 	{'train/accuracy': 0.7073335625071617, 'train/loss': 1.3441668099003095, 'train/bleu': 36.706607432382846, 'validation/accuracy': 0.661293722334503, 'validation/loss': 1.6537597177964316, 'validation/bleu': 28.151016458983513, 'validation/num_examples': 3000, 'test/accuracy': 0.6740921503689501, 'test/loss': 1.5678069258032654, 'test/bleu': 27.312409122165032, 'test/num_examples': 3003, 'score': 8404.940797567368, 'total_duration': 11637.66523885727, 'accumulated_submission_time': 8404.940797567368, 'accumulated_eval_time': 3185.191515684128, 'accumulated_logging_time': 0.520885705947876}
+I0604 06:46:05.256626 140168287721216 logging_writer.py:48] [93419] accumulated_eval_time=3185.19, accumulated_logging_time=0.520886, accumulated_submission_time=8404.94, global_step=93419, preemption_count=0, score=8404.94, test/accuracy=0.674092, test/bleu=27.3124, test/loss=1.56781, test/num_examples=3003, total_duration=11637.7, train/accuracy=0.707334, train/bleu=36.7066, train/loss=1.34417, validation/accuracy=0.661294, validation/bleu=28.151, validation/loss=1.65376, validation/num_examples=3000
+I0604 06:56:49.882533 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 06:56:52.091207 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:57:56.831943 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 06:57:59.026179 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:58:59.386199 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 06:59:01.577491 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 06:59:59.464092 140200356082880 submission_runner.py:516] Time since start: 12471.90s, 	Step: 100603, 	{'train/accuracy': 0.7583266291230893, 'train/loss': 1.0984060740144812, 'train/bleu': 40.844491405161506, 'validation/accuracy': 0.6573756060061251, 'validation/loss': 1.6974223816195708, 'validation/bleu': 27.741125084292044, 'validation/num_examples': 3000, 'test/accuracy': 0.6712799953518099, 'test/loss': 1.6073321567602115, 'test/bleu': 26.97325868012627, 'test/num_examples': 3003, 'score': 9046.024538993835, 'total_duration': 12471.902083396912, 'accumulated_submission_time': 9046.024538993835, 'accumulated_eval_time': 3374.7731189727783, 'accumulated_logging_time': 0.5604064464569092}
+I0604 06:59:59.491680 140168296113920 logging_writer.py:48] [100603] accumulated_eval_time=3374.77, accumulated_logging_time=0.560406, accumulated_submission_time=9046.02, global_step=100603, preemption_count=0, score=9046.02, test/accuracy=0.67128, test/bleu=26.9733, test/loss=1.60733, test/num_examples=3003, total_duration=12471.9, train/accuracy=0.758327, train/bleu=40.8445, train/loss=1.09841, validation/accuracy=0.657376, validation/bleu=27.7411, validation/loss=1.69742, validation/num_examples=3000
+I0604 07:10:44.175048 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 07:10:46.381423 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 07:11:53.011182 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 07:11:55.199667 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 07:12:49.918858 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 07:12:52.112757 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 07:13:49.764500 140200356082880 submission_runner.py:516] Time since start: 13302.20s, 	Step: 107784, 	{'train/accuracy': 0.7517248492905769, 'train/loss': 1.1232232189928255, 'train/bleu': 40.074040464793995, 'validation/accuracy': 0.6570780275508054, 'validation/loss': 1.7226566859059405, 'validation/bleu': 27.46261313456894, 'validation/num_examples': 3000, 'test/accuracy': 0.6690023821974319, 'test/loss': 1.6371561065597582, 'test/bleu': 26.677291245780037, 'test/num_examples': 3003, 'score': 9687.138712406158, 'total_duration': 13302.202503919601, 'accumulated_submission_time': 9687.138712406158, 'accumulated_eval_time': 3560.362629890442, 'accumulated_logging_time': 0.5994455814361572}
+I0604 07:13:49.792973 140168287721216 logging_writer.py:48] [107784] accumulated_eval_time=3560.36, accumulated_logging_time=0.599446, accumulated_submission_time=9687.14, global_step=107784, preemption_count=0, score=9687.14, test/accuracy=0.669002, test/bleu=26.6773, test/loss=1.63716, test/num_examples=3003, total_duration=13302.2, train/accuracy=0.751725, train/bleu=40.074, train/loss=1.12322, validation/accuracy=0.657078, validation/bleu=27.4626, validation/loss=1.72266, validation/num_examples=3000
+I0604 07:24:34.459436 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 07:24:36.678610 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 07:25:49.952827 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 07:25:52.153168 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 07:26:48.131489 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 07:26:50.334712 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 07:27:45.391058 140200356082880 submission_runner.py:516] Time since start: 14137.83s, 	Step: 114953, 	{'train/accuracy': 0.7531260754846851, 'train/loss': 1.1213392293793736, 'train/bleu': 39.76832601234368, 'validation/accuracy': 0.6562844850032857, 'validation/loss': 1.7392557903807764, 'validation/bleu': 27.635172746783688, 'validation/num_examples': 3000, 'test/accuracy': 0.6678868165707977, 'test/loss': 1.649873627331358, 'test/bleu': 26.859992871388393, 'test/num_examples': 3003, 'score': 10328.186014652252, 'total_duration': 14137.829053878784, 'accumulated_submission_time': 10328.186014652252, 'accumulated_eval_time': 3751.2942469120026, 'accumulated_logging_time': 0.6381094455718994}
+I0604 07:27:45.419959 140168296113920 logging_writer.py:48] [114953] accumulated_eval_time=3751.29, accumulated_logging_time=0.638109, accumulated_submission_time=10328.2, global_step=114953, preemption_count=0, score=10328.2, test/accuracy=0.667887, test/bleu=26.86, test/loss=1.64987, test/num_examples=3003, total_duration=14137.8, train/accuracy=0.753126, train/bleu=39.7683, train/loss=1.12134, validation/accuracy=0.656284, validation/bleu=27.6352, validation/loss=1.73926, validation/num_examples=3000
+I0604 07:35:20.486072 140200356082880 spec.py:333] Evaluating on the training split.
+I0604 07:35:22.700712 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 07:36:34.926800 140200356082880 spec.py:346] Evaluating on the validation split.
+I0604 07:36:37.126163 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 07:37:36.060085 140200356082880 spec.py:363] Evaluating on the test split.
+I0604 07:37:38.259037 140200356082880 workload.py:152] Translating evaluation dataset.
+I0604 07:38:33.456515 140200356082880 submission_runner.py:516] Time since start: 14785.89s, 	Step: 120001, 	{'train/accuracy': 0.7485788440116219, 'train/loss': 1.14574959518587, 'train/bleu': 40.34710285474404, 'validation/accuracy': 0.6565448661516906, 'validation/loss': 1.741937096254231, 'validation/bleu': 27.541319326654232, 'validation/num_examples': 3000, 'test/accuracy': 0.668502701760502, 'test/loss': 1.6532165112428099, 'test/bleu': 26.724372527084277, 'test/num_examples': 3003, 'score': 10780.301430225372, 'total_duration': 14785.894516944885, 'accumulated_submission_time': 10780.301430225372, 'accumulated_eval_time': 3944.2647426128387, 'accumulated_logging_time': 0.6772875785827637}
+I0604 07:38:33.483938 140168287721216 logging_writer.py:48] [120001] accumulated_eval_time=3944.26, accumulated_logging_time=0.677288, accumulated_submission_time=10780.3, global_step=120001, preemption_count=0, score=10780.3, test/accuracy=0.668503, test/bleu=26.7244, test/loss=1.65322, test/num_examples=3003, total_duration=14785.9, train/accuracy=0.748579, train/bleu=40.3471, train/loss=1.14575, validation/accuracy=0.656545, validation/bleu=27.5413, validation/loss=1.74194, validation/num_examples=3000
+I0604 07:38:34.128789 140168296113920 logging_writer.py:48] [120001] global_step=120001, preemption_count=0, score=10780.3
+I0604 07:38:34.149726 140200356082880 submission_runner.py:857] Final wmt score: 10780.301430225372

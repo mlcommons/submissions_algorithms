@@ -1,0 +1,73 @@
+python submission_runner.py --framework=jax --workload=librispeech_conformer --submission_path=submissions_algorithms/submissions/self_tuning/single_worker_dilocov2/submission.py --data_dir=/data/librispeech --experiment_dir=/experiment_runs --experiment_name=submissions_a100/single_worker_dilocov2/study_0 --overwrite=True --save_checkpoints=False --rng_seed=1847681076 --librispeech_tokenizer_vocab_path=/data/librispeech/spm_model.vocab --tuning_ruleset=self 2>&1 | tee -a /logs/librispeech_conformer_jax_06-15-2026-18-53-31.log
+2026-06-15 18:53:32.661989: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781549612.685656       9 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781549612.693368       9 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1781549612.712263       9 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781549612.712302       9 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781549612.712304       9 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1781549612.712306       9 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+INFO:2026-06-15 18:53:42,054:jax._src.xla_bridge:830: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0615 18:53:42.054643 140121817322688 xla_bridge.py:830] Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+I0615 18:53:42.822178 140121817322688 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/single_worker_dilocov2/study_0/librispeech_conformer_jax.
+I0615 18:53:43.224874 140121817322688 submission_runner.py:741] Creating directory at /experiment_runs/submissions_a100/single_worker_dilocov2/study_0/librispeech_conformer_jax/trial_1.
+I0615 18:53:43.536257 140121817322688 submission_runner.py:242] Initializing dataset.
+I0615 18:53:43.536479 140121817322688 submission_runner.py:251] Initializing model.
+I0615 18:54:08.128449 140121817322688 submission_runner.py:294] Initializing optimizer.
+I0615 18:54:09.195617 140121817322688 submission_runner.py:299] Initializing metrics bundle.
+I0615 18:54:09.195902 140121817322688 submission_runner.py:321] Initializing checkpoint and logger.
+I0615 18:54:09.197680 140121817322688 checkpoints.py:1098] Found no checkpoint files in /experiment_runs/submissions_a100/single_worker_dilocov2/study_0/librispeech_conformer_jax/trial_1 with prefix checkpoint_
+I0615 18:54:09.197846 140121817322688 submission_runner.py:344] Saving meta data to /experiment_runs/submissions_a100/single_worker_dilocov2/study_0/librispeech_conformer_jax/trial_1/meta_data_0.json.
+I0615 18:54:09.198030 140121817322688 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0615 18:54:09.198088 140121817322688 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0615 18:54:09.366905 140121817322688 submission_runner.py:348] Saving flags to /experiment_runs/submissions_a100/single_worker_dilocov2/study_0/librispeech_conformer_jax/trial_1/flags_0.json.
+I0615 18:54:09.381567 140121817322688 submission_runner.py:359] Starting training loop.
+I0615 18:54:09.577410 140121817322688 input_pipeline.py:19] Loading split = train-clean-100
+I0615 18:54:09.692745 140121817322688 input_pipeline.py:19] Loading split = train-clean-360
+I0615 18:54:09.852895 140121817322688 input_pipeline.py:19] Loading split = train-other-500
+/usr/local/lib/python3.11/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+/usr/local/lib/python3.11/site-packages/jax/_src/interpreters/mlir.py:1268: UserWarning: Some donated buffers were not usable: float32[512], float32[512], float32[512], float32[512], float32[512], float32[512], float32[512], float32[512].
+See an explanation at https://docs.jax.dev/en/latest/faq.html#buffer-donation.
+  warnings.warn("Some donated buffers were not usable:"
+2026-06-15 18:54:48.066023: E external/xla/xla/stream_executor/cuda/cuda_timer.cc:86] Delay kernel timed out: measured time has sub-optimal accuracy. There may be a missing warmup execution, please investigate in Nsight Systems.
+2026-06-15 18:54:48.227003: E external/xla/xla/stream_executor/cuda/cuda_timer.cc:86] Delay kernel timed out: measured time has sub-optimal accuracy. There may be a missing warmup execution, please investigate in Nsight Systems.
+2026-06-15 18:54:56.878203: E external/xla/xla/service/slow_operation_alarm.cc:73] Trying algorithm eng0{} for conv (f32[64,512,999,41]{3,2,1,0}, u8[0]{0}) custom-call(f32[64,512,500,20]{3,2,1,0}, f32[512,512,3,3]{3,2,1,0}), window={size=3x3 stride=2x2 pad=1_1x0_0}, dim_labels=bf01_oi01->bf01, custom_call_target="__cudnn$convBackwardInput", backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"activation_mode":"kNone","conv_result_scale":1,"side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false,"reification_cost":[]} is taking a while...
+2026-06-15 18:55:32.390278: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 36.512154748s
+Trying algorithm eng0{} for conv (f32[64,512,999,41]{3,2,1,0}, u8[0]{0}) custom-call(f32[64,512,500,20]{3,2,1,0}, f32[512,512,3,3]{3,2,1,0}), window={size=3x3 stride=2x2 pad=1_1x0_0}, dim_labels=bf01_oi01->bf01, custom_call_target="__cudnn$convBackwardInput", backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"activation_mode":"kNone","conv_result_scale":1,"side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false,"reification_cost":[]} is taking a while...
+2026-06-15 18:55:42.457920: E external/xla/xla/service/slow_operation_alarm.cc:73] Trying algorithm eng0{} for conv (f32[512,512,3,3]{3,2,1,0}, u8[0]{0}) custom-call(f32[64,512,999,41]{3,2,1,0}, f32[64,512,500,20]{3,2,1,0}), window={size=3x3 stride=2x2 pad=1_1x0_0}, dim_labels=bf01_oi01->bf01, custom_call_target="__cudnn$convBackwardFilter", backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"activation_mode":"kNone","conv_result_scale":1,"side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false,"reification_cost":[]} is taking a while...
+2026-06-15 18:55:58.096377: E external/xla/xla/service/slow_operation_alarm.cc:140] The operation took 16.638562089s
+Trying algorithm eng0{} for conv (f32[512,512,3,3]{3,2,1,0}, u8[0]{0}) custom-call(f32[64,512,999,41]{3,2,1,0}, f32[64,512,500,20]{3,2,1,0}), window={size=3x3 stride=2x2 pad=1_1x0_0}, dim_labels=bf01_oi01->bf01, custom_call_target="__cudnn$convBackwardFilter", backend_config={"operation_queue_id":"0","wait_on_operation_queues":[],"cudnn_conv_backend_config":{"activation_mode":"kNone","conv_result_scale":1,"side_input_scale":0,"leakyrelu_alpha":0},"force_earliest_schedule":false,"reification_cost":[]} is taking a while...
+E0615 18:57:12.756806     128 pjrt_stream_executor_client.cc:2939] Execution of replica 0 failed: INTERNAL: NCCL operation ncclCommInitRankConfig(&comm, clique_key.num_devices(), nccl_unique_id, ranks[i].rank.value(), &comm_config) failed: unhandled system error (run with NCCL_DEBUG=INFO for details). Last NCCL warning(error) log entry (may be unrelated) 'nvmlInit_v2() failed: Unknown Error'.
+E0615 18:57:12.756819     131 pjrt_stream_executor_client.cc:2939] Execution of replica 0 failed: INTERNAL: NCCL operation ncclCommInitRankConfig(&comm, clique_key.num_devices(), nccl_unique_id, ranks[i].rank.value(), &comm_config) failed: unhandled system error (run with NCCL_DEBUG=INFO for details). Last NCCL warning(error) log entry (may be unrelated) 'nvmlInit_v2() failed: Unknown Error'.
+E0615 18:57:12.756827     122 pjrt_stream_executor_client.cc:2939] Execution of replica 0 failed: INTERNAL: NCCL operation ncclCommInitRankConfig(&comm, clique_key.num_devices(), nccl_unique_id, ranks[i].rank.value(), &comm_config) failed: unhandled system error (run with NCCL_DEBUG=INFO for details). Last NCCL warning(error) log entry (may be unrelated) 'nvmlInit_v2() failed: Unknown Error'.
+E0615 18:57:12.756833     125 pjrt_stream_executor_client.cc:2939] Execution of replica 0 failed: INTERNAL: NCCL operation ncclCommInitRankConfig(&comm, clique_key.num_devices(), nccl_unique_id, ranks[i].rank.value(), &comm_config) failed: unhandled system error (run with NCCL_DEBUG=INFO for details). Last NCCL warning(error) log entry (may be unrelated) 'nvmlInit_v2() failed: Unknown Error'.
+Traceback (most recent call last):
+  File "/algorithmic-efficiency/submission_runner.py", line 873, in <module>
+    app.run(main)
+  File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 308, in run
+    _run_main(main, args)
+  File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 254, in _run_main
+    sys.exit(main(argv))
+             ^^^^^^^^^^
+  File "/algorithmic-efficiency/submission_runner.py", line 838, in main
+    score = score_submission_on_workload(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/algorithmic-efficiency/submission_runner.py", line 747, in score_submission_on_workload
+    score, _ = train_once(
+               ^^^^^^^^^^^
+  File "/algorithmic-efficiency/submission_runner.py", line 387, in train_once
+    optimizer_state, model_params, model_state = update_params(
+                                                 ^^^^^^^^^^^^^^
+  File "/algorithmic-efficiency/submissions_algorithms/submissions/self_tuning/single_worker_dilocov2/submission.py", line 316, in update_params
+    ) = jitted_inner_step(
+        ^^^^^^^^^^^^^^^^^^
+jaxlib._jax.XlaRuntimeError: INTERNAL: NCCL operation ncclCommInitRankConfig(&comm, clique_key.num_devices(), nccl_unique_id, ranks[i].rank.value(), &comm_config) failed: unhandled system error (run with NCCL_DEBUG=INFO for details). Last NCCL warning(error) log entry (may be unrelated) 'nvmlInit_v2() failed: Unknown Error'.: while running replica 0 and partition 0 of a replicated computation (other replicas may have failed as well).
+--------------------
+For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.

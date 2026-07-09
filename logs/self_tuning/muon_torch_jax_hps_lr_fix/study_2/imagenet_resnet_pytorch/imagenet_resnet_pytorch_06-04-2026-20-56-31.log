@@ -1,0 +1,881 @@
+torchrun --redirects 1:0,2:0,3:0 --standalone --nnodes=1 --nproc_per_node=4 submission_runner.py --framework=pytorch --workload=imagenet_resnet --submission_path=submissions_algorithms/submissions/self_tuning/muon_torch_jax_hps_lr_fix/submission.py --data_dir=/data/imagenet/pytorch --experiment_dir=/experiment_runs --experiment_name=submissions_a100/muon_torch_jax_hps_lr_fix/study_2 --overwrite=True --save_checkpoints=False --rng_seed=236080263 --imagenet_v2_data_dir=/data/imagenet/pytorch --torch_compile=true --tuning_ruleset=self 2>&1 | tee -a /logs/imagenet_resnet_pytorch_06-04-2026-20-56-31.log
+W0604 20:56:32.865000 9 site-packages/torch/distributed/run.py:803] 
+W0604 20:56:32.865000 9 site-packages/torch/distributed/run.py:803] *****************************************
+W0604 20:56:32.865000 9 site-packages/torch/distributed/run.py:803] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0604 20:56:32.865000 9 site-packages/torch/distributed/run.py:803] *****************************************
+2026-06-04 20:56:33.985991: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-06-04 20:56:33.986003: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-06-04 20:56:33.985998: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-06-04 20:56:33.986002: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780606594.006953      41 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780606594.006955      39 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780606594.006955      38 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780606594.006959      40 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780606594.013797      38 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780606594.013822      41 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780606594.013823      40 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780606594.013857      39 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1780606594.030493      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030504      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030506      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030502      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030526      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030526      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030528      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030529      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030528      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030529      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030530      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030531      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030531      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030532      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030533      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606594.030534      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606599.728600      41 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1780606599.854807      39 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1780606599.905178      38 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+W0000 00:00:1780606600.153474      40 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4876: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  warnings.warn(  # warn only once
+[rank0]:[W604 20:56:43.242918201 ProcessGroupNCCL.cpp:5068] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+I0604 20:56:44.928140 139894918825152 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_lr_fix/study_2/imagenet_resnet_pytorch.
+I0604 20:56:44.928140 139654192338112 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_lr_fix/study_2/imagenet_resnet_pytorch.
+I0604 20:56:44.928140 139680478246080 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_lr_fix/study_2/imagenet_resnet_pytorch.
+I0604 20:56:44.928141 139640796021952 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_lr_fix/study_2/imagenet_resnet_pytorch.
+I0604 20:56:46.388375 139894918825152 submission_runner.py:741] Creating directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_lr_fix/study_2/imagenet_resnet_pytorch/trial_1.
+I0604 20:56:46.735976 139894918825152 submission_runner.py:242] Initializing dataset.
+I0604 20:57:24.871374 139894918825152 submission_runner.py:251] Initializing model.
+I0604 20:57:25.892297 139894918825152 submission_runner.py:290] Performing `torch.compile`.
+I0604 20:57:25.894409 139894918825152 submission_runner.py:294] Initializing optimizer.
+I0604 20:57:25.894892 139680478246080 muon.py:324] Muon params:
+	_orig_mod.module.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer1.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer1.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer1.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer1.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer1.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer1.2.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer2.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.2.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.3.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.3.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.3.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer3.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.2.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.3.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.3.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.3.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.4.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.4.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.4.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.5.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.5.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.5.conv3.weight (ndim=4)
+	_orig_mod.module.layer4.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer4.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer4.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer4.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer4.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer4.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer4.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer4.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer4.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer4.2.conv3.weight (ndim=4)
+	_orig_mod.module.fc.weight (ndim=2)
+I0604 20:57:25.895028 139894918825152 muon.py:324] Muon params:
+	_orig_mod.module.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer1.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer1.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer1.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer1.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer1.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer1.2.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer2.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.2.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.3.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.3.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.3.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer3.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.2.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.3.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.3.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.3.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.4.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.4.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.4.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.5.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.5.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.5.conv3.weight (ndim=4)
+	_orig_mod.module.layer4.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer4.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer4.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer4.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer4.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer4.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer4.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer4.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer4.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer4.2.conv3.weight (ndim=4)
+	_orig_mod.module.fc.weight (ndim=2)
+I0604 20:57:25.895058 139680478246080 muon.py:325] Adam params:
+	_orig_mod.module.bn1.weight (ndim=1)
+	_orig_mod.module.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer1.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer1.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer1.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer1.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer1.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer1.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer1.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer1.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer1.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer1.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer1.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer1.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer1.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer1.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer1.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer1.2.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer2.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer2.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.2.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.3.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.3.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.3.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.3.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.3.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.3.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer3.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer3.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.2.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.3.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.3.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.3.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.3.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.3.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.3.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.4.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.4.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.4.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.4.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.4.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.4.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.5.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.5.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.5.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.5.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.5.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.5.bn3.bias (ndim=1)
+	_orig_mod.module.layer4.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer4.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer4.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer4.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer4.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer4.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer4.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer4.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer4.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer4.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer4.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer4.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer4.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer4.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer4.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer4.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer4.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer4.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer4.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer4.2.bn3.bias (ndim=1)
+	_orig_mod.module.fc.bias (ndim=1)
+I0604 20:57:25.895103 139894918825152 muon.py:325] Adam params:
+	_orig_mod.module.bn1.weight (ndim=1)
+	_orig_mod.module.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer1.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer1.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer1.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer1.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer1.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer1.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer1.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer1.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer1.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer1.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer1.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer1.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer1.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer1.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer1.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer1.2.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer2.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer2.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.2.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.3.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.3.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.3.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.3.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.3.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.3.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer3.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer3.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.2.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.3.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.3.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.3.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.3.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.3.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.3.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.4.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.4.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.4.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.4.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.4.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.4.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.5.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.5.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.5.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.5.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.5.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.5.bn3.bias (ndim=1)
+	_orig_mod.module.layer4.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer4.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer4.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer4.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer4.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer4.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer4.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer4.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer4.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer4.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer4.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer4.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer4.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer4.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer4.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer4.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer4.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer4.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer4.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer4.2.bn3.bias (ndim=1)
+	_orig_mod.module.fc.bias (ndim=1)
+I0604 20:57:25.896392 139894918825152 submission_runner.py:299] Initializing metrics bundle.
+I0604 20:57:25.896560 139894918825152 submission_runner.py:321] Initializing checkpoint and logger.
+I0604 20:57:25.896958 139640796021952 muon.py:324] Muon params:
+	_orig_mod.module.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer1.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer1.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer1.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer1.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer1.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer1.2.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer2.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.2.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.3.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.3.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.3.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer3.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.2.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.3.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.3.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.3.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.4.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.4.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.4.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.5.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.5.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.5.conv3.weight (ndim=4)
+	_orig_mod.module.layer4.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer4.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer4.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer4.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer4.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer4.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer4.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer4.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer4.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer4.2.conv3.weight (ndim=4)
+	_orig_mod.module.fc.weight (ndim=2)
+I0604 20:57:25.897124 139640796021952 muon.py:325] Adam params:
+	_orig_mod.module.bn1.weight (ndim=1)
+	_orig_mod.module.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer1.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer1.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer1.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer1.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer1.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer1.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer1.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer1.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer1.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer1.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer1.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer1.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer1.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer1.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer1.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer1.2.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer2.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer2.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.2.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.3.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.3.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.3.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.3.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.3.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.3.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer3.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer3.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.2.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.3.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.3.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.3.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.3.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.3.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.3.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.4.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.4.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.4.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.4.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.4.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.4.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.5.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.5.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.5.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.5.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.5.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.5.bn3.bias (ndim=1)
+	_orig_mod.module.layer4.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer4.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer4.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer4.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer4.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer4.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer4.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer4.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer4.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer4.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer4.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer4.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer4.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer4.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer4.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer4.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer4.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer4.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer4.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer4.2.bn3.bias (ndim=1)
+	_orig_mod.module.fc.bias (ndim=1)
+I0604 20:57:25.897334 139654192338112 muon.py:324] Muon params:
+	_orig_mod.module.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer1.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer1.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer1.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer1.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer1.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer1.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer1.2.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer2.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.2.conv3.weight (ndim=4)
+	_orig_mod.module.layer2.3.conv1.weight (ndim=4)
+	_orig_mod.module.layer2.3.conv2.weight (ndim=4)
+	_orig_mod.module.layer2.3.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer3.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.2.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.3.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.3.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.3.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.4.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.4.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.4.conv3.weight (ndim=4)
+	_orig_mod.module.layer3.5.conv1.weight (ndim=4)
+	_orig_mod.module.layer3.5.conv2.weight (ndim=4)
+	_orig_mod.module.layer3.5.conv3.weight (ndim=4)
+	_orig_mod.module.layer4.0.conv1.weight (ndim=4)
+	_orig_mod.module.layer4.0.conv2.weight (ndim=4)
+	_orig_mod.module.layer4.0.conv3.weight (ndim=4)
+	_orig_mod.module.layer4.0.downsample.conv.weight (ndim=4)
+	_orig_mod.module.layer4.1.conv1.weight (ndim=4)
+	_orig_mod.module.layer4.1.conv2.weight (ndim=4)
+	_orig_mod.module.layer4.1.conv3.weight (ndim=4)
+	_orig_mod.module.layer4.2.conv1.weight (ndim=4)
+	_orig_mod.module.layer4.2.conv2.weight (ndim=4)
+	_orig_mod.module.layer4.2.conv3.weight (ndim=4)
+	_orig_mod.module.fc.weight (ndim=2)
+I0604 20:57:25.897495 139654192338112 muon.py:325] Adam params:
+	_orig_mod.module.bn1.weight (ndim=1)
+	_orig_mod.module.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer1.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer1.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer1.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer1.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer1.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer1.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer1.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer1.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer1.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer1.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer1.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer1.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer1.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer1.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer1.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer1.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer1.2.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer2.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer2.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.2.bn3.bias (ndim=1)
+	_orig_mod.module.layer2.3.bn1.weight (ndim=1)
+	_orig_mod.module.layer2.3.bn1.bias (ndim=1)
+	_orig_mod.module.layer2.3.bn2.weight (ndim=1)
+	_orig_mod.module.layer2.3.bn2.bias (ndim=1)
+	_orig_mod.module.layer2.3.bn3.weight (ndim=1)
+	_orig_mod.module.layer2.3.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer3.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer3.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.2.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.3.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.3.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.3.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.3.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.3.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.3.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.4.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.4.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.4.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.4.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.4.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.4.bn3.bias (ndim=1)
+	_orig_mod.module.layer3.5.bn1.weight (ndim=1)
+	_orig_mod.module.layer3.5.bn1.bias (ndim=1)
+	_orig_mod.module.layer3.5.bn2.weight (ndim=1)
+	_orig_mod.module.layer3.5.bn2.bias (ndim=1)
+	_orig_mod.module.layer3.5.bn3.weight (ndim=1)
+	_orig_mod.module.layer3.5.bn3.bias (ndim=1)
+	_orig_mod.module.layer4.0.bn1.weight (ndim=1)
+	_orig_mod.module.layer4.0.bn1.bias (ndim=1)
+	_orig_mod.module.layer4.0.bn2.weight (ndim=1)
+	_orig_mod.module.layer4.0.bn2.bias (ndim=1)
+	_orig_mod.module.layer4.0.bn3.weight (ndim=1)
+	_orig_mod.module.layer4.0.bn3.bias (ndim=1)
+	_orig_mod.module.layer4.0.downsample.bn.weight (ndim=1)
+	_orig_mod.module.layer4.0.downsample.bn.bias (ndim=1)
+	_orig_mod.module.layer4.1.bn1.weight (ndim=1)
+	_orig_mod.module.layer4.1.bn1.bias (ndim=1)
+	_orig_mod.module.layer4.1.bn2.weight (ndim=1)
+	_orig_mod.module.layer4.1.bn2.bias (ndim=1)
+	_orig_mod.module.layer4.1.bn3.weight (ndim=1)
+	_orig_mod.module.layer4.1.bn3.bias (ndim=1)
+	_orig_mod.module.layer4.2.bn1.weight (ndim=1)
+	_orig_mod.module.layer4.2.bn1.bias (ndim=1)
+	_orig_mod.module.layer4.2.bn2.weight (ndim=1)
+	_orig_mod.module.layer4.2.bn2.bias (ndim=1)
+	_orig_mod.module.layer4.2.bn3.weight (ndim=1)
+	_orig_mod.module.layer4.2.bn3.bias (ndim=1)
+	_orig_mod.module.fc.bias (ndim=1)
+I0604 20:57:25.898755 139894918825152 submission_runner.py:344] Saving meta data to /experiment_runs/submissions_a100/muon_torch_jax_hps_lr_fix/study_2/imagenet_resnet_pytorch/trial_1/meta_data_0.json.
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/algorithmic-efficiency/submission_runner.py", line 873, in <module>
+[rank2]:     app.run(main)
+[rank2]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 308, in run
+[rank2]:     _run_main(main, args)
+[rank2]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 254, in _run_main
+[rank2]:     sys.exit(main(argv))
+[rank2]:              ^^^^^^^^^^
+[rank2]:   File "/algorithmic-efficiency/submission_runner.py", line 838, in main
+[rank2]:     score = score_submission_on_workload(
+[rank2]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/algorithmic-efficiency/submission_runner.py", line 747, in score_submission_on_workload
+[rank2]:     score, _ = train_once(
+[rank2]:                ^^^^^^^^^^^
+[rank2]:   File "/algorithmic-efficiency/submission_runner.py", line 345, in train_once
+[rank2]:     meta_data = logger_utils.get_meta_data(workload, rng_seed)
+[rank2]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/algorithmic-efficiency/algoperf/logger_utils.py", line 297, in get_meta_data
+[rank2]:     utilization_measurements = _get_utilization()
+[rank2]:                                ^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/algorithmic-efficiency/algoperf/logger_utils.py", line 162, in _get_utilization
+[rank2]:     gpus = GPUtil.getGPUs()
+[rank2]:            ^^^^^^^^^^^^^^^^
+[rank2]:   File "/usr/local/lib/python3.11/site-packages/GPUtil/GPUtil.py", line 102, in getGPUs
+[rank2]:     deviceIds = int(vals[i])
+[rank2]:                 ^^^^^^^^^^^^
+[rank2]: ValueError: invalid literal for int() with base 10: 'Failed to initialize NVML: Unknown Error'
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/algorithmic-efficiency/submission_runner.py", line 873, in <module>
+[rank3]:     app.run(main)
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 308, in run
+[rank3]:     _run_main(main, args)
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 254, in _run_main
+[rank3]:     sys.exit(main(argv))
+[rank3]:              ^^^^^^^^^^
+[rank3]:   File "/algorithmic-efficiency/submission_runner.py", line 838, in main
+[rank3]:     score = score_submission_on_workload(
+[rank3]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/algorithmic-efficiency/submission_runner.py", line 747, in score_submission_on_workload
+[rank3]:     score, _ = train_once(
+[rank3]:                ^^^^^^^^^^^
+[rank3]:   File "/algorithmic-efficiency/submission_runner.py", line 345, in train_once
+[rank3]:     meta_data = logger_utils.get_meta_data(workload, rng_seed)
+[rank3]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/algorithmic-efficiency/algoperf/logger_utils.py", line 297, in get_meta_data
+[rank3]:     utilization_measurements = _get_utilization()
+[rank3]:                                ^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/algorithmic-efficiency/algoperf/logger_utils.py", line 162, in _get_utilization
+[rank3]:     gpus = GPUtil.getGPUs()
+[rank3]:            ^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/GPUtil/GPUtil.py", line 102, in getGPUs
+[rank3]:     deviceIds = int(vals[i])
+[rank3]:                 ^^^^^^^^^^^^
+[rank3]: ValueError: invalid literal for int() with base 10: 'Failed to initialize NVML: Unknown Error'
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/algorithmic-efficiency/submission_runner.py", line 873, in <module>
+[rank1]:     app.run(main)
+[rank1]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 308, in run
+[rank1]:     _run_main(main, args)
+[rank1]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 254, in _run_main
+[rank1]:     sys.exit(main(argv))
+[rank1]:              ^^^^^^^^^^
+[rank1]:   File "/algorithmic-efficiency/submission_runner.py", line 838, in main
+[rank1]:     score = score_submission_on_workload(
+[rank1]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/algorithmic-efficiency/submission_runner.py", line 747, in score_submission_on_workload
+[rank1]:     score, _ = train_once(
+[rank1]:                ^^^^^^^^^^^
+[rank1]:   File "/algorithmic-efficiency/submission_runner.py", line 345, in train_once
+[rank1]:     meta_data = logger_utils.get_meta_data(workload, rng_seed)
+[rank1]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/algorithmic-efficiency/algoperf/logger_utils.py", line 297, in get_meta_data
+[rank1]:     utilization_measurements = _get_utilization()
+[rank1]:                                ^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/algorithmic-efficiency/algoperf/logger_utils.py", line 162, in _get_utilization
+[rank1]:     gpus = GPUtil.getGPUs()
+[rank1]:            ^^^^^^^^^^^^^^^^
+[rank1]:   File "/usr/local/lib/python3.11/site-packages/GPUtil/GPUtil.py", line 102, in getGPUs
+[rank1]:     deviceIds = int(vals[i])
+[rank1]:                 ^^^^^^^^^^^^
+[rank1]: ValueError: invalid literal for int() with base 10: 'Failed to initialize NVML: Unknown Error'
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/algorithmic-efficiency/submission_runner.py", line 873, in <module>
+[rank0]:     app.run(main)
+[rank0]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 308, in run
+[rank0]:     _run_main(main, args)
+[rank0]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 254, in _run_main
+[rank0]:     sys.exit(main(argv))
+[rank0]:              ^^^^^^^^^^
+[rank0]:   File "/algorithmic-efficiency/submission_runner.py", line 838, in main
+[rank0]:     score = score_submission_on_workload(
+[rank0]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/algorithmic-efficiency/submission_runner.py", line 747, in score_submission_on_workload
+[rank0]:     score, _ = train_once(
+[rank0]:                ^^^^^^^^^^^
+[rank0]:   File "/algorithmic-efficiency/submission_runner.py", line 345, in train_once
+[rank0]:     meta_data = logger_utils.get_meta_data(workload, rng_seed)
+[rank0]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/algorithmic-efficiency/algoperf/logger_utils.py", line 297, in get_meta_data
+[rank0]:     utilization_measurements = _get_utilization()
+[rank0]:                                ^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/algorithmic-efficiency/algoperf/logger_utils.py", line 162, in _get_utilization
+[rank0]:     gpus = GPUtil.getGPUs()
+[rank0]:            ^^^^^^^^^^^^^^^^
+[rank0]:   File "/usr/local/lib/python3.11/site-packages/GPUtil/GPUtil.py", line 102, in getGPUs
+[rank0]:     deviceIds = int(vals[i])
+[rank0]:                 ^^^^^^^^^^^^
+[rank0]: ValueError: invalid literal for int() with base 10: 'Failed to initialize NVML: Unknown Error'
+[rank0]:[W604 20:57:26.751335874 ProcessGroupNCCL.cpp:1524] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+W0604 20:57:28.940000 9 site-packages/torch/distributed/elastic/multiprocessing/api.py:908] Sending process 38 closing signal SIGTERM
+W0604 20:57:28.940000 9 site-packages/torch/distributed/elastic/multiprocessing/api.py:908] Sending process 40 closing signal SIGTERM
+W0604 20:57:28.941000 9 site-packages/torch/distributed/elastic/multiprocessing/api.py:908] Sending process 41 closing signal SIGTERM
+E0604 20:57:29.155000 9 site-packages/torch/distributed/elastic/multiprocessing/api.py:882] failed (exitcode: 1) local_rank: 1 (pid: 39) of binary: /usr/local/bin/python3.11
+Traceback (most recent call last):
+  File "/usr/local/bin/torchrun", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/run.py", line 936, in main
+    run(args)
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/run.py", line 927, in run
+    elastic_launch(
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 156, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 293, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+submission_runner.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-06-04_20:57:28
+  host      : de520f2efcbe
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 39)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

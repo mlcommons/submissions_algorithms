@@ -16,7 +16,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from algoperf import spec
 from algoperf.pytorch_utils import pytorch_setup
 
-from submissions.self_tuning.muon_torch_replicated_torch_hps.muon import MuonSingleDevice, split_params_muon_adam
+from submissions_algorithms.submissions.self_tuning.muon_torch_replicated_torch_hps.muon import MuonSingleDevice, split_params_muon_adam
 
 USE_PYTORCH_DDP = pytorch_setup()[0]
 

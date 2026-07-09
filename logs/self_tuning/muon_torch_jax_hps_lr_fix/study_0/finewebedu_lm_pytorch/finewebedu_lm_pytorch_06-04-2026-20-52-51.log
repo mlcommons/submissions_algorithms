@@ -1,0 +1,612 @@
+torchrun --redirects 1:0,2:0,3:0 --standalone --nnodes=1 --nproc_per_node=4 submission_runner.py --framework=pytorch --workload=finewebedu_lm --submission_path=submissions_algorithms/submissions/self_tuning/muon_torch_jax_hps_lr_fix/submission.py --data_dir=/data/fineweb_edu_10B --experiment_dir=/experiment_runs --experiment_name=submissions_a100/muon_torch_jax_hps_lr_fix/study_0 --overwrite=True --save_checkpoints=False --rng_seed=-330989070 --torch_compile=true --tuning_ruleset=self 2>&1 | tee -a /logs/finewebedu_lm_pytorch_06-04-2026-20-52-51.log
+W0604 20:52:53.397000 9 site-packages/torch/distributed/run.py:803] 
+W0604 20:52:53.397000 9 site-packages/torch/distributed/run.py:803] *****************************************
+W0604 20:52:53.397000 9 site-packages/torch/distributed/run.py:803] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0604 20:52:53.397000 9 site-packages/torch/distributed/run.py:803] *****************************************
+2026-06-04 20:52:54.379885: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-06-04 20:52:54.379886: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-06-04 20:52:54.379885: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-06-04 20:52:54.379907: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780606374.400635      38 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780606374.400635      40 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780606374.400638      39 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780606374.400635      41 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780606374.407472      41 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780606374.407475      40 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780606374.407478      38 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780606374.407491      39 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1780606374.424367      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424367      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424367      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424368      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424390      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424391      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424391      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424393      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424393      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424393      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424395      38 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424395      41 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424396      40 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424396      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424399      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606374.424401      39 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1780606380.061247      38 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1780606380.208046      39 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1780606380.219784      40 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+W0000 00:00:1780606380.261059      41 gpu_device.cc:2341] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/torch/__init__.py:1617: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  _C._set_float32_matmul_precision(precision)
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'repr' attribute with value False was provided to the `Field()` function, which has no effect in the context it was used. 'repr' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:2249: UnsupportedFieldAttributeWarning: The 'frozen' attribute with value True was provided to the `Field()` function, which has no effect in the context it was used. 'frozen' is field-specific metadata, and can only be attached to a model field using `Annotated` metadata or by assignment. This may have happened because an `Annotated` type alias using the `type` statement was used, or if the `Field()` function was attached to a single member of a union type.
+  warnings.warn(
+/usr/local/lib/python3.11/site-packages/torch/distributed/distributed_c10d.py:4876: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  warnings.warn(  # warn only once
+[rank0]:[W604 20:53:02.861929650 ProcessGroupNCCL.cpp:5068] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+I0604 20:53:02.880309 140081501373632 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_lr_fix/study_0/finewebedu_lm_pytorch.
+I0604 20:53:02.880316 140009075451072 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_lr_fix/study_0/finewebedu_lm_pytorch.
+I0604 20:53:02.880308 140308876448960 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_lr_fix/study_0/finewebedu_lm_pytorch.
+I0604 20:53:02.880342 139668357694656 logger_utils.py:84] Creating experiment directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_lr_fix/study_0/finewebedu_lm_pytorch.
+I0604 20:53:05.429703 140081501373632 submission_runner.py:741] Creating directory at /experiment_runs/submissions_a100/muon_torch_jax_hps_lr_fix/study_0/finewebedu_lm_pytorch/trial_1.
+I0604 20:53:05.770044 140081501373632 submission_runner.py:242] Initializing dataset.
+I0604 20:53:05.770219 140081501373632 submission_runner.py:251] Initializing model.
+I0604 20:53:11.463439 140081501373632 submission_runner.py:290] Performing `torch.compile`.
+I0604 20:53:11.464869 139668357694656 muon.py:324] Muon params:
+	_orig_mod.module.layers.0.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc2.weight (ndim=2)
+I0604 20:53:11.465019 139668357694656 muon.py:325] Adam params:
+	_orig_mod.module.embed_tokens.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.0.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.0.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.1.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.2.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.3.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.4.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.5.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.6.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.7.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.8.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.9.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.10.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.11.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.mlp_norm.weight (ndim=1)
+	_orig_mod.module.out_norm.weight (ndim=1)
+I0604 20:53:11.465219 140009075451072 muon.py:324] Muon params:
+	_orig_mod.module.layers.0.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc2.weight (ndim=2)
+I0604 20:53:11.465374 140009075451072 muon.py:325] Adam params:
+	_orig_mod.module.embed_tokens.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.0.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.0.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.1.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.2.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.3.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.4.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.5.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.6.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.7.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.8.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.9.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.10.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.11.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.mlp_norm.weight (ndim=1)
+	_orig_mod.module.out_norm.weight (ndim=1)
+I0604 20:53:11.467054 140081501373632 submission_runner.py:294] Initializing optimizer.
+I0604 20:53:11.467545 140081501373632 muon.py:324] Muon params:
+	_orig_mod.module.layers.0.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc2.weight (ndim=2)
+I0604 20:53:11.467624 140081501373632 muon.py:325] Adam params:
+	_orig_mod.module.embed_tokens.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.0.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.0.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.1.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.2.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.3.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.4.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.5.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.6.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.7.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.8.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.9.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.10.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.11.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.mlp_norm.weight (ndim=1)
+	_orig_mod.module.out_norm.weight (ndim=1)
+I0604 20:53:11.467596 140308876448960 muon.py:324] Muon params:
+	_orig_mod.module.layers.0.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.0.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.1.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.1.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.2.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.2.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.3.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.3.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.4.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.4.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.5.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.5.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.6.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.6.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.7.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.7.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.8.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.8.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.9.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.9.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.10.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.10.mlp.fc2.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_qkv.weight (ndim=2)
+	_orig_mod.module.layers.11.attn.w_out.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc1.weight (ndim=2)
+	_orig_mod.module.layers.11.mlp.fc2.weight (ndim=2)
+I0604 20:53:11.467751 140308876448960 muon.py:325] Adam params:
+	_orig_mod.module.embed_tokens.weight (ndim=2)
+	_orig_mod.module.layers.0.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.0.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.0.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.1.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.1.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.2.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.2.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.3.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.3.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.4.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.4.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.5.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.5.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.6.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.6.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.7.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.7.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.8.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.8.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.9.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.9.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.10.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.10.mlp_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.attn.attn_scale (ndim=0)
+	_orig_mod.module.layers.11.attn_norm.weight (ndim=1)
+	_orig_mod.module.layers.11.mlp_norm.weight (ndim=1)
+	_orig_mod.module.out_norm.weight (ndim=1)
+I0604 20:53:11.468274 139668357694656 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0604 20:53:11.468308 140009075451072 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0604 20:53:11.468395 139668357694656 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0604 20:53:11.468435 140009075451072 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0604 20:53:11.468743 140081501373632 submission_runner.py:299] Initializing metrics bundle.
+I0604 20:53:11.468892 140081501373632 submission_runner.py:321] Initializing checkpoint and logger.
+I0604 20:53:11.469656 140308876448960 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0604 20:53:11.469776 140308876448960 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0604 20:53:11.470422 140081501373632 submission_runner.py:344] Saving meta data to /experiment_runs/submissions_a100/muon_torch_jax_hps_lr_fix/study_0/finewebedu_lm_pytorch/trial_1/meta_data_0.json.
+I0604 20:53:11.470604 140081501373632 logger_utils.py:283] Unable to record workload.train_mean information. Continuing without it.
+I0604 20:53:11.470662 140081501373632 logger_utils.py:283] Unable to record workload.train_stddev information. Continuing without it.
+I0604 20:53:11.715296 140081501373632 submission_runner.py:348] Saving flags to /experiment_runs/submissions_a100/muon_torch_jax_hps_lr_fix/study_0/finewebedu_lm_pytorch/trial_1/flags_0.json.
+I0604 20:53:11.736179 140081501373632 submission_runner.py:359] Starting training loop.
+[rank0]:W0604 20:53:13.637000 38 site-packages/torch/_logging/_internal.py:1199] [0/0] Profiler function <class 'torch.autograd.profiler.record_function'> will be ignored
+[rank1]:W0604 20:53:13.661000 39 site-packages/torch/_logging/_internal.py:1199] [0/0] Profiler function <class 'torch.autograd.profiler.record_function'> will be ignored
+[rank2]:W0604 20:53:13.681000 40 site-packages/torch/_logging/_internal.py:1199] [0/0] Profiler function <class 'torch.autograd.profiler.record_function'> will be ignored
+[rank3]:W0604 20:53:13.705000 41 site-packages/torch/_logging/_internal.py:1199] [0/0] Profiler function <class 'torch.autograd.profiler.record_function'> will be ignored
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/algorithmic-efficiency/submission_runner.py", line 873, in <module>
+[rank3]:     app.run(main)
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 308, in run
+[rank3]:     _run_main(main, args)
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/absl/app.py", line 254, in _run_main
+[rank3]:     sys.exit(main(argv))
+[rank3]:              ^^^^^^^^^^
+[rank3]:   File "/algorithmic-efficiency/submission_runner.py", line 838, in main
+[rank3]:     score = score_submission_on_workload(
+[rank3]:             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/algorithmic-efficiency/submission_runner.py", line 747, in score_submission_on_workload
+[rank3]:     score, _ = train_once(
+[rank3]:                ^^^^^^^^^^^
+[rank3]:   File "/algorithmic-efficiency/submission_runner.py", line 387, in train_once
+[rank3]:     optimizer_state, model_params, model_state = update_params(
+[rank3]:                                                  ^^^^^^^^^^^^^^
+[rank3]:   File "/algorithmic-efficiency/submissions_algorithms/submissions/self_tuning/muon_torch_jax_hps_lr_fix/submission.py", line 150, in update_params
+[rank3]:     logits_batch, new_model_state = workload.model_fn(
+[rank3]:                                     ^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/algorithmic-efficiency/algoperf/workloads/finewebedu_lm/finewebedu_lm_pytorch/workload.py", line 90, in model_fn
+[rank3]:     logits = model(inputs)
+[rank3]:              ^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_dynamo/eval_frame.py", line 414, in __call__
+[rank3]:     return super().__call__(*args, **kwargs)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+[rank3]:     return self._call_impl(*args, **kwargs)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+[rank3]:     return forward_call(*args, **kwargs)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_dynamo/eval_frame.py", line 845, in compile_wrapper
+[rank3]:     raise e.remove_dynamo_frames() from None  # see TORCHDYNAMO_VERBOSE=1
+[rank3]:     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_dynamo/output_graph.py", line 2196, in _call_user_compiler
+[rank3]:     raise BackendCompilerFailed(
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_dynamo/output_graph.py", line 2171, in _call_user_compiler
+[rank3]:     compiled_fn = compiler_fn(gm, example_inputs)
+[rank3]:                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_dynamo/backends/distributed.py", line 614, in compile_fn
+[rank3]:     submod_compiler.run(*example_inputs)
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/fx/interpreter.py", line 174, in run
+[rank3]:     self.env[node] = self.run_node(node)
+[rank3]:                      ^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_dynamo/backends/distributed.py", line 325, in run_node
+[rank3]:     compiled_submod_real = self.compile_submod(real_mod, new_args, kwargs)
+[rank3]:                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_dynamo/backends/distributed.py", line 240, in compile_submod
+[rank3]:     self.compiler(input_mod, args),
+[rank3]:     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_dynamo/repro/after_dynamo.py", line 156, in __call__
+[rank3]:     compiled_gm = compiler_fn(gm, example_inputs)
+[rank3]:                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/__init__.py", line 2392, in __call__
+[rank3]:     return compile_fx(model_, inputs_, config_patches=self.config)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/compile_fx.py", line 2681, in compile_fx
+[rank3]:     return aot_autograd(
+[rank3]:            ^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_dynamo/backends/common.py", line 117, in __call__
+[rank3]:     cg = aot_module_simplified(gm, example_inputs, **self.kwargs)
+[rank3]:          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_functorch/aot_autograd.py", line 1106, in aot_module_simplified
+[rank3]:     compiled_fn, _ = aot_stage2_compile(aot_state, aot_graph_capture)
+[rank3]:                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/graph_compile.py", line 240, in aot_stage2_compile
+[rank3]:     return aot_stage2_autograd(aot_state, aot_graph_capture)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_functorch/_aot_autograd/graph_compile.py", line 1393, in aot_stage2_autograd
+[rank3]:     fw_module, bw_module = aot_config.partition_fn(
+[rank3]:                            ^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/compile_fx.py", line 2108, in partition_fn
+[rank3]:     _recursive_joint_graph_passes(gm, skip_invoke_subgraph=True)
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/compile_fx.py", line 527, in _recursive_joint_graph_passes
+[rank3]:     joint_graph_passes(gm)
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/fx_passes/joint_graph.py", line 601, in joint_graph_passes
+[rank3]:     ).apply_graph_pass(patterns.apply)
+[rank3]:       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/fx/passes/graph_transform_observer.py", line 88, in apply_graph_pass
+[rank3]:     return pass_fn(self.gm.graph)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/pattern_matcher.py", line 1982, in apply
+[rank3]:     if is_match(m) and guard_or_false(entry.extra_check(m)):
+[rank3]:                                       ^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/pattern_matcher.py", line 1518, in check_fn
+[rank3]:     if is_match(specific_pattern_match) and extra_check(specific_pattern_match):
+[rank3]:                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/fx_passes/pad_mm.py", line 730, in should_pad_mm
+[rank3]:     return should_pad_common(mat1, mat2) and should_pad_bench(
+[rank3]:                                              ^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/fx_passes/pad_mm.py", line 396, in should_pad_bench
+[rank3]:     return _should_pad_bench(*args, **kwargs)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/fx_passes/pad_mm.py", line 617, in _should_pad_bench
+[rank3]:     pad_time = do_bench(pad_bench_fn)
+[rank3]:                ^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/runtime/benchmarking.py", line 39, in wrapper
+[rank3]:     return fn(self, *args, **kwargs)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/runtime/benchmarking.py", line 250, in benchmark_gpu
+[rank3]:     _callable()
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/fx_passes/pad_mm.py", line 589, in pad_bench_fn
+[rank3]:     fn()
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/fx_passes/pad_mm.py", line 558, in <lambda>
+[rank3]:     lambda: pad_mm(
+[rank3]:             ^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/fx_passes/pad_mm.py", line 771, in pad_mm
+[rank3]:     mat1 = pad_mat1(
+[rank3]:            ^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_inductor/fx_passes/pad_mm.py", line 743, in pad_mat1
+[rank3]:     return aten.constant_pad_nd(mat1, pad_arg)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/usr/local/lib/python3.11/site-packages/torch/_ops.py", line 1255, in __call__
+[rank3]:     return self._op(*args, **kwargs)
+[rank3]:            ^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]: torch._dynamo.exc.BackendCompilerFailed: backend='compile_fn' raised:
+[rank3]: OutOfMemoryError: CUDA out of memory. Tried to allocate 3.07 GiB. GPU 3 has a total capacity of 39.38 GiB of which 2.76 GiB is free. Including non-PyTorch memory, this process has 0 bytes memory in use. Of the allocated memory 5.15 GiB is allocated by PyTorch, and 256.04 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+
+[rank3]: While executing %submod_24 : [num_users=1] = call_module[target=submod_24](args = (%submod_23, %l_self_modules_embed_tokens_parameters_weight_), kwargs = {})
+[rank3]: Original traceback:
+[rank3]: None
+[rank3]: Use tlparse to see full graph. (https://github.com/pytorch/tlparse?tab=readme-ov-file#tlparse-parse-structured-pt2-logs)
+
+[rank3]: Set TORCHDYNAMO_VERBOSE=1 for the internal stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS="+dynamo"
+
+W0604 20:53:41.123000 9 site-packages/torch/distributed/elastic/multiprocessing/api.py:908] Sending process 38 closing signal SIGTERM
+W0604 20:53:41.124000 9 site-packages/torch/distributed/elastic/multiprocessing/api.py:908] Sending process 39 closing signal SIGTERM
+W0604 20:53:41.146000 9 site-packages/torch/distributed/elastic/multiprocessing/api.py:908] Sending process 40 closing signal SIGTERM
+E0604 20:53:41.851000 9 site-packages/torch/distributed/elastic/multiprocessing/api.py:882] failed (exitcode: 1) local_rank: 3 (pid: 41) of binary: /usr/local/bin/python3.11
+Traceback (most recent call last):
+  File "/usr/local/bin/torchrun", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/run.py", line 936, in main
+    run(args)
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/run.py", line 927, in run
+    elastic_launch(
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 156, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/torch/distributed/launcher/api.py", line 293, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+submission_runner.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-06-04_20:53:41
+  host      : cb8e5e780495
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 41)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
