@@ -3,7 +3,7 @@
 import json
 import os
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 # Strips the framework suffix from a logged workload name, e.g.
 # 'imagenet_resnet_jax' -> 'imagenet_resnet'.
@@ -21,8 +21,31 @@ class WorkloadTarget:
   """Scoring constants for a single workload."""
 
   target_metric_name: str
+  target_metric_goal: str
   validation_target_value: float
   step_hint: int
+
+  def __post_init__(self):
+    if self.target_metric_goal not in ('minimize', 'maximize'):
+      raise ValueError(
+        'Target metric goal must be "minimize" or "maximize"; '
+        f'got {self.target_metric_goal!r}.'
+      )
+
+  @property
+  def is_minimized(self) -> bool:
+    return self.target_metric_goal == 'minimize'
+
+  def relaxed(self, fraction: float) -> 'WorkloadTarget':
+    """Return this target relaxed by a relative fraction."""
+    if not 0 <= fraction < 1:
+      raise ValueError(f'Target relaxation must be in [0, 1); got {fraction}.')
+    direction = 1 if self.is_minimized else -1
+    return replace(
+      self,
+      validation_target_value=self.validation_target_value
+      * (1 + direction * fraction),
+    )
 
 
 @dataclass(frozen=True)
@@ -32,7 +55,7 @@ class WorkloadConfig:
   A `WorkloadConfig` describes one benchmark version's scoring inputs: which
   workloads count toward the score (`base_workloads`), which held-out variants
   were sampled (`held_out_workloads`), and each workload's target metric, target
-  value, and step hint.
+  goal, target value, and step hint.
   """
 
   benchmark_version: str
@@ -84,6 +107,43 @@ class WorkloadConfig:
         return base_workload_name
     return workload_name
 
+  def with_target_relaxations(
+    self, relaxations: dict[str, float]
+  ) -> 'WorkloadConfig':
+    """Return a copy with selected convergence targets relaxed.
+
+    The special selector ``all`` matches every configured workload. A base
+    workload selector also matches its held-out variants. Later selectors
+    override earlier selectors.
+    """
+    workload_relaxations = {}
+    for selector, fraction in relaxations.items():
+      if selector == 'all':
+        matches = self.workloads
+      elif selector in self.base_workloads:
+        matches = (
+          workload
+          for workload in self.workloads
+          if self.base_workload_name(workload) == selector
+        )
+      elif selector in self.workloads:
+        matches = (selector,)
+      else:
+        raise ValueError(
+          f'Unknown target-relaxation selector {selector!r}. Use "all" or '
+          f'one of: {", ".join(sorted(self.workloads))}.'
+        )
+      for workload in matches:
+        workload_relaxations[workload] = fraction
+
+    workloads = {
+      name: target.relaxed(workload_relaxations[name])
+      if name in workload_relaxations
+      else target
+      for name, target in self.workloads.items()
+    }
+    return replace(self, workloads=workloads)
+
   def _target(self, workload: str) -> WorkloadTarget:
     match = _FRAMEWORK_SUFFIX.match(workload)
     name = match.group(1) if match else workload
@@ -103,6 +163,10 @@ class WorkloadConfig:
       f'validation/{target.target_metric_name}',
       target.validation_target_value,
     )
+
+  def target_is_minimized(self, workload: str) -> bool:
+    """Return whether the workload's target metric is minimized."""
+    return self._target(workload).is_minimized
 
   def step_hint(self, workload: str) -> int:
     """Returns the step hint for a workload."""
