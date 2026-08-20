@@ -80,14 +80,67 @@ flags.DEFINE_string(
   '',
   'Optional comma seperated list of names of submissions to include from scoring.',
 )
+flags.DEFINE_string(
+  'target_relaxations',
+  '',
+  'Optional comma-separated target relaxations in SELECTOR=FRACTION form. '
+  'For example, "all=0.05,imagenet_resnet=0.10" relaxes every target by '
+  '5%, then the ImageNet ResNet workload family by 10%. A base workload '
+  'selector includes its held-out variants. Fractions must be in [0, 1).',
+)
 FLAGS = flags.FLAGS
+
+
+def parse_target_relaxations(spec):
+  """Parse a target-relaxation flag into an ordered selector mapping."""
+  relaxations = {}
+  if not spec.strip():
+    return relaxations
+
+  for assignment in spec.split(','):
+    assignment = assignment.strip()
+    if assignment.count('=') != 1:
+      raise ValueError(
+        'Target relaxations must use SELECTOR=FRACTION syntax; '
+        f'got {assignment!r}.'
+      )
+    selector, fraction_text = (part.strip() for part in assignment.split('='))
+    if not selector:
+      raise ValueError(f'Missing workload selector in {assignment!r}.')
+    if selector in relaxations:
+      raise ValueError(f'Duplicate target-relaxation selector {selector!r}.')
+    try:
+      fraction = float(fraction_text)
+    except ValueError:
+      raise ValueError(
+        f'Target relaxation for {selector!r} must be a number; '
+        f'got {fraction_text!r}.'
+      ) from None
+    if not 0 <= fraction < 1:
+      raise ValueError(
+        f'Target relaxation for {selector!r} must be in [0, 1); got {fraction}.'
+      )
+    relaxations[selector] = fraction
+  return relaxations
+
+
+def prepare_scoring_runs(official_config, relaxation_spec):
+  """Build the official and optional relaxed scoring configurations."""
+  relaxations = parse_target_relaxations(relaxation_spec)
+  scoring_runs = [('official', '', official_config)]
+  if not relaxations:
+    return scoring_runs
+
+  relaxed_config = official_config.with_target_relaxations(relaxations)
+  scoring_runs.append(('relaxed', '_relaxed', relaxed_config))
+  return scoring_runs
 
 
 def get_summary_df(workload, workload_df, config):
   print(f' WORKLOAD: {workload}')
   validation_metric, validation_target = config.metric_and_target(workload)
 
-  is_minimized = performance_profile.check_if_minimized(validation_metric)
+  is_minimized = config.target_is_minimized(workload)
   target_op = operator.le if is_minimized else operator.ge
   best_op = min if is_minimized else max
   idx_op = np.argmin if is_minimized else np.argmax
@@ -186,13 +239,68 @@ def compute_leaderboard_score(df, normalize=True):
   return pd.DataFrame(scores, columns=['score'], index=df.index)
 
 
+def score_results(
+  results,
+  config,
+  run_name,
+  artifact_suffix,
+  output_dir,
+  self_tuning_ruleset=False,
+  strict=False,
+):
+  """Score parsed results once with one workload configuration."""
+  logging.info('Computing %s scores.', run_name)
+  profile_df = performance_profile.compute_performance_profiles(
+    results,
+    config,
+    time_col='score',
+    min_tau=1.0,
+    max_tau=4.0,
+    reference_submission_tag=None,
+    num_points=100,
+    scale='linear',
+    verbosity=0,
+    self_tuning_ruleset=self_tuning_ruleset,
+    strict=strict,
+    output_dir=output_dir,
+    artifact_suffix=artifact_suffix,
+  )
+  if not os.path.exists(output_dir):
+    os.mkdir(output_dir)
+  performance_profile.plot_performance_profiles(
+    profile_df,
+    'score',
+    save_dir=output_dir,
+    artifact_suffix=artifact_suffix,
+  )
+  logging.info(
+    '%s performance profile:\n%s',
+    run_name.capitalize(),
+    tabulate(profile_df.T, headers='keys', tablefmt='psql'),
+  )
+
+  scores = compute_leaderboard_score(profile_df)
+  scores.to_csv(os.path.join(output_dir, f'scores{artifact_suffix}.csv'))
+  logging.info(
+    '%s scores:\n%s',
+    run_name.capitalize(),
+    tabulate(scores, headers='keys', tablefmt='psql'),
+  )
+
+
 def main(_):
   results = {}
   os.makedirs(FLAGS.output_dir, exist_ok=True)
-  config = WorkloadConfig.from_json(FLAGS.workload_targets)
+  official_config = WorkloadConfig.from_json(FLAGS.workload_targets)
+  try:
+    scoring_runs = prepare_scoring_runs(
+      official_config, FLAGS.target_relaxations
+    )
+  except ValueError as e:
+    raise app.UsageError(str(e)) from e
   logging.info(
     f'Scoring submissions in {FLAGS.submission_directory} '
-    f'with benchmark version {config.benchmark_version} targets '
+    f'with benchmark version {official_config.benchmark_version} targets '
     f'({FLAGS.workload_targets})'
   )
 
@@ -217,11 +325,13 @@ def main(_):
         experiment_path = os.path.join(FLAGS.submission_directory, submission)
         df = scoring_utils.get_experiment_df(experiment_path)
         results[submission] = df
-        summary_df = get_submission_summary(df, config)
-        with open(
-          os.path.join(FLAGS.output_dir, f'{submission}_summary.csv'), 'w'
-        ) as fout:
-          summary_df.to_csv(fout)
+        for _, artifact_suffix, config in scoring_runs:
+          summary_df = get_submission_summary(df, config)
+          summary_path = os.path.join(
+            FLAGS.output_dir, f'{submission}_summary{artifact_suffix}.csv'
+          )
+          with open(summary_path, 'w') as fout:
+            summary_df.to_csv(fout)
 
     # Optionally save results to filename
     if FLAGS.save_results_to_filename:
@@ -238,33 +348,16 @@ def main(_):
       'under competition scoring rules. To enforce the criteria set strict=True.'
     )
   if FLAGS.compute_performance_profiles:
-    performance_profile_df = performance_profile.compute_performance_profiles(
-      results,
-      config,
-      time_col='score',
-      min_tau=1.0,
-      max_tau=4.0,
-      reference_submission_tag=None,
-      num_points=100,
-      scale='linear',
-      verbosity=0,
-      self_tuning_ruleset=FLAGS.self_tuning_ruleset,
-      strict=FLAGS.strict,
-      output_dir=FLAGS.output_dir,
-    )
-    if not os.path.exists(FLAGS.output_dir):
-      os.mkdir(FLAGS.output_dir)
-    performance_profile.plot_performance_profiles(
-      performance_profile_df, 'score', save_dir=FLAGS.output_dir
-    )
-    performance_profile_str = tabulate(
-      performance_profile_df.T, headers='keys', tablefmt='psql'
-    )
-    logging.info(f'Performance profile:\n {performance_profile_str}')
-    scores = compute_leaderboard_score(performance_profile_df)
-    scores.to_csv(os.path.join(FLAGS.output_dir, 'scores.csv'))
-    scores_str = tabulate(scores, headers='keys', tablefmt='psql')
-    logging.info(f'Scores: \n {scores_str}')
+    for run_name, artifact_suffix, config in scoring_runs:
+      score_results(
+        results,
+        config,
+        run_name,
+        artifact_suffix,
+        FLAGS.output_dir,
+        self_tuning_ruleset=FLAGS.self_tuning_ruleset,
+        strict=FLAGS.strict,
+      )
 
 
 if __name__ == '__main__':

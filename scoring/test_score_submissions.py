@@ -8,6 +8,12 @@ import tempfile
 import pandas as pd
 from absl.testing import absltest
 
+from scoring.config import WorkloadConfig, WorkloadTarget
+from scoring.score_submissions import (
+  parse_target_relaxations,
+  prepare_scoring_runs,
+)
+
 _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _TARGETS = os.path.join(_REPO_ROOT, 'scoring', 'workload_targets_v05.json')
 _EXTERNAL_LOGS = os.path.join(
@@ -30,6 +36,96 @@ _EXPECTED_EXTERNAL_SCORES = {
   'lawa_ema': 0.3384,
   'schedule_free_prodigy': 0.0,
 }
+
+
+class TargetRelaxationTest(absltest.TestCase):
+  def setUp(self):
+    super().setUp()
+    self.config = WorkloadConfig(
+      benchmark_version='test',
+      base_workloads=('accuracy_workload', 'loss_workload'),
+      held_out_workloads=('accuracy_workload_variant',),
+      workloads={
+        'accuracy_workload': WorkloadTarget('accuracy', 'maximize', 0.8, 100),
+        'accuracy_workload_variant': WorkloadTarget(
+          'accuracy', 'maximize', 0.75, 100
+        ),
+        'loss_workload': WorkloadTarget('loss', 'minimize', 0.2, 100),
+      },
+    )
+
+  def test_parse_target_relaxations(self):
+    self.assertEqual(
+      parse_target_relaxations('all=0.05, accuracy_workload=0.1'),
+      {'all': 0.05, 'accuracy_workload': 0.1},
+    )
+    self.assertEqual(parse_target_relaxations(''), {})
+
+  def test_parse_target_relaxations_rejects_invalid_values(self):
+    for spec in ('accuracy_workload', 'all=one', 'all=-0.1', 'all=1'):
+      with self.subTest(spec=spec):
+        with self.assertRaises(ValueError):
+          parse_target_relaxations(spec)
+
+  def test_relaxes_minimized_and_maximized_targets(self):
+    relaxed = self.config.with_target_relaxations(
+      {'all': 0.05, 'accuracy_workload': 0.1}
+    )
+
+    # The explicit base-workload selector overrides `all` for the base and its
+    # held-out variants. Accuracy is maximized, so its target decreases.
+    self.assertAlmostEqual(
+      relaxed.workloads['accuracy_workload'].validation_target_value, 0.72
+    )
+    self.assertAlmostEqual(
+      relaxed.workloads['accuracy_workload_variant'].validation_target_value,
+      0.675,
+    )
+    # Loss is minimized, so its target increases.
+    self.assertAlmostEqual(
+      relaxed.workloads['loss_workload'].validation_target_value, 0.21
+    )
+
+  def test_relaxation_direction_comes_from_config(self):
+    target = WorkloadTarget('loss', 'maximize', 0.2, 100)
+    self.assertAlmostEqual(target.relaxed(0.1).validation_target_value, 0.18)
+
+  def test_rejects_unknown_metric_goal(self):
+    with self.assertRaisesRegex(ValueError, 'minimize.*maximize'):
+      WorkloadTarget('accuracy', 'sideways', 0.8, 100)
+
+  def test_prepare_scoring_runs_adds_relaxed_config_with_suffix(self):
+    scoring_runs = prepare_scoring_runs(self.config, 'accuracy_workload=0.1')
+
+    self.assertEqual(
+      [(name, suffix) for name, suffix, _ in scoring_runs],
+      [('official', ''), ('relaxed', '_relaxed')],
+    )
+    self.assertIs(scoring_runs[0][2], self.config)
+    self.assertAlmostEqual(
+      scoring_runs[1][2].workloads['accuracy_workload'].validation_target_value,
+      0.72,
+    )
+
+  def test_prepare_scoring_runs_without_relaxation_scores_once(self):
+    scoring_runs = prepare_scoring_runs(self.config, '')
+    self.assertEqual(scoring_runs, [('official', '', self.config)])
+
+  def test_exact_variant_selector_does_not_change_base(self):
+    relaxed = self.config.with_target_relaxations(
+      {'accuracy_workload_variant': 0.1}
+    )
+    self.assertEqual(
+      relaxed.workloads['accuracy_workload'].validation_target_value, 0.8
+    )
+    self.assertAlmostEqual(
+      relaxed.workloads['accuracy_workload_variant'].validation_target_value,
+      0.675,
+    )
+
+  def test_rejects_unknown_workload(self):
+    with self.assertRaisesRegex(ValueError, 'Unknown.*missing'):
+      self.config.with_target_relaxations({'missing': 0.1})
 
 
 class ScoreSubmissionsEndToEndTest(absltest.TestCase):

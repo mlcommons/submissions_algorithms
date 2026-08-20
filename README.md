@@ -82,8 +82,10 @@ pip3 install -e .          # installs the scoring tooling (numpy, pandas, scipy,
 > definitions in [algorithmic-efficiency](https://github.com/mlcommons/algorithmic-efficiency)
 > (`scoring/generate_workload_targets.py`) and commited here. Each file is
 > frozen for one benchmark version, carrying that version's base/held-out
-> workload sets and per-workload targets. Regenerate and re-copy when a
-> benchmark version changes the workloads or targets.
+> workload sets and per-workload metric names, optimization goals, targets,
+> and step hints. Regenerate and re-copy when a benchmark version changes the
+> workloads or targets; the generator must emit `target_metric_goal` as either
+> `minimize` or `maximize` for every workload.
 
 ### Regenerating the leaderboard
 
@@ -111,6 +113,50 @@ python -m scoring.score_submissions \
   --compute_performance_profiles \
   --output_dir scoring_results_v05_external
 ```
+
+### Exploring relaxed convergence targets
+
+To measure how leaderboard scores would change under easier convergence
+targets, pass `--target_relaxations`. The value is a comma-separated list of
+`SELECTOR=FRACTION` assignments. Fractions are relative: `0.05` means a 5%
+relaxation. Use `all` to select every workload, or name a workload to select
+only that workload. Naming a base workload also selects all of its held-out
+variants.
+
+```bash
+# Relax every convergence target by 5%.
+python -m scoring.score_submissions \
+  --submission_directory logs/self_tuning \
+  --compute_performance_profiles \
+  --self_tuning_ruleset \
+  --target_relaxations=all=0.05 \
+  --output_dir scoring_results_relaxed
+
+# Relax only WMT by 5% and the ImageNet ResNet family by 10%.
+python -m scoring.score_submissions \
+  --submission_directory logs/self_tuning \
+  --compute_performance_profiles \
+  --self_tuning_ruleset \
+  --target_relaxations=wmt=0.05,imagenet_resnet=0.10 \
+  --output_dir scoring_results_selected_relaxations
+
+# Apply 5% globally, with a 10% override for ImageNet ResNet.
+--target_relaxations=all=0.05,imagenet_resnet=0.10
+```
+
+For lower-is-better metrics such as loss, a relaxation increases the target;
+for higher-is-better metrics such as accuracy, it decreases the target. A 5%
+relaxation therefore changes a loss target of `0.2` to `0.21`, and an accuracy
+target of `0.8` to `0.76`.
+
+The command parses the submission logs once, then scores the official and
+relaxed workload configurations serially. Unsuffixed artifacts remain the
+official results; the exploratory artifacts use a `_relaxed` suffix. For
+example, the run produces `scores.csv` and `scores_relaxed.csv`, along with
+`time_to_targets.csv` and `time_to_targets_relaxed.csv`.
+
+Target relaxation is an exploratory analysis feature. It does not modify the
+frozen `workload_targets*.json` files or the official scoring definition.
 
 See the [scoring methodology](https://github.com/mlcommons/algorithmic-efficiency/blob/main/docs/DOCUMENTATION.md#scoring)
 in the benchmark documentation for details on how scores are computed.

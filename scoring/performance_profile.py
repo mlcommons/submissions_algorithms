@@ -15,18 +15,10 @@ The two primary inputs to `compute_performance_profiles` are
   include a column of np.arrays indicating time (e.g., 'global_step'), a column
   of np.arrays indicating performance (e.g., 'validation/accuracy') for each
   workload and a column 'workload' that indicates the workload identifier.
-2. A dictionary of workload metadata describing each workload in the form:
-  {
-    'workload_identifier': {
-      'target': VALUE,
-      'metric': 'validation/error_rate',
-    }
-  }
-  The keys in this dictionary should match the workload identifiers used in
-  the dictionary of submissions.
+2. A `WorkloadConfig` containing each workload's validation metric, target,
+   and explicit `minimize` or `maximize` goal.
 """
 
-import itertools
 import operator
 import os
 import re
@@ -46,18 +38,6 @@ WORKLOAD_NAME_PATTERN = '(.*)(_jax|_pytorch)'
 # functions (see scoring/config.py).
 NUM_TRIALS = 5
 NUM_STUDIES = 3
-
-MIN_EVAL_METRICS = [
-  'ce_loss',
-  'error_rate',
-  'ctc_loss',
-  'wer',
-  'l1_loss',
-  'loss',
-  'ppl',
-]
-
-MAX_EVAL_METRICS = ['mean_average_precision', 'ssim', 'accuracy', 'bleu']
 
 # MPL params
 mpl.rcParams['figure.figsize'] = (16, 10)  # Width, height in inches
@@ -92,48 +72,22 @@ def print_dataframe(df):
   logging.info(tabulated_df)
 
 
-def generate_eval_cols(metrics):
-  splits = ['train', 'validation']
-  return [f'{split}/{col}' for split, col in itertools.product(splits, metrics)]
-
-
-MINIMIZE_REGISTRY = {k: True for k in generate_eval_cols(MIN_EVAL_METRICS)}
-MINIMIZE_REGISTRY.update(
-  {k: False for k in generate_eval_cols(MAX_EVAL_METRICS)}
-)
-MINIMIZE_REGISTRY['train_cost'] = True
-
-
-def check_if_minimized(col_name):
-  """Guess if the eval metric column name should be minimized or not."""
-  for prefix in ['best_', 'final_']:
-    col_name = col_name.replace(prefix, '')
-  for col in MINIMIZE_REGISTRY:
-    if col in col_name:
-      return MINIMIZE_REGISTRY[col]
-
-  raise ValueError(
-    f'Column {col_name} not found in `MINIMIZE_REGISTRY` as '
-    'either a column name or a substring of a column name.'
-  )
-
-
 def get_best_trial_index(
-  workload_df, validation_metric, validation_target=None
+  workload_df, validation_metric, validation_target, is_minimized
 ):
   """Get the eval index in which a workload reaches the target metric_col.
 
   Args:
     workload_df: A subset of a submission's trials DataFrame that
       includes only the trials in a single workload.
-    metric_col: Name of array column in workload_df (e.g. `validation/l1_loss`).
-    target: Target value for metric_col.
+    validation_metric: Name of an array column in workload_df.
+    validation_target: Target value for validation_metric.
+    is_minimized: Whether smaller metric values are better.
 
   Returns:
     Tuple of trial index and time index where the workload reached the target
       metric_col. Return (-1, -1) if not reached.
   """
-  is_minimized = check_if_minimized(validation_metric)
   validation_series = workload_df[validation_metric]
   validation_series = validation_series[validation_series != np.nan]
 
@@ -196,6 +150,7 @@ def get_workloads_time_to_target(
   # For each workload get submission time get the submission times to target.
   for workload, group in submission.groupby('workload'):
     validation_metric, validation_target = config.metric_and_target(workload)
+    is_minimized = config.target_is_minimized(workload)
 
     # Check number of studies
     time_vals_per_study = []
@@ -234,7 +189,7 @@ def get_workloads_time_to_target(
 
       # Get trial and time index that reaches target
       trial_idx, time_idx = get_best_trial_index(
-        group, validation_metric, validation_target
+        group, validation_metric, validation_target, is_minimized
       )
       if time_idx > -1:
         time_val = group[time_col].loc[trial_idx][time_idx]
@@ -285,6 +240,7 @@ def compute_performance_profiles(
   strict=False,
   self_tuning_ruleset=False,
   output_dir=None,
+  artifact_suffix='',
 ):
   """Compute performance profiles for a set of submission by some time column.
 
@@ -293,6 +249,7 @@ def compute_performance_profiles(
       trials where each row is a trial and each column is a field for a given
       trial. Results should contain keys for each workload's metric, time_col,
       'workload'. See file header comment for more details.
+    config: WorkloadConfig containing workload targets and metric goals.
     time_col: A string indicating which column to use for time.
     min_tau: Minimum tau to use for plotting.
     max_tau: Maximum tau to use for plotting.
@@ -303,6 +260,7 @@ def compute_performance_profiles(
     num_points: Number of points to use for plotting.
     scale: Linear or log scale for the x-axis.
     verbosity: Debug level of information; choice of (1, 2, 3).
+    artifact_suffix: Suffix inserted before the extension of saved artifacts.
 
   Returns:
     A DataFrame of performance profiles for the set of submissions given in
@@ -340,7 +298,7 @@ def compute_performance_profiles(
   df = df.reindex(sorted(df.columns), axis=1)
 
   # Save time to target dataframe
-  df.to_csv(os.path.join(output_dir, 'time_to_targets.csv'))
+  df.to_csv(os.path.join(output_dir, f'time_to_targets{artifact_suffix}.csv'))
   # For each held-out workload set to inf if the base workload is inf or nan
   for workload in df.keys():
     if workload not in config.base_workloads:
@@ -451,7 +409,12 @@ def maybe_save_df_to_csv(save_dir, df, path, **to_csv_kwargs):
 
 
 def plot_performance_profiles(
-  perf_df, df_col, scale='linear', save_dir=None, figsize=(30, 10)
+  perf_df,
+  df_col,
+  scale='linear',
+  save_dir=None,
+  figsize=(30, 10),
+  artifact_suffix='',
 ):
   """Plot performance profiles.
 
@@ -467,7 +430,7 @@ def plot_performance_profiles(
     save_dir: If a valid directory is provided, save both the plot and perf_df
       to the provided directory.
     figsize: The size of the plot.
-    font_size: The font size to use for the legend.
+    artifact_suffix: Suffix inserted before the extension of saved artifacts.
 
   Returns:
     None. If a valid save_dir is provided, save both the plot and perf_df.
@@ -478,7 +441,11 @@ def plot_performance_profiles(
   fig.set_ylabel('Proportion of workloads')
   fig.legend(bbox_to_anchor=(1.0, 1.0))
   plt.tight_layout()
-  maybe_save_figure(save_dir, f'performance_profile_by_{df_col_display}')
+  maybe_save_figure(
+    save_dir, f'performance_profile_by_{df_col_display}{artifact_suffix}'
+  )
   maybe_save_df_to_csv(
-    save_dir, perf_df, f'performance_profile_{df_col_display}.csv'
+    save_dir,
+    perf_df,
+    f'performance_profile_{df_col_display}{artifact_suffix}.csv',
   )
