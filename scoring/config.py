@@ -9,6 +9,13 @@ from dataclasses import dataclass, replace
 # 'imagenet_resnet_jax' -> 'imagenet_resnet'.
 _FRAMEWORK_SUFFIX = re.compile(r'(.*)(_jax|_pytorch)$')
 
+# The self-tuning ruleset gets this multiple of the external-tuning ruleset's
+# per-trial runtime budget, since self-tuning submissions don't get external
+# hyperparameter-tuning trials in exchange. See algorithmic-efficiency's
+# submission_runner.py: "use 1.5x the runtime budget for the self-tuning
+# ruleset".
+SELF_TUNING_RUNTIME_FACTOR = 1.5
+
 # The latest version's targets, vendored next to this module; used as the
 # default when no --workload_targets is supplied.
 DEFAULT_TARGETS_PATH = os.path.join(
@@ -24,6 +31,9 @@ class WorkloadTarget:
   target_metric_goal: str
   validation_target_value: float
   step_hint: int
+  # External-tuning ruleset runtime budget, in seconds; None for targets
+  # files that predate this field (e.g. workload_targets_v05.json).
+  max_allowed_runtime_sec: int | None = None
 
   def __post_init__(self):
     if self.target_metric_goal not in ('minimize', 'maximize'):
@@ -171,3 +181,20 @@ class WorkloadConfig:
   def step_hint(self, workload: str) -> int:
     """Returns the step hint for a workload."""
     return self._target(workload).step_hint
+
+  def max_runtime_sec(self, workload: str, self_tuning_ruleset: bool = False) -> float:
+    """Returns the runtime budget (seconds) for a workload.
+
+    Returns the external-tuning ruleset's budget, or
+    `SELF_TUNING_RUNTIME_FACTOR` times that when `self_tuning_ruleset` is
+    True. Raises if this targets file predates `max_allowed_runtime_sec`.
+    """
+    target = self._target(workload)
+    if target.max_allowed_runtime_sec is None:
+      raise ValueError(
+        f'No max_allowed_runtime_sec for workload {workload!r} in the '
+        f'{self.benchmark_version} targets; this targets file predates that '
+        'field.'
+      )
+    factor = SELF_TUNING_RUNTIME_FACTOR if self_tuning_ruleset else 1
+    return target.max_allowed_runtime_sec * factor
