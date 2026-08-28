@@ -15,6 +15,7 @@ from jax.sharding import NamedSharding, PartitionSpec as P
 _GRAD_CLIP_EPS = 1e-6
 _JITTED_CALCULATE_LOSS_AND_GRAD = None
 _JITTED_UPDATE_OPT=None
+_JITTED_UPDATE_BN_ON_X = None
 
 HPARAMS = {
   'learning_rate': 0.0025,
@@ -99,13 +100,14 @@ def calculate_loss_and_grad(
 ):
   def _loss_fn(params):
     """Loss function used for training."""
-    logits, new_model_state = workload.model_fn(
+    logits, _ = workload.model_fn(
       params,
       batch,
       model_state,
       spec.ForwardPassMode.TRAIN,
       rng,
-      update_batch_norm=False,
+      update_batch_norm=True,
+      use_running_average_bn=False,
     )
     loss_dict = workload.loss_fn(
       label_batch=batch['targets'],
@@ -115,16 +117,16 @@ def calculate_loss_and_grad(
     )
     summed_loss = loss_dict['summed']
     n_valid_examples = loss_dict['n_valid_examples']
-    return summed_loss, (n_valid_examples, new_model_state)
+    return summed_loss, n_valid_examples
 
   grad_fn = jax.value_and_grad(_loss_fn, has_aux=True)
-  (summed_loss, (n_valid_examples, new_model_state)), grad = grad_fn(
+  (summed_loss, n_valid_examples), grad = grad_fn(
     current_param_container
   )
 
   loss = summed_loss / n_valid_examples
   grad = jax.tree.map(lambda x: x / n_valid_examples, grad)
-  return loss, new_model_state, grad
+  return loss, model_state, grad
 
 def update_opt(
   opt_update_fn,
@@ -165,6 +167,7 @@ def train_step(
       spec.ForwardPassMode.TRAIN,
       rng,
       update_batch_norm=True,
+      use_running_average_bn=False,
     )
     loss_dict = workload.loss_fn(
       label_batch=batch['targets'],
@@ -215,6 +218,16 @@ def jitted_restore_y(params_x, params_z, beta1):
     params_x, params_z
   )
 
+def _update_bn_step(workload, params_x, model_state, batch, rng):
+  _, new_model_state = workload.model_fn(
+    params_x,
+    batch,
+    model_state,
+    spec.ForwardPassMode.TRAIN,
+    rng,
+    update_batch_norm=True,
+  )
+  return new_model_state
 
 def update_params(
   workload: spec.Workload,
@@ -234,7 +247,7 @@ def update_params(
   del loss_type
   del eval_results
 
-  global _JITTED_CALCULATE_LOSS_AND_GRAD, _JITTED_UPDATE_OPT, _JITTED_TRAIN_STEP
+  global _JITTED_CALCULATE_LOSS_AND_GRAD, _JITTED_UPDATE_OPT, _JITTED_TRAIN_STEP, _JITTED_UPDATE_BN_ON_X
   (optimizer_state, is_holding_x), opt_update_fn = optimizer_state
   per_device_rngs = jax.random.split(rng, jax.local_device_count())
   if hasattr(hyperparameters, 'label_smoothing'):
@@ -258,18 +271,30 @@ def update_params(
   replicated = NamedSharding(mesh, P())  # No partitioning
   sharded = NamedSharding(mesh, P('batch'))  # Partition along batch dimension
 
+  if _JITTED_UPDATE_BN_ON_X is None:
+    _JITTED_UPDATE_BN_ON_X = jax.jit(
+      _update_bn_step,
+      static_argnums=(0,),
+      in_shardings=(
+        replicated, # params_x
+        replicated, # model_state
+        sharded,    # batch
+        replicated, # rng
+      ),
+      out_shardings=replicated,
+    )
+
   # Update batch norm statistics at x (the eval point), not y.
   # Mirrors the fix in schedule_free_adamw_v2 (PyTorch).
   contains_bn = model_state is not None and len(jax.tree_util.tree_leaves(model_state)) > 0
   if contains_bn and global_step % 3 == 0:
     params_x = _jitted_eval_params_no_donate(optimizer_state, current_param_container)
-    _, model_state = workload.model_fn(
+    model_state = _JITTED_UPDATE_BN_ON_X(
+      workload,
       params_x,
-      batch,
       model_state,
-      spec.ForwardPassMode.TRAIN,
+      batch,
       rng,
-      update_batch_norm=True,
     )
 
   if _JITTED_CALCULATE_LOSS_AND_GRAD is None:
@@ -310,7 +335,7 @@ def update_params(
     )
   )
   
-  loss, new_model_state, grad = _JITTED_CALCULATE_LOSS_AND_GRAD(
+  loss, model_state, grad = _JITTED_CALCULATE_LOSS_AND_GRAD(
     workload,
     model_state,
     current_param_container,
@@ -340,7 +365,7 @@ def update_params(
   new_is_holding_x = jnp.array(0, dtype=jnp.int32)
   new_optimizer_state = ((new_optimizer_state, new_is_holding_x), opt_update_fn)
 
-  return new_optimizer_state, new_params, new_model_state
+  return new_optimizer_state, new_params, model_state
 
 
 def get_batch_size(workload_name):
