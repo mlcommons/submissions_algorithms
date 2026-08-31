@@ -586,7 +586,7 @@ for name, row in ttt_display.iterrows():
 
 _budget_caption = (
     r"Time to target as a fraction of each workload's self-tuning-ruleset "
-    rf'time budget ({SELF_TUNING_RUNTIME_FACTOR:g}\times the external-tuning maximum allowed runtime).'
+    rf'time budget (${SELF_TUNING_RUNTIME_FACTOR:g}\times$ the external-tuning maximum allowed runtime).'
     if SELF_TUNING_RULESET else
     r"Time to target as a fraction of each workload's maximum allowed runtime."
 )
@@ -805,28 +805,44 @@ print('LaTeX saved -> steps_to_target_table.tex')
 # before reading the legend. Dark marker edges keep light fills legible on
 # white.
 _FAMILIES = [
-    ('o', ['Schedule-Free AdamW v2 (PyTorch)', 'Schedule-Free AdamW v2 (JAX)',
-           'Schedule-Free AdamW (JAX)', 'Schedule-Free AdamW (PyTorch)']),
-    ('s', ['NAdamW (JAX)', 'NAdamW (Baseline AlgoPerf v0.5) (JAX)',
-           'NAdamW (Tuned for ResNet) (JAX)', 'Cautious NAdamW (JAX)']),
-    ('D', ['Muon (PyTorch)', 'Muon (JAX)']),
-    ('^', ['Single Worker DiLoCo (JAX)', 'Single Worker DiLoCo v2 (JAX)']),
-    ('P', ['AdEMAMix (PyTorch)']),
-    ('X', ['Lion (PyTorch)']),
+    ('Schedule-Free AdamW', 'o', [
+        'Schedule-Free AdamW v2 (PyTorch)',
+        'Schedule-Free AdamW v2 (JAX)',
+        'Schedule-Free AdamW (PyTorch)',
+        'Schedule-Free AdamW (JAX)',
+    ]),
+    ('NAdamW', 's', [
+        'NAdamW (Baseline AlgoPerf v0.5) (JAX)',
+        'NAdamW (JAX)',
+        'NAdamW (Tuned for ResNet) (JAX)',
+        'Cautious NAdamW (JAX)',
+    ]),
+    ('Muon', 'D', ['Muon (PyTorch)', 'Muon (JAX)']),
+    ('Single Worker DiLoCo', '^', [
+        'Single Worker DiLoCo (JAX)',
+        'Single Worker DiLoCo v2 (JAX)',
+    ]),
+    ('AdEMAMix', 'P', ['AdEMAMix (PyTorch)']),
+    ('Lion', 'X', ['Lion (PyTorch)']),
 ]
-_FAMILY_MARKER = {name: marker for marker, members in _FAMILIES for name in members}
+_FAMILY_MARKER = {
+    name: marker
+    for _, marker, members in _FAMILIES
+    for name in members
+}
 
 fig, ax = plt.subplots(figsize=(9.5, 5.6))
 
 lims = (0.10, 0.60)
 ax.plot(lims, lims, linestyle='--', color='#999999', linewidth=1.0, zorder=1)
-ax.text(0.135, 0.575, 'wall-clock advantage\n(cheap, fast steps)',
+ax.text(0.135, 0.575, 'wall-clock advantage\n(lower cost per step)',
         ha='left', va='top', fontsize=8.5, style='italic', color='#777777')
-ax.text(0.575, 0.135, 'step advantage\n(expensive steps)',
+ax.text(0.575, 0.135, 'step advantage\n(fewer steps to target)',
         ha='right', va='bottom', fontsize=8.5, style='italic', color='#777777')
 
+_scatter_handles = {}
 for name, row in cmp.iterrows():
-    ax.scatter(
+    _scatter_handles[name] = ax.scatter(
         row.steps, row.wallclock,
         color=SUBMISSION_STYLE[name]['color'],
         marker=_FAMILY_MARKER.get(name, 'o'),
@@ -854,7 +870,18 @@ ax.set_xlabel('Step-based benchmark score')
 ax.set_ylabel('Wall-clock benchmark score')
 ax.set_title('Wall-clock vs. step-based benchmark scores', pad=8)
 
+_family_legend_order = [
+    name
+    for _, _, members in _FAMILIES
+    for name in members
+    if name in _scatter_handles
+]
+_family_legend_order.extend(
+    name for name in cmp.index if name not in _family_legend_order
+)
 ax.legend(
+    [_scatter_handles[name] for name in _family_legend_order],
+    _family_legend_order,
     loc='center left', bbox_to_anchor=(1.03, 0.5), ncol=1,
     borderaxespad=0, frameon=True, handlelength=1.0, labelspacing=0.5,
 )
@@ -879,13 +906,17 @@ plt.show()
 # (minimize) targets increase by this fraction; accuracy-style (maximize)
 # targets decrease by it. Artifacts use a `_relaxed` suffix
 # (`time_to_targets_relaxed.csv`, `scores_relaxed.csv`,
-# `scores_relaxed_table.tex`, `performance_profile_by_score_relaxed.{pdf,png}`)
+# `scores_standard_vs_relaxed.csv`, `scores_relaxed_table.tex`,
+# `performance_profile_by_score_relaxed.{pdf,png}`)
 # and this never modifies the frozen `workload_targets*.json` files.
 # Also emits `time_to_target_table_relaxed.tex`, the relaxed-target analog of
-# Section 5b's time-to-target table.
+# Section 5b's time-to-target table, plus
+# `newly_reached_targets_relaxed.csv` to record which cells should be bolded.
 
 # %%
 TARGET_RELAXATION_FRACTION = 0.10  # 10% relaxation, applied to every workload
+_RELAXATION_LABEL = f'{TARGET_RELAXATION_FRACTION:.0%}'
+_RELAXATION_LABEL_LATEX = _RELAXATION_LABEL.replace('%', r'\%')
 
 RELAXED_WORKLOAD_CONFIG = WORKLOAD_CONFIG.with_target_relaxations(
     {'all': TARGET_RELAXATION_FRACTION}
@@ -930,12 +961,66 @@ print(f'\n--- Leaderboard Scores (targets relaxed {TARGET_RELAXATION_FRACTION:.0
 display(scores_relaxed.sort_values('score', ascending=False))
 print(f'Saved to {scores_relaxed_path}')
 
-# ── LaTeX table ────────────────────────────────────────────────────────────
-scores_relaxed_latex = scores_to_latex(
-    scores_relaxed,
-    caption=f'AlgoPerf Self-Tuning Leaderboard (targets relaxed {TARGET_RELAXATION_FRACTION:.0%})',
-    label='tab:scores_relaxed',
+# ── Standard-vs-relaxed comparison table ──────────────────────────────────
+# Keep the score and rank movement in one auditable DataFrame, then use it for
+# both the CSV byproduct and the report table. Positive rank_shift means that a
+# submission moves up when targets are relaxed.
+relaxed_cmp = pd.DataFrame({
+    'standard_score': scores['score'],
+    'relaxed_score': scores_relaxed['score'],
+})
+relaxed_cmp['standard_rank'] = (
+    relaxed_cmp.standard_score.rank(ascending=False, method='min').astype(int)
 )
+relaxed_cmp['relaxed_rank'] = (
+    relaxed_cmp.relaxed_score.rank(ascending=False, method='min').astype(int)
+)
+relaxed_cmp['rank_shift'] = (
+    relaxed_cmp.standard_rank - relaxed_cmp.relaxed_rank
+)
+relaxed_cmp = relaxed_cmp.sort_values('relaxed_rank')
+
+relaxed_cmp_path = os.path.join(
+    BYPRODUCTS_DIR, 'scores_standard_vs_relaxed.csv'
+)
+relaxed_cmp.to_csv(relaxed_cmp_path)
+print(f'Saved to {relaxed_cmp_path}')
+
+_best_standard = relaxed_cmp.standard_score.max()
+_best_relaxed = relaxed_cmp.relaxed_score.max()
+_relaxed_cmp_rows = []
+for name, row in relaxed_cmp.iterrows():
+    standard_score = f'{row.standard_score:.4f}'
+    relaxed_score = f'{row.relaxed_score:.4f}'
+    if row.standard_score == _best_standard:
+        standard_score = r'\textbf{' + standard_score + '}'
+    if row.relaxed_score == _best_relaxed:
+        relaxed_score = r'\textbf{' + relaxed_score + '}'
+    _relaxed_cmp_rows.append(
+        f'    {latex_name(name)} & {standard_score} & '
+        f'{int(row.standard_rank)} & {relaxed_score} & '
+        f'{int(row.relaxed_rank)} & {_fmt_shift(int(row.rank_shift))} '
+        + r'\\'
+    )
+
+scores_relaxed_latex = '\n'.join([
+    r'\begin{table}[htbp]',
+    r'  \centering',
+    r'  \caption{Standard vs.\ ' + _RELAXATION_LABEL_LATEX
+    + r' relaxed-target AlgoPerf self-tuning leaderboard. $\Delta$ is the rank'
+    + r' change after relaxing targets.}',
+    r'  \label{tab:scores_relaxed}',
+    r'  \begin{tabular}{lrrrrc}',
+    r'    \toprule',
+    r'    & \multicolumn{2}{c}{Standard} & \multicolumn{2}{c}{10\% relaxed} & \\',
+    r'    \cmidrule(lr){2-3}\cmidrule(lr){4-5}',
+    r'    Submission & Score & Rank & Score & Rank & $\Delta$ \\',
+    r'    \midrule',
+    *_relaxed_cmp_rows,
+    r'    \bottomrule',
+    r'  \end{tabular}',
+    r'\end{table}',
+])
 print(scores_relaxed_latex)
 
 scores_relaxed_latex_path = os.path.join(RESULTS_DIR, 'scores_relaxed_table.tex')
@@ -968,24 +1053,50 @@ _relaxed_workloads = list(ttt_relaxed.columns)
 _relaxed_col_spec = 'l' + 'r' * len(_relaxed_workloads)
 _relaxed_wl_headers = ' & '.join(_WL_MACRO.get(w, w) for w in _relaxed_workloads)
 
+# A target is newly reached when its standard time-to-target is non-finite but
+# its relaxed time-to-target is finite. Persist this mask so the bolding in the
+# LaTeX table is mechanically checkable without parsing LaTeX.
+def _target_reached(v):
+    return pd.notna(v) and np.isfinite(v)
+
+
+_newly_reached_relaxed = (
+    ~ttt.map(_target_reached) & ttt_relaxed.map(_target_reached)
+)
+_newly_reached_path = os.path.join(
+    BYPRODUCTS_DIR, 'newly_reached_targets_relaxed.csv'
+)
+_newly_reached_relaxed.to_csv(_newly_reached_path)
+print(
+    f'Newly reached targets: {_newly_reached_relaxed.to_numpy().sum()} '
+    f'(saved to {_newly_reached_path})'
+)
+
 _relaxed_ttt_rows = []
 for name, row in ttt_relaxed_display.iterrows():
-    cells = [str(v).replace('%', r'\%') for v in row]
+    cells = []
+    for workload, value in row.items():
+        cell = str(value).replace('%', r'\%')
+        if _newly_reached_relaxed.loc[name, workload]:
+            cell = r'\textbf{' + cell + '}'
+        cells.append(cell)
     _relaxed_ttt_rows.append('      ' + latex_name(name) + ' & ' + ' & '.join(cells) + r' \\')
 
 _relaxed_budget_caption = (
-    rf'Time to target with targets relaxed {TARGET_RELAXATION_FRACTION:.0%}, as a '
+    rf'Time to target with targets relaxed {_RELAXATION_LABEL_LATEX}, as a '
     r"fraction of each workload's self-tuning-ruleset time budget "
-    rf'({SELF_TUNING_RUNTIME_FACTOR:g}\times the external-tuning maximum allowed runtime).'
+    rf'(${SELF_TUNING_RUNTIME_FACTOR:g}\times$ the external-tuning maximum allowed runtime).'
     if SELF_TUNING_RULESET else
-    rf'Time to target with targets relaxed {TARGET_RELAXATION_FRACTION:.0%}, as a '
+    rf'Time to target with targets relaxed {_RELAXATION_LABEL_LATEX}, as a '
     r"fraction of each workload's maximum allowed runtime."
 )
 
 ttt_relaxed_latex = '\n'.join([
     r'\begin{table}[htbp]',
     r'  \centering',
-    r'  \caption{' + _relaxed_budget_caption + r' \textemdash{} = target not reached.}',
+    r'  \caption{' + _relaxed_budget_caption
+    + r' \textbf{Bold} values mark targets reached only after relaxation;'
+    + r' \textemdash{} = target not reached.}',
     r'  \label{tab:time_to_target_relaxed}',
     r'  \resizebox{\textwidth}{!}{%',
     r'  \begin{tabular}{' + _relaxed_col_spec + '}',
