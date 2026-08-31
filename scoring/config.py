@@ -182,7 +182,9 @@ class WorkloadConfig:
     """Returns the step hint for a workload."""
     return self._target(workload).step_hint
 
-  def max_runtime_sec(self, workload: str, self_tuning_ruleset: bool = False) -> float:
+  def max_runtime_sec(
+    self, workload: str, self_tuning_ruleset: bool = False
+  ) -> float:
     """Returns the runtime budget (seconds) for a workload.
 
     Returns the external-tuning ruleset's budget, or
