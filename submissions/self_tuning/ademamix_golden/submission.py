@@ -23,7 +23,6 @@ USE_PYTORCH_DDP = pytorch_setup()[0]
 HPARAMS = {
   "learning_rate": 0.0003878772442557,
   "beta1": 0.8109381219504399,
-  "one_minus_beta1": 0.1890618780495601,  # 1 - beta1 (search space parameterization)
   "beta2": 0.9998264265703692,
   "beta3": 0.9988652932526556,
   "weight_decay": 0.0472351197090468,
