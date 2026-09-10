@@ -22,7 +22,8 @@ USE_PYTORCH_DDP = pytorch_setup()[0]
 # Golden universal parameters across all 9 AlgoPerf workloads
 HPARAMS = {
   "learning_rate": 0.0003878772442557,
-  "one_minus_beta1": 0.1890618780495601,  # beta1 = 0.8109381219504399
+  "beta1": 0.8109381219504399,
+  "one_minus_beta1": 0.1890618780495601,  # 1 - beta1 (search space parameterization)
   "beta2": 0.9998264265703692,
   "beta3": 0.9988652932526556,
   "weight_decay": 0.0472351197090468,
@@ -204,7 +205,7 @@ def init_optimizer_state(workload: spec.Workload,
       AdEMAMix(
         model_params.parameters(),
         lr=HPARAMS.learning_rate,
-        betas=(1.0 - HPARAMS.one_minus_beta1,
+        betas=(HPARAMS.beta1,
              HPARAMS.beta2,
              HPARAMS.beta3),
         weight_decay=HPARAMS.weight_decay,
