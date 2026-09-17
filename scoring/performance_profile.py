@@ -39,32 +39,24 @@ WORKLOAD_NAME_PATTERN = '(.*)(_jax|_pytorch)'
 NUM_TRIALS = 5
 NUM_STUDIES = 3
 
-# MPL params
-mpl.rcParams['figure.figsize'] = (16, 10)  # Width, height in inches
-mpl.rcParams['font.family'] = 'serif'
-mpl.rcParams['font.serif'] = ['Times New Roman'] + mpl.rcParams[
-  'font.serif'
-]  # Add Times New Roman as first choice
-mpl.rcParams['font.size'] = 22
-mpl.rcParams['savefig.dpi'] = 300  # Set resolution for saved figures
-
-# Plot Elements
-mpl.rcParams['lines.linewidth'] = 3  # Adjust line thickness if needed
-mpl.rcParams['lines.markersize'] = 6  # Adjust marker size if needed
-mpl.rcParams['axes.prop_cycle'] = mpl.cycler(
-  color=['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
-)  # Example color cycle (consider ColorBrewer or viridis)
-mpl.rcParams['axes.labelsize'] = 22  # Axis label font size
-mpl.rcParams['xtick.labelsize'] = 20  # Tick label font size
-mpl.rcParams['ytick.labelsize'] = 20
-
-# Legends and Gridlines
-mpl.rcParams['legend.fontsize'] = 20  # Legend font size
-mpl.rcParams['legend.loc'] = (
-  'best'  # Let matplotlib decide the best legend location
-)
-mpl.rcParams['axes.grid'] = True  # Enable grid
-mpl.rcParams['grid.alpha'] = 0.4  # Gridline transparency
+PLOT_STYLE = {
+  'font.family': 'serif',
+  'font.serif': ['Times New Roman', *mpl.rcParamsDefault['font.serif']],
+  'font.size': 22,
+  'savefig.dpi': 300,
+  'lines.linewidth': 3,
+  'lines.markersize': 6,
+  'axes.prop_cycle': mpl.cycler(
+    color=['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
+  ),
+  'axes.labelsize': 22,
+  'xtick.labelsize': 20,
+  'ytick.labelsize': 20,
+  'legend.fontsize': 20,
+  'legend.loc': 'best',
+  'axes.grid': True,
+  'grid.alpha': 0.4,
+}
 
 
 def print_dataframe(df):
@@ -435,6 +427,8 @@ def plot_performance_profiles(
   Returns:
     None. If a valid save_dir is provided, save both the plot and perf_df.
   """
+  mpl.rcdefaults()
+  mpl.rcParams.update(PLOT_STYLE)
   fig = perf_df.T.plot(figsize=figsize, alpha=0.7)
   df_col_display = f'log10({df_col})' if scale == 'log' else df_col
   fig.set_xlabel(f'Ratio of `{df_col_display}` to best submission')
