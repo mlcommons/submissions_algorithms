@@ -22,6 +22,10 @@ paired scripts; add submission labels in `report_utils.py`. The Muon, selected
 sweep, and framework views require their configured submissions. Recheck the
 framework view's batch-size assumptions when submission recipes change.
 
+The Muon figure loads `muon_torch_replicated_torch_hps` from the supplied log
+directory as a matched vanilla comparison. It keeps the standard leaderboard's
+non-Muon reference pool and records available study counts in its audit CSV.
+
 Sections share loading/scoring in `report_data.py`, table rendering in
 `report_tables.py`, and labels, styles, paths, and PDF/PNG export in
 `report_utils.py`. Notebook and command-line plots use the same renderers.
