@@ -16,6 +16,7 @@ import pandas as pd
 from artifacts.tech_report_v1.report_utils import (
   DISPLAY_TO_RAW,
   REPORT_ROOT,
+  SERIF_STYLE,
   set_plot_style,
   save_figure,
   submission_directory,
@@ -31,7 +32,7 @@ VANILLA = pretty(VANILLA_RAW)
 JAX = 'Muon (JAX)'
 MUONS = [SHARDED, VANILLA, JAX]
 LEGEND_LABELS = ['Muon (PyTorch, sharded)', 'Muon (PyTorch, vanilla)', JAX]
-COLORS = ['#176B96', '#176B96', '#B65A27']
+COLORS = ['#4477AA', '#4477AA', '#EE7733']
 MARKERS = ['o', 'o', 'D']
 WORKLOADS = [
   ('criteo1tb', 'Criteo 1TB', 'DLRM'),
@@ -174,13 +175,11 @@ def load_verified_data(source=SOURCE, config=None, submission_dir=None):
 def plot(times, normalized, best):
   set_plot_style(
     {
-      'font.family': 'DejaVu Sans',
+      **SERIF_STYLE,
+      'font.serif': ['Times New Roman', 'DejaVu Serif'],
       'font.size': 10,
       'savefig.bbox': 'tight',
       'savefig.pad_inches': 0.14,
-      'pdf.fonttype': 42,
-      'axes.spines.top': False,
-      'axes.spines.right': False,
       'axes.spines.left': False,
     }
   )
@@ -195,7 +194,8 @@ def plot(times, normalized, best):
       markersize=7,
       label=label,
       markerfacecolor='white' if name == VANILLA else c,
-      markeredgewidth=1.5 if name == VANILLA else 1,
+      markeredgewidth=1.6 if name == VANILLA else 0.8,
+      markeredgecolor=c if name == VANILLA else '#333333',
     )
     for name, label, c, m in zip(
       MUONS, LEGEND_LABELS, COLORS, MARKERS, strict=True
@@ -205,7 +205,7 @@ def plot(times, normalized, best):
       [],
       [],
       marker='o',
-      color='#ADB5BE',
+      color='#BBBBBB',
       linestyle='none',
       markersize=5,
       label='Other submissions',
@@ -267,6 +267,7 @@ def plot(times, normalized, best):
       color=color,
       transform=ratios.transAxes,
       ha='center',
+      weight='bold',
       fontsize=10,
     )
   ax.set_xlim(-0.015, 1.025)
@@ -291,7 +292,7 @@ def plot(times, normalized, best):
       finite,
       np.full(len(finite), y),
       s=25,
-      color='#ADB5BE',
+      color='#BBBBBB',
       edgecolor='white',
       linewidth=0.5,
       zorder=3,
@@ -320,8 +321,8 @@ def plot(times, normalized, best):
           s=112 if is_vanilla else 58,
           marker=MARKERS[j],
           facecolors='none' if is_vanilla else COLORS[j],
-          edgecolors=COLORS[j] if is_vanilla else 'white',
-          linewidth=1.5 if is_vanilla else 0.8,
+          edgecolors=COLORS[j] if is_vanilla else '#333333',
+          linewidth=1.6 if is_vanilla else 0.7,
           zorder=6 if is_vanilla else 5,
         )
       if np.isfinite(value) and np.isfinite(best[workload]):
