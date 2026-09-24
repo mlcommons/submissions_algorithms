@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import sys
 from functools import partial
 from multiprocessing import Pool
 from pathlib import Path
@@ -27,6 +28,9 @@ from pathlib import Path
 import matplotlib
 
 matplotlib.use("Agg")  # headless-safe; avoids the Qt "no display" crash.
+
+if __name__ == "__main__" and not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
 
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
@@ -36,8 +40,11 @@ from plot_config import (  # noqa: E402
     ALGO_CONFIGS,
     DEFAULT_DATA_PATH,
     DEFAULT_PLOT_DIR,
-    PLOT_RC_PARAMS,
     is_higher_better,
+)
+from artifacts.tech_report_v1.report_utils import (  # noqa: E402
+    NOTEBOOK_STYLE,
+    set_plot_style,
 )
 
 GRID_POINTS = 150
@@ -134,19 +141,6 @@ def compute_ylimits(values, target_value, higher_is_better, zoom):
     return ymin, ymax
 
 
-def _style_axis(ax):
-    ax.grid(True, which="major", color="#e8e8e8", linewidth=0.8)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    ax.spines["left"].set_color("#cccccc")
-    ax.spines["bottom"].set_color("#cccccc")
-
-
-def _legend(ax):
-    ax.legend(fontsize=9, frameon=True, facecolor="white", framealpha=0.9,
-              edgecolor="#e5e5e5")
-
-
 def _plot_metric(ax, submissions, wdf, x_col, x_scale):
     """Metric mean + std band per submission; returns pooled values for ylim."""
     all_vals = []
@@ -223,8 +217,7 @@ def plot_workload(workload, wdf, submissions, out_dir, dpi=200):
                        label=f"Target ({target:g})")
         ax.set_xlabel(xlab, fontweight="semibold")
         ax.set_ylabel(mlabel, fontweight="semibold")
-        _legend(ax)
-        _style_axis(ax)
+        ax.legend()
     ax_mt.set_title(f"Validation {metric} vs. wall-clock time", fontsize=12)
     ax_ms.set_title(f"Validation {metric} vs. training steps", fontsize=12)
 
@@ -235,8 +228,7 @@ def plot_workload(workload, wdf, submissions, out_dir, dpi=200):
         for ax, xlab in [(ax_gt, "Wall-clock time (hours)"), (ax_gs, "Training steps (x10³)")]:
             ax.set_xlabel(xlab, fontweight="semibold")
             ax.set_ylabel(glabel, fontweight="semibold")
-            _legend(ax)
-            _style_axis(ax)
+            ax.legend()
         ax_gt.set_title("Distance to target vs. wall-clock time", fontsize=12)
         ax_gs.set_title("Distance to target vs. training steps", fontsize=12)
     else:
@@ -253,7 +245,7 @@ def plot_workload(workload, wdf, submissions, out_dir, dpi=200):
 
 def _render_job(job, dpi):
     workload, wdf, submissions, out_dir = job
-    plt.rcParams.update(PLOT_RC_PARAMS)  # rcParams don't survive a spawn start.
+    set_plot_style(NOTEBOOK_STYLE)  # rcParams don't survive a spawn start.
     return plot_workload(workload, wdf, submissions, out_dir, dpi=dpi)
 
 
@@ -290,7 +282,7 @@ def main() -> None:
     if not args.data.is_file():
         raise SystemExit(f"No curve data at {args.data}. Run parse_logs.py first (pass 1).")
 
-    plt.rcParams.update(PLOT_RC_PARAMS)
+    set_plot_style(NOTEBOOK_STYLE)
     data = pd.read_csv(args.data)
     algos = list(ALGO_CONFIGS) if args.algo == "all" else [args.algo]
     print(f"Plotting algorithms: {algos}")

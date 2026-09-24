@@ -63,7 +63,8 @@ NOTEBOOK_STYLE = {
 }
 
 SUBMISSION_NAME_MAP = {
-  'ademamix': 'AdEMAMix (PyTorch)',
+  'ademamix': 'AdEMAMix (AdamW-equiv.) (PyTorch)',
+  'ademamix_golden': 'AdEMAMix (PyTorch)',
   'cautious_nadamw': 'Cautious NAdamW (JAX)',
   'lion': 'Lion (PyTorch)',
   'muon': 'Muon (JAX)',
@@ -81,11 +82,12 @@ SUBMISSION_NAME_MAP = {
   'schedule_free_adamw_jax_v2': 'Schedule-Free AdamW v2 (JAX)',
   'schedule_free_adamw_v2': 'Schedule-Free AdamW v2 (PyTorch)',
   'single_worker_diloco': 'Single Worker DiLoCo (JAX)',
-  'single_worker_dilocov2': 'Single Worker DiLoCo v2 (JAX)',
+  'single_worker_dilocov2': 'Single Worker DiLoCo (JAX)',
 }
 
 SUBMISSION_LATEX_MACRO = {
-  'ademamix': r'\ademamix',
+  'ademamix': r'\ademamixadamw',
+  'ademamix_golden': r'\ademamix',
   'cautious_nadamw': r'\cautiousnadamw',
   'lion': r'\lion',
   'muon': r'\muonjax',
@@ -98,7 +100,7 @@ SUBMISSION_LATEX_MACRO = {
   'schedule_free_adamw_jax_v2': r'\sfadamwjaxii',
   'schedule_free_adamw_v2': r'\sfadamwii',
   'single_worker_diloco': r'\dilocosw',
-  'single_worker_dilocov2': r'\dilocoswii',
+  'single_worker_dilocov2': r'\dilocosw',
 }
 
 DISPLAY_TO_RAW = {display: raw for raw, display in SUBMISSION_NAME_MAP.items()}
@@ -174,6 +176,8 @@ EXCLUDED_SUBMISSIONS = (
   'muon_torch_jax_hps_lr_fix',
   'muon_torch_replicated_jax_hps',
   'muon_torch_replicated_torch_hps',
+  'single_worker_diloco',
+
 )
 SELECTED_SWEEP_SUBMISSIONS = tuple(
   map(

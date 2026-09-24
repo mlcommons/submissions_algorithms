@@ -17,9 +17,11 @@ from __future__ import annotations
 from pathlib import Path
 
 # --- Paths -----------------------------------------------------------------
-# Derived from this file's location (``<repo>/logs/curve_plotting/plot_config.py``)
-# so the scripts work from any checkout without a hardcoded ``~`` path.
-REPO_ROOT = Path(__file__).resolve().parents[2]
+# Derived from this file's location (``<repo>/artifacts/tech_report_v1/
+# appendix_training_curves/curve_plotting/plot_config.py``) so the scripts
+# work from any checkout without a hardcoded ``~`` path.
+REPO_ROOT = Path(__file__).resolve().parents[4]
+REPORT_ROOT = Path(__file__).resolve().parent
 DEFAULT_LOG_DIR = REPO_ROOT / "logs" / "self_tuning"
 DEFAULT_PLOT_DIR = REPO_ROOT / "logs" / "curve_plotting"
 DEFAULT_DATA_PATH = DEFAULT_PLOT_DIR / "curve_data.csv"
