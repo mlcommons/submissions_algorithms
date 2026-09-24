@@ -151,6 +151,16 @@ def plot_performance_profiles(
 def plot_score_comparison(comparison):
   """Render wall-clock versus step scores using the shared submission styles."""
   styles = submission_styles(comparison.index)
+  # The shared color cycle repeats every 10 entries, which lands "AdEMAMix
+  # (AdamW-equiv.) (PyTorch)" on the same blue as "Schedule-Free AdamW
+  # (PyTorch)"; both also render as plain circles, so they're
+  # indistinguishable here. Give it a distinct color from the same palette
+  # family, local to this plot.
+  if 'AdEMAMix (AdamW-equiv.) (PyTorch)' in styles:
+    styles['AdEMAMix (AdamW-equiv.) (PyTorch)'] = {
+      **styles['AdEMAMix (AdamW-equiv.) (PyTorch)'],
+      'color': '#882255',
+    }
   set_plot_style(NOTEBOOK_STYLE)
   families = [
     (
@@ -182,36 +192,48 @@ def plot_score_comparison(comparison):
         'Single Worker DiLoCo v2 (JAX)',
       ],
     ),
-    ('AdEMAMix', 'P', ['AdEMAMix (PyTorch)']),
+    (
+      'AdEMAMix',
+      'P',
+      ['AdEMAMix (PyTorch)', 'AdEMAMix (AdamW-equiv.) (PyTorch)'],
+    ),
     ('Lion', 'X', ['Lion (PyTorch)']),
   ]
   _FAMILY_MARKER = {
     name: marker for _, marker, members in families for name in members
   }
 
-  fig, ax = plt.subplots(figsize=(9.5, 5.6))
+  fig, ax = plt.subplots(figsize=(13.65, 4.23))
 
   lims = (0.10, 0.60)
   ax.plot(lims, lims, linestyle='--', color='#999999', linewidth=1.0, zorder=1)
+  # White background so these labels stay legible if a marker lands nearby.
+  _corner_label_bbox = dict(
+    boxstyle='round,pad=0.2', facecolor='white', edgecolor='none', alpha=0.75
+  )
   ax.text(
-    0.135,
-    0.575,
+    0.15,
+    0.485,
     'wall-clock advantage\n(lower cost per step)',
     ha='left',
     va='top',
     fontsize=8.5,
     style='italic',
     color='#777777',
+    zorder=4,
+    bbox=_corner_label_bbox,
   )
   ax.text(
-    0.575,
-    0.135,
+    0.55,
+    0.205,
     'step advantage\n(fewer steps to target)',
     ha='right',
     va='bottom',
     fontsize=8.5,
     style='italic',
     color='#777777',
+    zorder=4,
+    bbox=_corner_label_bbox,
   )
 
   scatter_handles = {}
@@ -272,10 +294,12 @@ def plot_score_comparison(comparison):
     ncol=1,
     borderaxespad=0,
     frameon=True,
-    handlelength=1.0,
-    labelspacing=0.5,
+    handlelength=0.9,
+    labelspacing=0.45,
+    fontsize=7.7,
+    markerscale=0.9,
   )
-  fig.subplots_adjust(left=0.09, right=0.62, top=0.93, bottom=0.11)
+  fig.subplots_adjust(left=0.085, right=0.535, top=0.92, bottom=0.12)
 
   return fig
 
