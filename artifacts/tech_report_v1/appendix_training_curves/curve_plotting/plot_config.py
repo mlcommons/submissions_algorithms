@@ -19,7 +19,9 @@ from pathlib import Path
 # --- Paths -----------------------------------------------------------------
 # Derived from this file's location (``<repo>/logs/curve_plotting/plot_config.py``)
 # so the scripts work from any checkout without a hardcoded ``~`` path.
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[4]
+REPORT_ROOT = Path(__file__).resolve().parent
+print(REPO_ROOT)
 DEFAULT_LOG_DIR = REPO_ROOT / "logs" / "self_tuning"
 DEFAULT_PLOT_DIR = REPO_ROOT / "logs" / "curve_plotting"
 DEFAULT_DATA_PATH = DEFAULT_PLOT_DIR / "curve_data.csv"
