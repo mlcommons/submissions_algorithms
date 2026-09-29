@@ -238,9 +238,11 @@ def plot_workload(workload, wdf, submissions, out_dir, dpi=200):
     fig.tight_layout()
     out_dir.mkdir(parents=True, exist_ok=True)
     png_path = out_dir / f"{workload}_curves.png"
+    pdf_path = out_dir / f"{workload}_curves.pdf"
     fig.savefig(png_path, dpi=dpi)
+    fig.savefig(pdf_path)
     plt.close(fig)
-    return png_path
+    return pdf_path
 
 
 def _render_job(job, dpi):

@@ -60,6 +60,8 @@ NOTEBOOK_STYLE = {
   'axes.spines.right': False,
   'axes.linewidth': 0.8,
   'lines.linewidth': 1.6,
+  'pdf.fonttype': 42,
+  'ps.fonttype': 42,
 }
 
 SUBMISSION_NAME_MAP = {
