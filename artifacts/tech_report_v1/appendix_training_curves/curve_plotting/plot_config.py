@@ -101,7 +101,7 @@ ALGO_CONFIGS = {
                 "label": "PyTorch v1",
                 "alpha": 0.9,
             },
-            "muon_torch_jax_hps": {
+            "muon_torch_jax_hps_lr_fix": {
                 "color": "#0B3C5D",
                 "linestyle": "--",
                 "label": "PyTorch v2 (JAX HPS)",
